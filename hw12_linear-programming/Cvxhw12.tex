@@ -1,0 +1,181 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage{fullpage}
+\usepackage[top=2cm, bottom=4.5cm, left=2.5cm, right=2.5cm]{geometry}
+\usepackage{amsmath,amsthm,amsfonts,amssymb,amscd}
+\usepackage{lastpage}
+\usepackage{enumerate}
+\usepackage{fancyhdr}
+\usepackage{mathrsfs}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{hyperref}
+\usepackage{mathtools}
+\usepackage{xfrac}
+
+\hypersetup{%
+  colorlinks=true,
+  linkcolor=blue,
+  linkbordercolor={0 0 1}
+}
+\linespread{1.1}
+ 
+\renewcommand\lstlistingname{Algorithm}
+\renewcommand\lstlistlistingname{Algorithms}
+\def\lstlistingautorefname{Alg.}
+
+\lstdefinestyle{Python}{
+    language        = Python,
+    frame           = lines, 
+    basicstyle      = \footnotesize,
+    keywordstyle    = \color{blue},
+    stringstyle     = \color{green},
+    commentstyle    = \color{red}\ttfamily
+}
+
+\setlength{\parindent}{0.0in}
+\setlength{\parskip}{0.05in}
+
+% Edit these as appropriate
+\newcommand\course{ConvexOptimization}
+\newcommand\hwnumber{1}                  % <-- homework number
+\newcommand\NetIDa{SUN Yilin}           % <-- NetID of person #1
+\newcommand\NetIDb{520030910361}           % <-- NetID of person #2 (Comment this line out for problem sets)
+
+\pagestyle{fancyplain}
+\headheight 35pt
+\lhead{\NetIDa}
+\lhead{\NetIDa\\\NetIDb}                 % <-- Comment this line out for problem sets (make sure you are person #1)
+\chead{\textbf{\Large Homework \hwnumber}}
+\rhead{\course \\ \today}
+\lfoot{}
+\cfoot{}
+\rfoot{\small\thepage}
+\headsep 1.5em
+
+\begin{document}
+
+\section{}
+\subsection*{(a).}
+In this problem $A=(1,1,1)$, $\nabla f=(e^{x_1},2e^{2x_2},2e^{2x_3})^T$ and $\nabla^2f=diag\{e^{x_1},4e^{2x_2},4e^{2x_3}\}$
+So the KKT system is 
+$$\begin{pmatrix}
+    e^{x_1}&0&0&1\\
+    0&4e^{2x_2}&0&1\\
+    0&0&4e^{2x_3}&1\\
+    1&1&1&0
+\end{pmatrix}
+\begin{pmatrix}
+d_1\\d_2\\d_3\\\lambda
+\end{pmatrix}=
+\begin{pmatrix}
+-e^{x_1}\\-2e^{2x_2}\\-2e^{2x_3}\\0
+\end{pmatrix}
+$$
+By solving the KKT system we get the Newton direction at $\boldsymbol{x}=(x_1,x_2,x_3)$ is 
+$$\boldsymbol{d}=\begin{pmatrix}
+d_1\\d_2\\d_3
+\end{pmatrix}=\begin{pmatrix}
+\frac{4e^{-x_1}-e^{-2x_2}-e^{-2x_3}}{4e^{-x_1}+e^{-2x_2}+e^{-2x_3}}\\
+\frac{-4e^{-x_1}+3e^{-2x_2}-e^{-2x_3}}{2(4e^{-x_1}+e^{-2x_2}+e^{-2x_3})}\\
+\frac{-4e^{-x_1}-e^{-2x_2}+3e^{-2x_3}}{2(4e^{-x_1}+e^{-2x_2}+e^{-2x_3})}
+\end{pmatrix}
+$$
+\subsection*{(b).}
+I will directly paste the outputs which show the process of iteration below.\\
+iteration 0: [0. 1. 0.]\\
+iteration 1: [0.55783402  0.55270748 -0.1105415 ]\\
+iteration 2: [0.74171111 0.22388047 0.03440841]\\
+iteration 3: [0.83735858 0.09139269 0.07124873]\\
+iteration 4: [0.8464719  0.07685719 0.07667091]\\
+iteration 5: [0.84657358 0.07671322 0.0767132 ]\\
+iteration 6: [0.84657359 0.0767132  0.0767132 ]\\
+optimal value: 4.663287963194248\\
+This result is the same as what we have shown in the previous homework.
+
+\newpage
+\section{}
+\subsection*{(a).}
+By using the Log Barrier function,
+the approximating equality constrained problem is 
+$$\min_{\boldsymbol{x}\in\mathbb{R}^n} \boldsymbol{c}^T\boldsymbol{x}-\frac{1}{t}\sum_{i=1}^{n}log(x_i)$$
+$$s.t.\qquad
+\boldsymbol{Ax}=\boldsymbol{b}
+$$
+
+\subsection*{(b).}
+$$\nabla f=\boldsymbol{c}-\frac{1}{t}\begin{pmatrix}
+\frac{1}{x_1}\\
+\frac{1}{x_2}\\
+\frac{1}{x_3}\\
+\dots\\
+\frac{1}{x_n}\\
+\end{pmatrix}, \nabla^2 f=\frac{1}{t}diag\{\frac{1}{x_1^2},\frac{1}{x_2^2},\frac{1}{x_3^2},\dots,\frac{1}{x_n^2}\}
+$$
+\subsection*{(c).}
+The implementation can be found in file LP.py
+\subsection*{(d).}
+By introducing two variables we get the standard form of this LP.\\
+$$
+\min_{(x_1,x_2,s_1,s_2)\in\mathbb{R}^4} -x_1-3x_2$$
+$$s.t.\quad x_1+x_2+s_1=6$$
+$$-x_1+2x_2+s_2=8$$
+$$x_1,x_2,s_1,s_2 \geq0$$
+Then we solve it. The output is \\
+iteration 0: [2 1 3 8]\\
+iteration 1: [1.63310136 3.90397091 0.46292773 1.82515955]\\
+iteration 2: [1.34599628 4.59596597 0.05803775 0.15406434]\\
+iteration 3: [1.33436048 4.65965606 0.00598345 0.01504836]\\
+iteration 4: [1.33343377e+00 4.66596530e+00 6.00928006e-04 1.50318063e-03]\\
+iteration 5: [1.33334340e+00 4.66659622e+00 6.03805159e-05 1.50958601e-04]\\
+iteration 6: [1.33333435e+00 4.66665953e+00 6.11807327e-06 1.52952233e-05]\\
+iteration 7: [1.33333344e+00 4.66666592e+00 6.35922351e-07 1.58980583e-06]\\
+iteration 8: [1.33333335e+00 4.66666658e+00 7.10430528e-08 1.77607681e-07]\\
+iteration 9: [1.33333333e+00 4.66666666e+00 1.84101098e-09 4.60247546e-09]\\
+optimal value: -15.333333327196652
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.45\textwidth]{p2.pdf}
+\caption{trajectories}
+\label{trandgap1a}
+\end{figure}
+\\
+We can see the optimal variable is $(x_1^*,x_2^*,s_1^*,s_2^*)=(\frac{4}{3},\frac{14}{3},0,0)$, optimal value is -15.3333.
+\newpage
+\section{}
+\subsection*{(a).}
+$$\max_{\boldsymbol{\mu}\in\mathbb{R}^4}\quad-6\mu_1-8\mu_2
+$$
+$\qquad\qquad\qquad\qquad\qquad\qquad\qquad s.t. -\mu_1+\mu_2+\mu_3=-1$
+$$-\mu_1-2\mu_2+\mu_4=-3$$
+$$\mu_1,\mu_2,\mu_3,\mu_4\geq0$$
+\subsection*{(b).}
+$$\max_{\boldsymbol{\mu}\in\mathbb{R}^2}\quad-6\mu_1-8\mu_2
+$$
+$\qquad\qquad\qquad\qquad\qquad\qquad\qquad\quad s.t. -\mu_1+\mu_2\leq-1$
+$$-\mu_1-2\mu_2\leq-3$$
+$$\mu_1,\mu_2\geq0$$
+\subsection*{(c).}
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.45\textwidth]{3c.png}
+\caption{graphical solution}
+\label{graphsolution}
+\end{figure}
+In the figure above the optimal solution is the intersection of the blue line with the feasible set. The dual optimal solution is $(\mu_1^*,\mu_2^*)=(\frac{5}{3},\frac{2}{3})$, the dual optimal value and the primal optimal value are both $-\frac{46}{3}$ or approximately -15.33.
+\subsection*{(d).}
+iteration 0: [4. 1. 2. 3.]\\
+iteration 1: [2.1603025  0.54793137 0.61237113 0.25616523]\\
+iteration 2: [1.72345017 0.6491511  0.07429907 0.02175236]\\
+iteration 3: [1.67238171 0.66488279 0.00749892 0.0021473 ]\\
+iteration 4: [1.66723914e+00 6.66487789e-01 7.51348892e-04 2.14716385e-04]\\
+iteration 5: [1.66672417e+00 6.66648696e-01 7.54772486e-05 2.15653129e-05]\\
+iteration 6: [1.66667249e+00 6.66664846e-01 7.64760038e-06 2.18503079e-06]\\
+iteration 7: [1.66666727e+00 6.66666477e-01 7.94902929e-07 2.27115120e-07]\\
+iteration 8: [1.66666673e+00 6.66666646e-01 8.88038268e-08 2.53725245e-08]\\
+iteration 9: [1.66666667e+00 6.66666666e-01 2.30125234e-09 6.57497929e-10]\\
+dual optimal value: -15.333333339470014\\
+We can see the dual optimal solution is $\boldsymbol{\mu}^*=(\frac{5}{3},\frac{2}{3},0,0)$ with dual optimal value -15.3333
+
+
+\end{document}
