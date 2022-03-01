@@ -1,0 +1,154 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage{fullpage}
+\usepackage[top=2cm, bottom=4.5cm, left=2.5cm, right=2.5cm]{geometry}
+\usepackage{amsmath,amsthm,amsfonts,amssymb,amscd}
+\usepackage{lastpage}
+\usepackage{enumerate}
+\usepackage{fancyhdr}
+\usepackage{mathrsfs}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{hyperref}
+\usepackage{mathtools}
+\usepackage{xfrac}
+
+\hypersetup{%
+  colorlinks=true,
+  linkcolor=blue,
+  linkbordercolor={0 0 1}
+}
+\linespread{1.1}
+ 
+\renewcommand\lstlistingname{Algorithm}
+\renewcommand\lstlistlistingname{Algorithms}
+\def\lstlistingautorefname{Alg.}
+
+\lstdefinestyle{Python}{
+    language        = Python,
+    frame           = lines, 
+    basicstyle      = \footnotesize,
+    keywordstyle    = \color{blue},
+    stringstyle     = \color{green},
+    commentstyle    = \color{red}\ttfamily
+}
+
+\setlength{\parindent}{0.0in}
+\setlength{\parskip}{0.05in}
+
+% Edit these as appropriate
+\newcommand\course{ConvexOptimization}
+\newcommand\hwnumber{10}                  % <-- homework number
+\newcommand\NetIDa{SUN Yilin}           % <-- NetID of person #1
+\newcommand\NetIDb{520030910361}           % <-- NetID of person #2 (Comment this line out for problem sets)
+
+\pagestyle{fancyplain}
+\headheight 35pt
+\lhead{\NetIDa}
+\lhead{\NetIDa\\\NetIDb}                 % <-- Comment this line out for problem sets (make sure you are person #1)
+\chead{\textbf{\Large Homework \hwnumber}}
+\rhead{\course \\ \today}
+\lfoot{}
+\cfoot{}
+\rfoot{\small\thepage}
+\headsep 1.5em
+
+\begin{document}
+
+\section{}
+The KKT conditions are
+$$
+\begin{cases}
+\frac{\partial\mathcal{L}}{\partial x_1}=2x_1+\mu_1(2x_1-2)+\mu_2(2x_1-2)=0\\
+\frac{\partial\mathcal{L}}{\partial x_2}=2x_2+\mu_1(2x_2-2)+2\mu_2x_2=0\\
+\mu_1\geq0\\
+\mu_2\geq0\\
+\mu_1[(x_1-1)^2+(x_2-1)^2-1]=0\\
+\mu_2[(x_1-1)^2+x_2^2-1]=0
+\end{cases}$$
+When both conditions are inactive, we solve for 
+$$
+\begin{cases}
+\mu_1^*=0\\
+\mu_2^*=0\\
+x_1^*=0\\
+x_2^*=0
+\end{cases}$$
+which violate $g_1\leq0$.\\
+When $g_1$ is inactive we solve for 
+$$
+\begin{cases}
+\mu_1^*=0\\
+\mu_2^*=-2\\
+x_1^*=2\\
+x_2^*=0
+\end{cases}$$
+which violate $\mu_2\geq0$.\\
+When $g_2$ is inactive we solve for
+$$
+\begin{cases}
+\mu_1^*=\sqrt{2}-1\\
+\mu_2^*=0\\
+x_1^*=1-\frac{\sqrt{2}}{2}\\
+x_2^*=1-\frac{\sqrt{2}}{2}
+\end{cases}$$
+where KKT conditions are satisfied, note that $\boldsymbol{x}^*$ is also a regular point. By the sufficiency of KKT conditions, we know that they are the optimal point and corresponding Lagrange multipliers.
+Still, we check the case where both conditions are active and solve for $\mu_1^*,\mu_2^*$ and find that at least one of them must be negative, meaning that this case cannot be an optima.
+Finally we conclude that the solution above is the optima we want.
+\section{}
+\subsection*{(a).}
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.45\textwidth]{2a.png}
+\caption{Feasible set and Level set}
+\label{sk}
+\end{figure}
+The feasible set is the intersection of the two blue circles. We can the that the feasible set is only a singleton, meaning that the optimal point must be it. So $\boldsymbol{x}^*=(1,0)$ and $f^*=1$
+\subsection*{(b).}
+The KKT conditions are
+$$
+\begin{cases}
+\frac{\partial\mathcal{L}}{\partial x_1}=2x_1+\mu_1(2x_1-2)+\mu_2(2x_1-2)=0\\
+\frac{\partial\mathcal{L}}{\partial x_2}=2x_2+\mu_1(2x_2-2)+\mu_2(2x_2+2)=0\\
+\mu_1\geq0\\
+\mu_2\geq0\\
+\mu_1[(x_1-1)^2+(x_2-1)^2-1]=0\\
+\mu_2[(x_1-1)^2+(x_2+1)^2-1]=0
+\end{cases}$$
+At the only point in feasible set $(1,0)$, we can see that the first equation $$\frac{\partial\mathcal{L}}{\partial x_1}=2x_1+\mu_1(2x_1-2)+\mu_2(2x_1-2)=0$$
+can never be satisfied. So Lagrange multipliers do not exist.
+At $\boldsymbol{x}^*$, $\nabla g_1^T=(0,-2)$, $\nabla g_2^T=(0,2)$ and they are linearly dependent. So it is not a regular point. 
+\section{}
+$\boldsymbol{x}^{(1)}$ is not feasible, so it cannot be an optimal solution.\\
+At $\boldsymbol{x}^{(2)}$ both conditions are inactive. (Here we do not treat $x_1,x_2>0$ as the conditions we usually mention in KKT conditions as they do not affect out discussion) So the multipliers must both be zero. But when they are both zero,by setting the gradient of Lagrange function to be zero we get $(x_1,x_2)=(\frac{9}{4},2)\neq \boldsymbol{x}^{(2)}$. So $\boldsymbol{x}^{(2)}$ is also not an optimal solution.\\
+$\boldsymbol{x}^{(3)}$ is an optimal solution. We can find multipliers satisfying the KKT conditions. The multipliers are
+$$\begin{cases}
+\mu_1^*=\frac{1}{2}\\
+\mu_2^*=0
+\end{cases}
+$$
+\section{}
+\subsection*{(a)}
+The Lagrange function is 
+$$\mathcal{L}=\frac{1}{2}(\boldsymbol{x}-\boldsymbol{z})^T(\boldsymbol{x}-\boldsymbol{z})+\lambda\boldsymbol{y}^T\boldsymbol{x}-\boldsymbol{\mu}^T\boldsymbol{x}$$
+where $\lambda$ is a scalar and $\boldsymbol{\mu}$ is a vector.\\
+The KKT conditions are
+$$\begin{cases}
+\nabla_{\boldsymbol{x}}\mathcal{L}=\boldsymbol{x}^*+\lambda\boldsymbol{y}-\boldsymbol{z}-\boldsymbol{\mu}^*=\boldsymbol{0}\\
+\boldsymbol{\mu}^*\geq\boldsymbol{0}\\
+\mu_i^*x_i^*=0, i=1,2,\dots,n
+\end{cases}
+$$
+So by the first equation there exist $\lambda$ such that $$x_i^*=z_i-\lambda y_i+\mu_i^*,\quad i=1,2\dots,n$$ 
+For any $i$, \\
+If $x_i^*\neq 0$, then $\mu_i^*=0$. Then $$x_i^*=z_i-\lambda y_i+\mu_i^*=z_i-\lambda y_i,\quad i=1,2\dots,n$$ 
+Also note that $\boldsymbol{x}^*\geq\boldsymbol{0}$, so
+$$x_i^*=z_i-\lambda y_i=(z_i-\lambda y_i)^+,\quad i=1,2\dots,n$$ 
+If $x_i^*=0$, then $$z_i-\lambda y_i+\mu_i^*=0$$
+Since $\mu_i^*\geq0$, $z_i-\lambda y_i\leq0$. So $(z_i-\lambda y_i)^+=0$. So $$x_i^*=0=(z_i-\lambda y_i)^+$$
+So there exists a $\lambda\in\mathbb{R}$ such that $$x_i^*=(z_i-\lambda y_i)^+,\quad n=1,2,\dots,n$$
+And by the equality constraint $\lambda$ satisfies $$\sum_{i=1}^{n}y_i(z-\lambda y_i)^+=0$$
+
+\subsection*{(b)}
+The solution is $\boldsymbol{x}^*=(\frac{1}{3},\frac{4}{3},\frac{5}{3})$. In the codes I also used CVXPY for double-check and the results are the same. Can check the codes for more details.
+\end{document}
