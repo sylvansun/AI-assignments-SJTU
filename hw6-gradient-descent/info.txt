@@ -1,2 +1,0 @@
-In this assignment we implemented the so-called gradient descent method. 
-This is the first code assignment of cvxopt course.
