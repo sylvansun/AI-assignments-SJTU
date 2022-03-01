@@ -1,0 +1,124 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage{fullpage}
+\usepackage[top=2cm, bottom=4.5cm, left=2.5cm, right=2.5cm]{geometry}
+\usepackage{amsmath,amsthm,amsfonts,amssymb,amscd}
+\usepackage{lastpage}
+\usepackage{enumerate}
+\usepackage{fancyhdr}
+\usepackage{mathrsfs}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{hyperref}
+\usepackage{mathtools}
+\usepackage{xfrac}
+
+\hypersetup{%
+  colorlinks=true,
+  linkcolor=blue,
+  linkbordercolor={0 0 1}
+}
+\linespread{1.1}
+ 
+\renewcommand\lstlistingname{Algorithm}
+\renewcommand\lstlistlistingname{Algorithms}
+\def\lstlistingautorefname{Alg.}
+
+\lstdefinestyle{Python}{
+    language        = Python,
+    frame           = lines, 
+    basicstyle      = \footnotesize,
+    keywordstyle    = \color{blue},
+    stringstyle     = \color{green},
+    commentstyle    = \color{red}\ttfamily
+}
+
+\setlength{\parindent}{0.0in}
+\setlength{\parskip}{0.05in}
+
+% Edit these as appropriate
+\newcommand\course{ConvexOptimization}
+\newcommand\hwnumber{5}                  % <-- homework number
+\newcommand\NetIDa{SUN Yilin}           % <-- NetID of person #1
+\newcommand\NetIDb{520030910361}           % <-- NetID of person #2 (Comment this line out for problem sets)
+
+\pagestyle{fancyplain}
+\headheight 35pt
+\lhead{\NetIDa}
+\lhead{\NetIDa\\\NetIDb}                 % <-- Comment this line out for problem sets (make sure you are person #1)
+\chead{\textbf{\Large Homework \hwnumber}}
+\rhead{\course \\ \today}
+\lfoot{}
+\cfoot{}
+\rfoot{\small\thepage}
+\headsep 1.5em
+
+\begin{document}
+
+\section{}
+By the first-order optimality condition we know that the solution $\boldsymbol{x}^*$ to the given problem must satisfy that $\nabla f(\boldsymbol{x}^*)^T(\boldsymbol{x}-\boldsymbol{x}^*)\geq0,\forall\boldsymbol{x}\in\Bar{B}$. By taking the gradient of $f$ we know that the inequality is equivalent to $(\boldsymbol{x}^*-\boldsymbol{x}_0)^T(\boldsymbol{x}-\boldsymbol{x}^*)\geq0$. We already know that this inequality is also the condition of the projection of point $\boldsymbol{x}_0$ onto $\Bar{B}$. Now to show that the projection of $\boldsymbol{x}_0\notin\Bar{B}$ is $\frac{\boldsymbol{x}_0}{||\boldsymbol{x}_0||}$, we only need to show that $\frac{\boldsymbol{x}_0}{||\boldsymbol{x}_0||}$ satisfies $(\frac{\boldsymbol{x}_0}{||\boldsymbol{x}_0||}-\boldsymbol{x}_0)^T(\boldsymbol{x}-\frac{\boldsymbol{x}_0}{||\boldsymbol{x}_0||})\geq0$.\\
+Then by transformation, that is equivalent to show $\boldsymbol{x}_0^T\boldsymbol{x}\leq||\boldsymbol{x}_0||$. Then by applying $H\ddot{o}lder's$ $Inequality$ we get 
+$\boldsymbol{x}_0^T\boldsymbol{x}=\sum_{i=1}^{n}x_{0_{i}}x_i\leq\sum_{i=1}^{n}|x_{0_{i}}x_i|\leq||\boldsymbol{x}_0||\cdot||\boldsymbol{x}||\leq||\boldsymbol{x}_0||$. So $\frac{\boldsymbol{x}_0}{||\boldsymbol{x}_0||}$ does satisfy $(\frac{\boldsymbol{x}_0}{||\boldsymbol{x}_0||}-\boldsymbol{x}_0)^T(\boldsymbol{x}-\frac{\boldsymbol{x}_0}{||\boldsymbol{x}_0||})\geq0$. So it is the projection of $\boldsymbol{x}_0\notin\Bar{B}$.
+
+\section{}
+Below is the feasible set of the problem. Note that the area is directed by the arrows.
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.6\textwidth,height=0.5\textwidth]{Fset.png}
+    \caption{\label{fig:fset} Feasible Set for Problem 2}
+\end{figure}
+\subsection*{(a)}
+Graphically, the set of optimal solutions is a single point, i.e. $S=\{(x_1,x_2)=(0.4,0.2)\}$. And the optimal value is $f=0.6$. Below is the graph where we can see the optimal solution, i.e. the intersection of the blue line and the Feasible Set.
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.4\textwidth,height=0.3\textwidth]{2a.png}
+    \caption{Set of Optimal Solutions for 2(a)}
+\end{figure}
+
+\subsection*{(b)}
+The set of optimal solutions is where either $x_1$ or $x_2$ goes to infinity, and the optimal value is just minus infinity. We cannot represent the optimal solutions with a graph but we know where it is.
+\subsection*{(c)}
+Graphically, the set of optimal solutions is a set of points, i.e. $S=\{(x_1,x_2)|x_1=0,x_2\geq1\}$. And the optimal value is $f=0$. Below is the graph where we can see the optimal solutions, i.e. the blue line above the point $(x_1,x_2)=(0,1)$.
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.4\textwidth,height=0.3\textwidth]{2c.png}
+    \caption{\label{fig:2c} Set of Optimal Solutions for 2(c)}
+\end{figure}
+\subsection*{CVXPY Results for (a)-(e)}
+For the optimal variables, the first is $x_1$, the second is $x_2$.
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=1\textwidth,height=0.8\textwidth]{prob2rst.jpeg}
+    \caption{\label{fig:cvxpy} CVXPY Results for Problem 2}
+\end{figure}
+
+\section{}
+\subsection*{(a)}
+We introduce a new variable $\boldsymbol{t}\in\mathbb{R}^m$ and let $-\boldsymbol{t}\leq\boldsymbol{Ax}-\boldsymbol{b}\leq\boldsymbol{t}$, where the inequality is defined elementwise. And note that for the constraint $||\boldsymbol{x}||_{\infty}\leq1$, it is equivalent to $-\boldsymbol{1}\leq\boldsymbol{x}\leq\boldsymbol{1}$(also elementwise). Then the original problem can be transformed into
+$$\min_{\boldsymbol{x},\boldsymbol{t}}\boldsymbol{1}^T\boldsymbol{t}$$
+$$s.t.\quad  -\boldsymbol{1}\leq\boldsymbol{x}\leq\boldsymbol{1}$$
+$$\qquad \qquad\quad-\boldsymbol{t}\leq\boldsymbol{Ax}-\boldsymbol{b}\leq\boldsymbol{t}$$
+\subsection*{(b)}
+Note that the optimal variable is given in form of a row vector, whose transpose is the actual answer.
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.8\textwidth,height=0.16\textwidth]{prob3rst.png}
+    \caption{\label{fig:cvxpy3} CVXPY Results for Problem 3(b)}
+\end{figure}
+\subsection*{(c)}
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.8\textwidth,height=0.16\textwidth]{prob3lp.png}
+    \caption{\label{fig:cvxpy3lp} CVXPY Results for Problem 3(c)}
+\end{figure}
+\section{}
+\subsection*{(a)}
+Since $\boldsymbol{X}$ has full column rank, $\boldsymbol{w}^*$ is simply $(\boldsymbol{X}^T\boldsymbol{X})^{-1}\boldsymbol{X}^T\boldsymbol{y}$, which is $(1.5,2)^T$. And the optimal value is 4.
+\subsection*{(b)(c)}
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.8\textwidth,height=0.6\textwidth]{prob4.jpeg}
+    \caption{\label{fig:cvxpy4} CVXPY Results for Problem 4}
+\end{figure}
+Lasso with $t=1$ has different solution, and the solution has zero component. But Lasso with $t=10$ has the same solution with no zero component. Ridge with $t=1$ has different solution with no zero component, while with $t=100$ the solution is the same with no zero compenent.
+\end{document}
