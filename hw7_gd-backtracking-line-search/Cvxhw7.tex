@@ -1,0 +1,182 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage{fullpage}
+\usepackage[top=2cm, bottom=4.5cm, left=2.5cm, right=2.5cm]{geometry}
+\usepackage{amsmath,amsthm,amsfonts,amssymb,amscd}
+\usepackage{lastpage}
+\usepackage{enumerate}
+\usepackage{fancyhdr}
+\usepackage{mathrsfs}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{hyperref}
+\usepackage{mathtools}
+\usepackage{xfrac}
+\usepackage{pdfpages}
+\usepackage{float} 
+\usepackage{subfigure} 
+
+\hypersetup{%
+  colorlinks=true,
+  linkcolor=blue,
+  linkbordercolor={0 0 1}
+}
+\linespread{1.1}
+ 
+\renewcommand\lstlistingname{Algorithm}
+\renewcommand\lstlistlistingname{Algorithms}
+\def\lstlistingautorefname{Alg.}
+
+\lstdefinestyle{Python}{
+    language        = Python,
+    frame           = lines, 
+    basicstyle      = \footnotesize,
+    keywordstyle    = \color{blue},
+    stringstyle     = \color{green},
+    commentstyle    = \color{red}\ttfamily
+}
+
+\setlength{\parindent}{0.0in}
+\setlength{\parskip}{0.05in}
+
+% Edit these as appropriate
+\newcommand\course{ConvexOptimization}
+\newcommand\hwnumber{7}                  % <-- homework number
+\newcommand\NetIDa{SUN Yilin}           % <-- NetID of person #1
+\newcommand\NetIDb{520030910361}           % <-- NetID of person #2 (Comment this line out for problem sets)
+
+\pagestyle{fancyplain}
+\headheight 35pt
+\lhead{\NetIDa}
+\lhead{\NetIDa\\\NetIDb}                 % <-- Comment this line out for problem sets (make sure you are person #1)
+\chead{\textbf{\Large Homework \hwnumber}}
+\rhead{\course \\ \today}
+\lfoot{}
+\cfoot{}
+\rfoot{\small\thepage}
+\headsep 1.5em
+
+\begin{document}
+\section{}
+\subsection*{(a)}
+We know $e^x$ is convex and $f$ is simply summing up affine composition of $e^x$, so $f$ is convex. By letting $\nabla f(\boldsymbol{x})=0$ we get $\boldsymbol{x}^*=(-\frac{ln2}{2},0)=(-0.3466,0)$ and $f(\boldsymbol{x}^*)=\frac{2^{\frac{3}{2}}}{e^{0.1}}=2.56$.
+\subsection*{(b)}
+The solution given by backtracking line search is $\boldsymbol{x}^*=(-0.3466,0)$ and $f(\boldsymbol{x}^*)=2.56$. Number of iterations in the outer loop is 29, total number of iterations in the inner loop is 156.
+\begin{figure}[htbp]
+\begin{minipage}[t]{0.3\linewidth}
+\centering
+\includegraphics[height=5cm,width=5cm]{gd_traces_armijo.pdf}
+\caption{trajectory}
+\end{minipage}%
+\begin{minipage}[t]{0.3\linewidth}
+\centering
+\includegraphics[height=5cm,width=5cm]{gd_error_armijo.pdf}
+\caption{error}
+\end{minipage}
+\begin{minipage}[t]{0.3\linewidth}
+\centering
+\includegraphics[height=5cm,width=5cm]{gd_armijo_ss.pdf}
+\caption{stepsize}
+\end{minipage}
+\end{figure}
+
+\newpage
+\subsection*{(c)}
+The solution of these two step sizes are both $\boldsymbol{x}^*=(-0.3466,0)$ and $f(\boldsymbol{x}^*)=2.56$.\\
+For step size 0.1, we need 44 iterations. And for step size 0.01, we need 489 iterations. \\
+Below are the trajectories and errors.
+\begin{figure}[H]
+\centering
+\subfigure[trajectory when stepsize=0.1]{
+\label{tr.sub.1}
+\includegraphics[width=0.45\textwidth]{gd_traces_css0.1.pdf}}
+\subfigure[error when stepsize=0.1]{
+\label{tr.sub.3}
+\includegraphics[width=0.45\textwidth]{gd_error_css0.1.pdf}}
+\subfigure[trajectory when stepsize=0.01]{
+\label{tr.sub.2}
+\includegraphics[width=0.45\textwidth]{gd_traces_css0.01.pdf}}
+\subfigure[error when stepsize=0.01]{
+\label{tr.sub.4}
+\includegraphics[width=0.45\textwidth]{gd_error_css0.01.pdf}}
+\caption{trajectories and errors for part (c)}
+\label{tr}
+\end{figure}
+
+\newpage
+\subsection*{(d)}
+The solution given by backtracking line search is $\boldsymbol{x}^*=(-0.3466,0)$ and $f(\boldsymbol{x}^*)=2.56$. Number of iterations in the outer loop is 33, total number of iterations in the inner loop is 202.\\
+The solutions are the same as part (b), but this time we need more iterations.
+\begin{figure}[htbp]
+\begin{minipage}[t]{0.3\linewidth}
+\centering
+\includegraphics[height=5cm,width=5cm]{gd_traces_armijo_p1d.pdf}
+\caption{trajectory}
+\end{minipage}%
+\begin{minipage}[t]{0.3\linewidth}
+\centering
+\includegraphics[height=5cm,width=5cm]{gd_error_armijo_p1d.pdf}
+\caption{error}
+\end{minipage}
+\begin{minipage}[t]{0.3\linewidth}
+\centering
+\includegraphics[height=5cm,width=5cm]{gd_armijo_ss_p1d.pdf}
+\caption{stepsize}
+\end{minipage}
+\end{figure}
+
+\newpage
+\subsection*{(e)}
+\begin{figure}[H]
+\centering
+\subfigure[trajectory when stepsize=0.005]{
+\label{tr2.sub.1}
+\includegraphics[width=0.45\textwidth]{gd_traces_css0.005_p1e.pdf}}
+\subfigure[error when stepsize=0.005]{
+\label{tr2.sub.3}
+\includegraphics[width=0.45\textwidth]{gd_error_css0.005_p1e.pdf}}
+\subfigure[trajectory when stepsize=0.01]{
+\label{tr2.sub.2}
+\includegraphics[width=0.45\textwidth]{gd_traces_css0.01_p1e.pdf}}
+\subfigure[error when stepsize=0.01]{
+\label{tr2.sub.4}
+\includegraphics[width=0.45\textwidth]{gd_error_css0.01_p1e.pdf}}
+\subfigure[trajectory when stepsize=0.1]{
+\label{tr2.sub.5}
+\includegraphics[width=0.45\textwidth]{gd_traces_css0.1_p1e.pdf}}
+\subfigure[error when stepsize=0.1]{
+\label{tr2.sub.6}
+\includegraphics[width=0.45\textwidth]{gd_error_css0.1_p1e.pdf}}
+\caption{trajectories and errors for part (e)}
+\label{tr2}
+\end{figure}
+The solution is still $\boldsymbol{x}^*=(-0.3466,0)$ and $f(\boldsymbol{x}^*)=2.56$. And we need 984 iterations.\\
+If we use step sizes in part (c), the step size is so large that it does not converge. We can still try to plot the trajectories but with 2 to 3 iterations the function value is two large, so here I only plot the trajectory of one iteration.
+
+\section{}
+\subsection*{(a)}
+$$||\boldsymbol{x}_{k+1}-\boldsymbol{x}^*||=||\boldsymbol{\tilde{x}}_{k+1}-t\boldsymbol{\varepsilon}_k-\boldsymbol{x}^*||\leq||\boldsymbol{\tilde{x}}_{k+1}-\boldsymbol{x}^*||+||t\boldsymbol{\varepsilon}_k||$$
+$$||\boldsymbol{x}_{k+1}-\boldsymbol{x}^*||\leq||\boldsymbol{\tilde{x}}_{k+1}-\boldsymbol{x}^*||+tE$$
+\subsection*{(b)}
+$$||\boldsymbol{\tilde{x}}_{k+1}-\boldsymbol{x}^*||=||\boldsymbol{{x}}_{k}-t\nabla f(\boldsymbol{x}_k)-\boldsymbol{x}^*||$$
+In convergence analysis of the lecture notes we have proved 
+$$||\boldsymbol{{x}}_{k}-t\nabla f(\boldsymbol{x}_k)-\boldsymbol{x}^*||^2\leq(1-mt)||\boldsymbol{{x}}_{k}-\boldsymbol{x}^*||^2$$
+So
+$$||\boldsymbol{x}_{k+1}-\boldsymbol{x}^*||\leq q||\boldsymbol{{x}}_{k}-\boldsymbol{x}^*||+tE$$
+where $q=\sqrt{1-mt}$.
+\subsection*{(c)}
+\subsubsection*{(i)}
+When $k=1$ obviously the inequality holds.
+\subsubsection*{(ii)}
+Suppose we already have $$||\boldsymbol{x}_k-\boldsymbol{x}^*||\leq q^k||\boldsymbol{x}_0-\boldsymbol{x}^*||+\frac{1-q^k}{1-q}tE$$
+Now we need to show that inequality holds for $k+1$.\\
+From part (b)
+$$||\boldsymbol{x}_{k+1}-\boldsymbol{x}^*||\leq q||\boldsymbol{{x}}_{k}-\boldsymbol{x}^*||+tE$$
+By assumption we get
+$$||\boldsymbol{x}_{k+1}-\boldsymbol{x}^*||\leq q(q^k||\boldsymbol{x}_0-\boldsymbol{x}^*||+\frac{1-q^k}{1-q}tE)+tE$$
+Which is equivalent to $$||\boldsymbol{x}_{k+1}-\boldsymbol{x}^*||\leq q^{k+1}||\boldsymbol{x}_0-\boldsymbol{x}^*||+\frac{1-q^{k+1}}{1-q}tE$$
+So the inequality holds for any $k$.
+\subsection*{(d)}
+By taking limits of $k$ to infinity of the inequality we have proved in part (c) we can get $$\limsup_{k\to \infty}||\boldsymbol{x}_k-\boldsymbol{x}^*||\leq\frac{tE}{1-q}$$ because $q<1$ and $||\boldsymbol{x}_0-\boldsymbol{x}^*||$ is finite. Then by $(mt)^2\geq0$ we know $4-4mt\leq4-4mt+m^2t^2$, or equivalently $2\sqrt{1-mt}\leq2-mt$. So $2q\leq2-mt$, $\frac{t}{1-q}\leq\frac{2}{m}$. So 
+$$\limsup_{k\to \infty}||\boldsymbol{x}_k-\boldsymbol{x}^*||\leq\frac{tE}{1-q}\leq\frac{2E}{m}$$
+\end{document}
