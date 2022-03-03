@@ -1,0 +1,83 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage{fullpage}
+\usepackage[top=2cm, bottom=4.5cm, left=2.5cm, right=2.5cm]{geometry}
+\usepackage{amsmath,amsthm,amsfonts,amssymb,amscd}
+\usepackage{lastpage}
+\usepackage{enumerate}
+\usepackage{fancyhdr}
+\usepackage{mathrsfs}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{hyperref}
+\usepackage{mathtools}
+\usepackage{xfrac}
+
+
+\hypersetup{%
+  colorlinks=true,
+  linkcolor=blue,
+  linkbordercolor={0 0 1}
+}
+\linespread{1.1}
+ 
+\renewcommand\lstlistingname{Algorithm}
+\renewcommand\lstlistlistingname{Algorithms}
+\def\lstlistingautorefname{Alg.}
+
+
+\lstdefinestyle{Python}{
+    language        = Python,
+    frame           = lines, 
+    basicstyle      = \footnotesize,
+    keywordstyle    = \color{blue},
+    stringstyle     = \color{green},
+    commentstyle    = \color{red}\ttfamily
+}
+
+\setlength{\parindent}{0.0in}
+\setlength{\parskip}{0.05in}
+
+% Edit these as appropriate
+\newcommand\course{DSIP}
+\newcommand\hwnumber{1}                  % <-- homework number
+\newcommand\NetIDa{SUN Yilin}           % <-- NetID of person #1
+\newcommand\NetIDb{520030910361}           % <-- NetID of person #2 (Comment this line out for problem sets)
+
+\pagestyle{fancyplain}
+\headheight 35pt
+\lhead{\NetIDa}
+\lhead{\NetIDa\\\NetIDb}                 % <-- Comment this line out for problem sets (make sure you are person #1)
+\chead{\textbf{\Large Programming \hwnumber}}
+\rhead{\course \\ \today}
+\lfoot{}
+\cfoot{}
+\rfoot{\small\thepage}
+\headsep 1.5em
+
+\begin{document}
+
+\section{}
+By generating a PSF matrix and doing matrix-level convolution we can get the matrix of the blurred image. However when we are trying to 
+show the blurred image we must notice that the built-in function of MATLAB does not support float not in the interval
+$[0,1]$, i.e. it treats any float larger than 1 as pure white pixel. 
+\\
+Our original matrix is a uint8 matrix with its elements in $[0,255]$, whose data type becomes float after doing
+convolution with PSF matrix. If directly output without normalization we can only get a picture which is mostly white.
+\section{}
+When adding white gaussian noise to the blurred image, we must note that the $awgn$ function requires us to set a parameter which is 
+$'measured'$.  When adding this parameter, the function will automatically caluculate the 
+power of a given signal and add noise accordingly.\\
+After we add noise with different SNR, we can directly see their difference.
+\section{}
+\subsection{Direct deconvolution}
+Firstly we do deconvolution directly without knowing that there is gaussian noise in our picture,
+and it turns out that we get nothing as shown in the pictures attached below. This tells us that 
+gaussian noise, however slight, actually violates the process of deconvolution. 
+\subsection{Wiener's Method}
+Then we use Wiener's Method which minimizes the mean-square of estimated error. To do this, we must know the SNR(or NSR if you want) in advance.
+And it turns out Wiener's Method works well under different SNRs.
+\subsection{Lucy-Richardson's Method}
+The links provided by teacher also recommends a Lucy-Richardson's Method. The advantage of this method is that it can do deconvolution without knowing the SNR.
+The drawback is that it works worse when the SNR is decreasing. 
+\end{document}
