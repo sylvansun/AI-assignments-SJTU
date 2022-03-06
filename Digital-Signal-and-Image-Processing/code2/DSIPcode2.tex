@@ -1,0 +1,87 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage{fullpage}
+\usepackage[top=2cm, bottom=4.5cm, left=2.5cm, right=2.5cm]{geometry}
+\usepackage{amsmath,amsthm,amsfonts,amssymb,amscd}
+\usepackage{lastpage}
+\usepackage{enumerate}
+\usepackage{fancyhdr}
+\usepackage{mathrsfs}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{hyperref}
+\usepackage{mathtools}
+\usepackage{xfrac}
+
+
+\hypersetup{%
+  colorlinks=true,
+  linkcolor=blue,
+  linkbordercolor={0 0 1}
+}
+\linespread{1.1}
+ 
+\renewcommand\lstlistingname{Algorithm}
+\renewcommand\lstlistlistingname{Algorithms}
+\def\lstlistingautorefname{Alg.}
+
+
+\lstdefinestyle{Python}{
+    language        = Python,
+    frame           = lines, 
+    basicstyle      = \footnotesize,
+    keywordstyle    = \color{blue},
+    stringstyle     = \color{green},
+    commentstyle    = \color{red}\ttfamily
+}
+
+\setlength{\parindent}{0.0in}
+\setlength{\parskip}{0.05in}
+
+% Edit these as appropriate
+\newcommand\course{DSIP}
+\newcommand\hwnumber{2}                  % <-- homework number
+\newcommand\NetIDa{SUN Yilin}           % <-- NetID of person #1
+\newcommand\NetIDb{520030910361}           % <-- NetID of person #2 (Comment this line out for problem sets)
+
+\pagestyle{fancyplain}
+\headheight 35pt
+\lhead{\NetIDa}
+\lhead{\NetIDa\\\NetIDb}                 % <-- Comment this line out for problem sets (make sure you are person #1)
+\chead{\textbf{\Large Programming \hwnumber}}
+\rhead{\course \\ \today}
+\lfoot{}
+\cfoot{}
+\rfoot{\small\thepage}
+\headsep 1.5em
+
+\begin{document}
+
+\section{}
+In this problem we set our sampling frequency as $f=100$ and our sampling interval is hence $T=1/100$. We set up two arrays to represent our original signal and sampling signal respectively. Then by a simple element-wise multiplication we get our sampled signal. We plot the sampled signal in time domain and also show its features in frequency domain.\\
+As we can see from the result, our sampled signal is exactly the original signal if we set sampling points properly, which means that we can get all information about the original signal in an ideal state.
+\section{}
+To do this we only need to left(or right if you want) shift our original signal by one bit in our array. Now after sampling we miss the shifted signal totally and get nothing. This tell us that most of the cases we won't get anything if we sample off-grid signals without some pretreatments.
+\section{}
+We set proper parameters for the Butterworth filter and get a filtered signal. Now we can see even though our signal is still shifted, we can actually do a meaningful sampling. As shown in lecture notes the filtered signal show be a linear combination of $sinc$ functions, so I enlarged the plotted function and see that the output does take the form of $sinc$ functions(though it might not be clearly seen in a picture with small size).
+\section{Formulas for these problems}
+In this problem, our signal to be sampled, the rectangle window, can be expressed as $x(t)=\sum_{k=1}^{10}\delta(t-k)$. Let $T$ be our sampling interval, i.e. the multiplicative inverse of sampling frequency $f$, Then the sampling signal can be expressed as $S(t)=\sum_{l=1}^{1000}\delta(t-lT)$.\\
+Now we can show the formulas for the problems.
+\subsection{}
+The signal after sample is simply $x(t)S(t)$.\\
+$x(t)S(t)=\sum_{k=1}^{10}\delta(t-k)\sum_{l=1}^{1000}\delta(t-lT)=\sum_{k=1}^{10}\sum_{l=1}^{1000}\delta(t-k)\delta(t-lT)=\sum_{k=1}^{10}\sum_{l=1}^{1000}\delta(t-k)\delta(k-lT)=\sum_{k=1}^{10}\delta(t-k)=x(t)$.
+\subsection{}
+The signal after a shift operation is $x'(t)=\sum_{k=1}^{10}\delta(t-k+\tau)$ where $\tau=T/2$.\\
+$x'(t)S(t)=\sum_{k=1}^{10}\delta(t-k+\tau)\sum_{l=1}^{1000}\delta(t-lT)=\sum_{k=1}^{10}\sum_{l=1}^{1000}\delta(t-k+\tau)\delta(t-lT)=\sum_{k=1}^{10}\sum_{l=1}^{1000}\delta(t-k+\tau)\delta(k-\tau-lT)=0$.
+\subsection{}
+Here the Fourier Transform of $x'(t)$ is $\mathcal{F}(x'(t))=\sum_{k=1}^{10}exp(-j\omega(k+\tau))$. So by low-pass filtering, our signal becomes 
+\begin{align}
+&\quad\int_{-\omega_0}^{\omega_0}\sum_{k=1}^{10}exp(-j\omega(k+\tau))exp(j\omega nT)d\omega\\
+&=\int_{-\omega_0}^{\omega_0}\sum_{k=1}^{10}exp(-j\omega(k+\tau-nT))d\omega\\
+&=\sum_{k=1}^{10}\frac{1}{-j(k+\tau-nT)}\int_{-\omega_0}^{\omega_0}dexp(-j\omega(\tau+k-nT))\\
+&=\sum_{k=1}^{10}\frac{exp(-j\omega_0(\tau+k-nT))-exp(j\omega_0(\tau+k-nT))}{-j(\tau-nT)}\\
+&=\sum_{k=1}^{10}\frac{sin(\omega_0(\tau+k-nT))}{\tau+k-nT}\\
+&=\sum_{k=1}^{10}\omega_0sinc(\omega_0(\tau+k-nT))
+\end{align}
+And this is consistent with our results above.
+\end{document}
