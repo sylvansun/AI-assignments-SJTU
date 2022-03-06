@@ -1,0 +1,89 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage{fullpage}
+\usepackage[top=2cm, bottom=4.5cm, left=2.5cm, right=2.5cm]{geometry}
+\usepackage{amsmath,amsthm,amsfonts,amssymb,amscd}
+\usepackage{lastpage}
+\usepackage{enumerate}
+\usepackage{fancyhdr}
+\usepackage{mathrsfs}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{hyperref}
+\usepackage{mathtools}
+\usepackage{xfrac}
+
+\hypersetup{%
+  colorlinks=true,
+  linkcolor=blue,
+  linkbordercolor={0 0 1}
+}
+\linespread{1.1}
+ 
+\renewcommand\lstlistingname{Algorithm}
+\renewcommand\lstlistlistingname{Algorithms}
+\def\lstlistingautorefname{Alg.}
+
+\lstdefinestyle{Python}{
+    language        = Python,
+    frame           = lines, 
+    basicstyle      = \footnotesize,
+    keywordstyle    = \color{blue},
+    stringstyle     = \color{green},
+    commentstyle    = \color{red}\ttfamily
+}
+
+\setlength{\parindent}{0.0in}
+\setlength{\parskip}{0.05in}
+
+% Edit these as appropriate
+\newcommand\course{Algorithms}
+\newcommand\hwnumber{1}                  % <-- homework number
+\newcommand\NetIDa{SUN Yilin}           % <-- NetID of person #1
+\newcommand\NetIDb{520030910361}           % <-- NetID of person #2 (Comment this line out for problem sets)
+
+\pagestyle{fancyplain}
+\headheight 35pt
+\lhead{\NetIDa}
+\lhead{\NetIDa\\\NetIDb}                 % <-- Comment this line out for problem sets (make sure you are person #1)
+\chead{\textbf{\Large Homework \hwnumber}}
+\rhead{\course \\ \today}
+\lfoot{}
+\cfoot{}
+\rfoot{\small\thepage}
+\headsep 1.5em
+
+\begin{document}
+
+\section{}
+\begin{align}
+    T(n)&=aT(\frac{n}{b})+n^d\log^wn\\
+    &=a(aT(\frac{n}{b^2})+(\frac{n}{b})^d\log^w(\frac{n}{b}))+n^d\log^wn\\
+    &=a^2T(\frac{n}{b^2})+n^d\frac{a}{b^d}\log^w(\frac{n}{b})+n^d\log^wn\\
+    &=a^3T(\frac{n}{b^3})+n^d((\frac{a}{b^d})^2\log^w\frac{n}{b^2}+\frac{a}{b^d}\log^w(\frac{n}{b})+\log^wn)\\
+    &=\dots\\
+    &=a^{\log_bn}T(1)+n^d\sum_{i=0}^{(\log_bn)-1}(\frac{a}{b^d})^i\log^w{\frac{n}{b^i}}
+\end{align}
+Since $T(n)=1$ for $n<b$, $T(1)=1$. So 
+\begin{align}
+    T(n)&=n^{\log_ba}+n^d\sum_{i=0}^{(\log_bn)-1}(\frac{a}{b^d})^i\log^w{\frac{n}{b^i}}
+\end{align}
+And since $w\geq0$, $b>1$, it is obvious that $\log^w\frac{n}{b^i}\leq\log^wn$. So \\
+\begin{align}
+    T(n)&\leq n^{\log_ba}+n^d\log^wn\sum_{i=0}^{(\log_bn)-1}(\frac{a}{b^d})^i
+\end{align}
+If $a<b^d$, then $\sum_{i=0}^{\log_bn-1}(\frac{a}{b^d})^i=O(1)$, so
+\begin{align}
+    T(n)&\leq n^{\log_ba}+n^d\log^wnO(1)\\
+    T(n)&\leq n^{\log_ba}+O(n^d\log^wn)\\
+    T(n)&=O(n^d\log^wn)
+\end{align}
+If $a=b^d$, then $\sum_{i=0}^{\log_bn-1}(\frac{a}{b^d})^i=\log_bn$, so
+\begin{align}
+    T(n)&\leq n^d+n^d\log^wn\log_bn\\
+    T(n)&\leq n^d+n^d\log^wn\frac{\log n}{\log b}\\
+    T(n)&\leq n^d+n^d\log^{w+1}n/\log b\\
+    T(n)&=O(n^d\log^{w+1}n)
+\end{align}
+If $a>b^d$, then 
+\end{document}
