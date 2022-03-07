@@ -58,6 +58,7 @@
 \begin{document}
 
 \section{}
+Without loss of generality, assume $n=b^{2k}$ for some $k\in\mathbb{N}$, then 
 \begin{align}
     T(n)&=aT(\frac{n}{b})+n^d\log^wn\\
     &=a(aT(\frac{n}{b^2})+(\frac{n}{b})^d\log^w(\frac{n}{b}))+n^d\log^wn\\
@@ -87,11 +88,23 @@ If $a=b^d$, then $\sum_{i=0}^{\log_bn-1}(\frac{a}{b^d})^i=\log_bn$, so
     T(n)&\leq n^d+n^d\log^{w+1}n/\log b\\
     T(n)&=O(n^d\log^{w+1}n)
 \end{align}
-If $a>b^d$, firtsly $\exists k, 0<k\leq \log_bn$. Then 
+If $a>b^d$, note that by our assumption that $n=b^{2k}$ for some $k\in\mathbb{N}$, $\log_{b}\sqrt{n}$ is an integer. Then 
 \begin{align}
-    T(n)&=a^{\log_bn}+n^d\sum_{i=0}^{(\log_bn)-1}(\frac{a}{b^d})^i\log^w{\frac{n}{b^i}}
+    \sum_{i=0}^{(\log_bn)-1}(\frac{a}{b^d})^i\log^w{\frac{n}{b^i}}&=\sum_{i=0}^{\log_{b}\sqrt{n}-1}(\frac{a}{b^d})^i\log^w\frac{n}{b^i}+\sum_{i=\log_{b}\sqrt{n}}^{\log_{b}n-1}(\frac{a}{b^d})^i\log^w\frac{n}{b^i}\\
+    &\leq \sum_{i=0}^{\log_{b}\sqrt{n}-1}(\frac{a}{b^d})^i\log^wn+\sum_{i=\log_{b}\sqrt{n}}^{\log_{b}n-1}(\frac{a}{b^d})^i\log^w\sqrt{n}\\
+    &\leq O((\frac{a}{b^d})^{\log_b{\sqrt{n}}})\log^wn+O((\frac{a}{b^d})^{\log_b{\sqrt{n}}}\log_b\sqrt{n})\log^w\sqrt{n} \\
+    &\leq O(\frac{\sqrt{n}^{\log_ba}}{\sqrt{n}^{d}})\log^wn+O(\frac{\sqrt{n}^{\log_ba}}{\sqrt{n}^{d}}\log_b\sqrt{n})\log^w\sqrt{n}
 \end{align}
-
+So
+\begin{align}
+    T(n)&\leq n^{\log_ba}+n^d\left[O(\frac{\sqrt{n}^{\log_ba}}{\sqrt{n}^{d}})\log^wn+O(\frac{\sqrt{n}^{\log_ba}}{\sqrt{n}^{d}}\log_b\sqrt{n})\log^w\sqrt{n}\right]\\
+    &\leq n^{\log_ba}+O(n^{\frac{\log_ba+d}{2}})\left(\log^wn+\log_b\sqrt{n}\log^w\sqrt{n}\right)
+\end{align}
+Since $a>b^d$
+\begin{align}
+    T(n)&\leq n^{\log_ba} \\
+    T(n)&=O(n^{\log_ba})
+\end{align}
 \section{}
 \subsection{Algorithm Description}
 \begin{algorithm}
@@ -131,4 +144,8 @@ So
     T(n)&=O(n)+O(n\log_{\frac{3}{2}}n)\\
     T(n)&=O(n\log n)
 \end{align}
+
+\section{}
+
 \end{document}
+
