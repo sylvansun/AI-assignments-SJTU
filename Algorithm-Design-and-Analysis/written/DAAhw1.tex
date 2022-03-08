@@ -105,7 +105,7 @@ Since $a>b^d$
     T(n)&\leq n^{\log_ba} \\
     T(n)&=O(n^{\log_ba})
 \end{align}
-\newpage
+
 \section{}
 \subsection{Algorithm Description}
 \begin{algorithm}
@@ -151,14 +151,14 @@ In this problem our assumption is that we already have a \textbf{sort} function 
 \subsection{}
 Basically the idea is that we sort the two sets together with $O(n\log n)$ time and scan the result once with $O(n)$ time to get the answer. See the algorithm below for more detail.
 \begin{algorithm}
-    \caption{Count Pairs}\label{alg:count}
+    \caption{Count Pairs(One Dimension)}\label{alg:count1d}
     \begin{algorithmic}[1]
     \Procedure{Count Pairs}{$A,B$}:\Comment{A,B are sets where ordering relation is well defined}
     \State $\boldsymbol{c}\gets sort(A\cup B)$\Comment{Sort two sets together and save the elements in an array}
     \State $\hat{b}\gets |B|$\Comment{Can get $|B|$ from the sorting subroutine}
     \State $ans\gets 0$\Comment{Initialization of the result}
     \While{$\boldsymbol{c} \enspace is\enspace  not\enspace  empty$}
-    \State $a\gets\boldsymbol{c}.pop\_head$
+    \State $a\gets\boldsymbol{c}.pop\_front$
     \If{$a\in A$} 
     \State $ans\gets ans+\hat{b}$
     \EndIf
@@ -172,8 +172,36 @@ Basically the idea is that we sort the two sets together with $O(n\log n)$ time 
 \end{algorithm}\\
 The correctness of this algorithm lies in that after sorting we can count the number of pairs for each element in $A$ by scanning the entire array only once. Since the sort is $O(n\log n)$ and the scanning is $O(n)$, the total time complexity is $O(n\log n)$
 \subsection{}
-
+\begin{algorithm}
+    \caption{Count Pairs(Two Dimension)}\label{alg:count2d}
+    \begin{algorithmic}[1]
+    \Procedure{Count Pairs}{$S$}:\Comment{In this case $S=A\cup B$ contain elements with dim=2}
+    \State Sort $S$ by descending order of one of its coordinates denoted by $x$. Denote the other coordinate by $y$.
+    \If{$S\cap A=\emptyset\vee S\cap B=\emptyset$} \textbf{return} 0\Comment{No pairs inside $S$}
+    \EndIf
+    \State find $t$ such that half of the points in $S$ is with coordinates $x<t$ 
+    \State compute $S_{small}=\{(x_i,y_j)|x_i\leq t\}$ and $S_{large}=\{(x_i,y_j)|x_i> t\}$  
+    \State $ans\gets $Count Pairs($S_{large}$)+Count Pairs($S_{small}$)\Comment{Recursion process}
+    \State compute $A'=\{y|(x,y)\in A\wedge (x,y)\in S_{large}\}$ and $B'=\{y|(x,y)\in B\wedge (x,y)\in S_{small}\}$ 
+    \State $ans\gets ans+$Count Pairs(One Dimension)($A',B'$)\Comment{reduce to dim=1}
+    \State \textbf{return} $ans$
+    \EndProcedure
+    \end{algorithmic}
+\end{algorithm}
+At line 6 we use a Divide and Couquer approach and at lint 8 we use the algorithm defined in the previous problem. Then the time complexity can be expressed as 
+\begin{align}
+    T(n)&=2T(\frac{n}{2})+O(n\log n)
+\end{align}
+This is exactly the case where $a=b=2,d=w=1$ in the generalized Master Theorem proved in problem 1 in this assignment. So we know 
+\begin{align}
+    T(n)&=O(n\log^2n)
+\end{align}
+Which satisfies that 
+\begin{align}
+    T(n)&=o(n^{1.1})
+\end{align}
 \subsection{}
+What to write here...
 \section{}
 \subsection{}
 Since $x$ is the median of $\frac{n}{3}$ numbers and the numbers are distinctive to each other, there are exactly $\frac{n}{6}$ numbers smaller than $x$ and exactly $\frac{n}{6}$ numbers larger than $x$ for the same reason. Because those numbers are also medians of each group, exactly another number is smaller(larger) than each of them in their groups respectively. So totally there are $\frac{n}{6}*2=\frac{n}{3}$ numbers in $a$ smaller than $x$ and $\frac{n}{3}$ numbers in $a$ larger than $x$ as well. 
