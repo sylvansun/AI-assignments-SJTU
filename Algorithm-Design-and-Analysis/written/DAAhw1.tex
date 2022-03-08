@@ -105,7 +105,7 @@ Since $a>b^d$
     T(n)&\leq n^{\log_ba} \\
     T(n)&=O(n^{\log_ba})
 \end{align}
-
+\newpage
 \section{}
 \subsection{Algorithm Description}
 \begin{algorithm}
@@ -170,7 +170,11 @@ Basically the idea is that we sort the two sets together with $O(n\log n)$ time 
     \EndProcedure
     \end{algorithmic}
 \end{algorithm}\\
-The correctness of this algorithm lies in that after sorting we can count the number of pairs for each element in $A$ by scanning the entire array only once. Since the sort is $O(n\log n)$ and the scanning is $O(n)$, the total time complexity is $O(n\log n)$
+The correctness of this algorithm lies in that after sorting we can count the number of pairs for each element in $A$ by scanning the entire array only once. Since the sort is $O(n\log n)$ and the scanning is $O(n)$, the total time complexity is $O(n\log n)$\\
+\\
+\\
+\\
+\\
 \subsection{}
 \begin{algorithm}
     \caption{Count Pairs(Two Dimension)}\label{alg:count2d}
@@ -200,8 +204,41 @@ Which satisfies that
 \begin{align}
     T(n)&=o(n^{1.1})
 \end{align}
+
+\newpage
 \subsection{}
-What to write here...
+The idea is that when treating cases with dimension $d+1$, we apply the Divide and Conqure approach and reduces it to the case with dimension $d$.
+\begin{algorithm}
+    \caption{CountPairs}\label{alg:countfinal}
+    \begin{algorithmic}[1]
+    \Procedure{CountPairs}{$S,d$}:\Comment{$S=A\cup B$ and $d$ is the dimension}
+    \State Sort $S$ by descending order of one of its coordinates denoted by $x$.
+    \If{$S\cap A=\emptyset\vee S\cap B=\emptyset$} \textbf{return} 0\Comment{No pairs inside $S$}
+    \EndIf
+    \State find $t$ such that half of the points in $S$ is with coordinates $x<t$ 
+    \State compute $S_{small}=\{\boldsymbol{a}=(x_i,a_2,a_3,\dots,a_d)\in S|x_i\leq t\}$ 
+    \State compure $S_{large}=\{\boldsymbol{a}=(x_i,a_2,a_3,\dots,a_d)\in S|x_i> t\}$  
+    \State $ans\gets $CountPairs($S_{large},d$)+Count Pairs($S_{small},d$)\Comment{Recursion process}
+    \State compute $A'=\{(a_2,a_3,\dots,a_n)|\boldsymbol{a}\in A\wedge \boldsymbol{a}\in S_{large}\}$ 
+    \State compute $B'=\{(a_2,a_3,\dots,a_n)|\boldsymbol{a}\in B\wedge \boldsymbol{a}\in S_{small}\}$\Comment{generate sets with dim=$d-1$}
+    \State $ans\gets ans+$CountPairs($A'\cup B',d-1$)\Comment{reduce to dim=$d-1$}
+    \State \textbf{return} $ans$
+    \EndProcedure
+    \end{algorithmic}
+\end{algorithm}\\
+We assume the running time is $O(n\log^dn)$ for the generalized case and prove by induction.\\
+Clearly with $d=1,2$ that equation holds by our proof above. Assume that equation holds when $d=k$, i.e. the running time is $O(n\log^kn)$ when $d=k$. Now consider the case where $d=k+1$. \\
+At line 7 we divide the original problem to two subproblem with same $d$ but a smaller size, at line 10 the subproblem with dimension $d-1=k$ is $O(n\log^kn)$ by our assumption step. So at dimension $d$ we have 
+\begin{align}
+    T(n)&=2T(\frac{n}{2})+O(n\log^kn)\\
+\end{align}
+And here we need to use the generalized Master Theorem again. Likewise, by generalized Master Theorem we can directly get
+\begin{align}
+    T(n)&=O(n\log^{k+1}n)
+\end{align}
+So that equation still holds with $d=k+1$. So our assumption is true and the running time is indeed $O(n\log^dn)$
+
+\newpage
 \section{}
 \subsection{}
 Since $x$ is the median of $\frac{n}{3}$ numbers and the numbers are distinctive to each other, there are exactly $\frac{n}{6}$ numbers smaller than $x$ and exactly $\frac{n}{6}$ numbers larger than $x$ for the same reason. Because those numbers are also medians of each group, exactly another number is smaller(larger) than each of them in their groups respectively. So totally there are $\frac{n}{6}*2=\frac{n}{3}$ numbers in $a$ smaller than $x$ and $\frac{n}{3}$ numbers in $a$ larger than $x$ as well. 
@@ -248,6 +285,7 @@ Then we can define the actual algorithm building on that.
     \EndProcedure
     \end{algorithmic}
 \end{algorithm}
+\newpage
 \subsubsection{Time Complexity Analysis}
 Suppose we line up elements in groups of $m$, $m\in\mathbb{N},m\geq 2$. Then by our analysis in part 4.1 we can see there are $\frac{n}{m}$ groups and hence $\frac{n}{2m}$ groups contain $\frac{m+1}{2}$ elements larger(smaller) than the median we calculated. Then after each iteration we can discard at least $n-\frac{n}{2m}\frac{m+1}{2}$ elements and reduce our problem to a same problem with scale $\frac{3m-1}{4m}n$. Hence the Time Complexity can be expressed as 
 \begin{align}
@@ -283,6 +321,7 @@ $$T(n)=\begin{cases}
     O(n), m\geq 4\\
     O(n\log n), m\leq 3
 \end{cases}$$
+\newpage
 \section{}
 \subsection*{Comments from a student's perspective}
 It takes 18 hours perhaps(Including discussion and thinking). But I do not remember the exact time I spent on discussion. Actually I discussed this assignment long after I have finished this pdf file.\\
