@@ -105,6 +105,7 @@ Since $a>b^d$
     T(n)&\leq n^{\log_ba} \\
     T(n)&=O(n^{\log_ba})
 \end{align}
+\newpage
 \section{}
 \subsection{Algorithm Description}
 \begin{algorithm}
@@ -144,8 +145,35 @@ So
     T(n)&=O(n\log n)
 \end{align}
 
-\section{}
 
+\section{}
+In this problem our assumption is that we already have a \textbf{sort} function which can sort any given set on which an ordering relation is well defined in $O(n\log n)$ time. Also withour loss of generality assume that this function sorts the elements in a \underline{descending} order.
+\subsection{}
+Basically the idea is that we sort the two sets together with $O(n\log n)$ time and scan the result once with $O(n)$ time to get the answer. See the algorithm below for more detail.
+\begin{algorithm}
+    \caption{Count Pairs}\label{alg:count}
+    \begin{algorithmic}[1]
+    \Procedure{Count Pairs}{$A,B$}:\Comment{A,B are sets where ordering relation is well defined}
+    \State $\boldsymbol{c}\gets sort(A\cup B)$\Comment{Sort two sets together and save the elements in an array}
+    \State $\hat{b}\gets |B|$\Comment{Can get $|B|$ from the sorting subroutine}
+    \State $ans\gets 0$\Comment{Initialization of the result}
+    \While{$\boldsymbol{c} \enspace is\enspace  not\enspace  empty$}
+    \State $a\gets\boldsymbol{c}.pop\_head$
+    \If{$a\in A$} 
+    \State $ans\gets ans+\hat{b}$
+    \EndIf
+    \If{$a\in B$} 
+    \State $\hat{b}\gets \hat{b}-1$
+    \EndIf
+    \EndWhile
+    \State \textbf{return} $ans$
+    \EndProcedure
+    \end{algorithmic}
+\end{algorithm}\\
+The correctness of this algorithm lies in that after sorting we can count the number of pairs for each element in $A$ by scanning the entire array only once. Since the sort is $O(n\log n)$ and the scanning is $O(n)$, the total time complexity is $O(n\log n)$
+\subsection{}
+
+\subsection{}
 \section{}
 \subsection{}
 Since $x$ is the median of $\frac{n}{3}$ numbers and the numbers are distinctive to each other, there are exactly $\frac{n}{6}$ numbers smaller than $x$ and exactly $\frac{n}{6}$ numbers larger than $x$ for the same reason. Because those numbers are also medians of each group, exactly another number is smaller(larger) than each of them in their groups respectively. So totally there are $\frac{n}{6}*2=\frac{n}{3}$ numbers in $a$ smaller than $x$ and $\frac{n}{3}$ numbers in $a$ larger than $x$ as well. 
@@ -163,7 +191,7 @@ Firstly we define an algorithm which can generate all the medians we want.
     \State $\boldsymbol{b}\text{.push\_back}(x)$
     \State $i\gets i+m$
     \EndWhile
-    \State \textbf{return} $\boldsymbol{b}$\Comment{b is the array containing all the Medians we want}
+    \State \textbf{return} $\boldsymbol{b}$\Comment{$\boldsymbol{b}$ is the array containing all the Medians we want}
     \EndProcedure
     \end{algorithmic}
 \end{algorithm}\\
@@ -176,7 +204,7 @@ Then we can define the actual algorithm building on that.
     \State {\textbf{return} {a}[n]}
     \EndIf
     \State $\boldsymbol{b}\gets Generate Medians(\boldsymbol{a},m)$
-    \State $x\gets MedianofMedians(\boldsymbol{b},m,\frac{m}{2n})$\Comment{Find the median of array $\boldsymbol{b}$}
+    \State $x\gets MedianofMedians(\boldsymbol{b},m,\frac{m}{2n})$\Comment{x is the median of array $\boldsymbol{b}$}
     \State $l\gets \boldsymbol{a}\text{.length}, \quad i\gets 1$
     \While{$i\leq l$}
     \If{$\boldsymbol{a}[i]\leq x$} $\boldsymbol{c}.\text{push\_back}(\boldsymbol{a}[i])$
@@ -228,8 +256,14 @@ $$T(n)=\begin{cases}
     O(n\log n), m\leq 3
 \end{cases}$$
 \section{}
+\subsection*{Comments from a student's perspective}
+It takes 18 hours perhaps(Including discussion and thinking). But I do not remember the exact time I spent on discussion. Actually I discussed this assignment long after I have finished this pdf file.\\
+As for the difficuities of each questions, I would say that Q1 and Q2 get a $3$ because they only involve the ideas that have been thoroughly discussed in class plus some tricks from Mathematical Analysis.\\
+Q3 definitily gets a 5 because it is the most diffcult one in this assignment. Actually most of the time it took me to finish this assignment is spent on this one.\\
+Q4 could have got a 5 but my overhearing the idea from the other class reduced its fun. So my recommendation is a 4 because this algorithm is intrinsic brilliant. My suggestion is that our professor also teach it in class.
 \subsection*{Acknowledgements}
-When proving the case where $a>b^d$ of problem 1, I got the idea of dividing the whole sequence into two parts and analyze them separatly from Liyuan MAO. He illustrate the basic ideas for me and I then wrote a formal proof myself.
+When proving the case where $a>b^d$ of problem 1, I got the idea of dividing the whole sequence into two parts and analyze them separatly from Liyuan MAO. He illustrate the basic ideas for me and I then wrote a formal proof myself.\\
+As for the algorithm MedianofMedians, some of my classmates from another class have learnt this algorithm. When I discuss this problem with them they taught me the idea of lining up the elements in group of five and I then thought this algorithm might be different with different group size. I then formalized the algorithm(their lecture slides did not illustrate the formal version) and analyzed its complexity with different group size.
 
 \end{document}
 
