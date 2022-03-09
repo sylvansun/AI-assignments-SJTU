@@ -124,8 +124,28 @@ For any $p,q\in[0,1]$ satisfying $p\geq q$, $H$ is a subgraph of $G$, so $\omega
 
 \newpage
 \section{Total Variation Distance is Non-Increasing}
+Let $X_0\sim\mu_0$ and $Y_0\sim\pi$. For any $t\geq 0$, we can couple the distributions of random variables $X_t$ and $Y_t$ such that $Pr(X_t\neq Y_t)=\Delta(t)$. This coupling is feasible because we have proven, in problem 1, that an optimal coupling exists.\\
+Then we can construct a coupling of the distributions of  $X_{t+1}$ and $Y_{t+1}$ with this coupling. We define 
+$$\begin{cases}
+  X_{t+1}=Y_{t+1},\quad \text{if} \quad X_t=Y_t\\
+  X_{t+1}\sim\mu_{t+1}, Y_{t+1}\sim\pi \quad \text{if} \quad X_t\neq Y_t
+\end{cases}$$
+Then by the coupling lemma again we have 
+\begin{align}
+  \Delta(t+1)\leq Pr(X_{t+1}\neq Y_{t+1})
+\end{align}
+By our construction of coupling at $t$ and $t+1$ we have
+\begin{align}
+  &\quad\enspace  Pr(X_{t+1}\neq Y_{t+1})\\
+  &=Pr(X_{t+1}\neq Y_{t+1}|X_t=Y_t)Pr(X_t=Y_t)+Pr(X_{t+1}\neq Y_{t+1}|X_t\neq Y_t)Pr(X_t\neq Y_t)\\
+  &\leq Pr(X_t\neq Y_t)
+\end{align} 
+That inequality is true because all posibilities must be in $[0,1]$.\\
+So it follows That
+$$\Delta(t+1)\leq Pr(X_{t+1}\neq Y_{t+1})\leq Pr(X_t\neq Y_t)\leq\Delta(t),\forall t\geq 0$$
+And that is true for any $t\geq 0$ by induction. The induction process is actually how the Markov Chain $X_t$ and $Y_t$ forms. Since any step of this induction process is the same as our construction of coupling and proof above, we do not write it again.
 
-
+\newpage
 \section*{Acknowledgements}
 The inspiration of constructing the optimal coupling is from the lecture notes of a MIT course 6.896 Probability and Computation. Actually my construction is not entirely like its demonstration, but the core ideas are the same.\\
 In Problem 2 I actually learnt our teacher's lecture notes 5 from last year and then solved these questions. I think it will be extremely difficult to solve these questions without knowing the theorem about monotone coupling.
