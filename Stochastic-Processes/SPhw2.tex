@@ -1,0 +1,114 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage{fullpage}
+\usepackage[top=2cm, bottom=4.5cm, left=2.5cm, right=2.5cm]{geometry}
+\usepackage{amsmath,amsthm,amsfonts,amssymb,amscd}
+\usepackage{lastpage}
+\usepackage{enumerate}
+\usepackage{fancyhdr}
+\usepackage{mathrsfs}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{hyperref}
+\usepackage{mathtools}
+\usepackage{xfrac}
+
+
+\hypersetup{%
+  colorlinks=true,
+  linkcolor=blue,
+  linkbordercolor={0 0 1}
+}
+\linespread{1.1}
+ 
+\renewcommand\lstlistingname{Algorithm}
+\renewcommand\lstlistlistingname{Algorithms}
+\def\lstlistingautorefname{Alg.}
+
+
+\lstdefinestyle{Python}{
+    language        = Python,
+    frame           = lines, 
+    basicstyle      = \footnotesize,
+    keywordstyle    = \color{blue},
+    stringstyle     = \color{green},
+    commentstyle    = \color{red}\ttfamily
+}
+
+\setlength{\parindent}{0.0in}
+\setlength{\parskip}{0.05in}
+
+% Edit these as appropriate
+\newcommand\course{Stochastic Processes}
+\newcommand\hwnumber{2}                  % <-- homework number
+\newcommand\NetIDa{SUN Yilin}           % <-- NetID of person #1
+\newcommand\NetIDb{520030910361}           % <-- NetID of person #2 (Comment this line out for problem sets)
+
+\pagestyle{fancyplain}
+\headheight 35pt
+\lhead{\NetIDa}
+\lhead{\NetIDa\\\NetIDb}                 % <-- Comment this line out for problem sets (make sure you are person #1)
+\chead{\textbf{\Large Homework \hwnumber}}
+\rhead{\course \\ \today}
+\lfoot{}
+\cfoot{}
+\rfoot{\small\thepage}
+\headsep 1.5em
+
+\begin{document}
+
+\section{Optimal Coupling}
+\subsection{Basic Ideas}
+To reach the lower bound $D_{TV}(\mu,\nu)$, the intuition is that we maximize the terms where $X=Y$. Denote our optimal coupling by $\omega^*$, then $\forall (x,y)\in\Omega^2$ such that $x=y$, the maximum of $\omega^*(x,y)$ can only be $\min\{\mu(x),\nu(y)\}$. As we want to maximize these cases, we can directly set it as $\min\{\mu(x),\nu(y)\}$.\\
+Then we need a formula to define $\omega^*(x,y)$ where $x\neq y$. Here the intuition is that $\omega^*(x,y)$ should be some constant times $\max\{\mu(x)-\nu(x),0\}\cdot\max\{\nu(y)-\mu(y),0\}$. So up to here, I construct a coupling as follows:\\
+$$\omega^*(x,y)=\begin{cases}
+\min\{\mu(x),\nu(y)\},\quad x=y\\
+C\cdot\max\{\mu(x)-\nu(x),0\}\cdot\max\{\nu(y)-\mu(y),0\},\quad o.w.
+\end{cases}$$
+Now I will determine $C$ so that $\omega^*$ is indeed a valid coupling, and then show $Pr_{(X,Y)\sim\omega^*}(X\neq Y)$ is actually $D_{TV}(\mu,\nu)$.
+\subsection{Determine $C$ and proof of valid coupling}
+Define $A=\{x\in\Omega|\mu(x)\geq\nu(x)\}$. It follows that $\bar{A}=\{x\in\Omega|\mu(x)<\nu(x)\}$. We now calculate the marginal distribution of $X$ under $\omega^*$.\\
+\begin{align}
+  \forall x\in A,\quad \sum_{y\in\Omega}\omega^*(x,y)&=\sum_{y\in\Omega\wedge y=x}\omega^*(x,y)+\sum_{y\in\Omega\wedge y\neq x}\omega^*(x,y)\\
+  &=\min\{\mu(x),\nu(x)\}+\sum_{y\in\Omega\wedge y\neq x}\omega^*(x,y)\\
+  &=\nu(x)+C\max\{\mu(x)-\nu(y),0\}\sum_{y\in\Omega\wedge y\neq x}\max\{\nu(y)-\mu(y),0\}\\
+  &=\nu(x)+C(\mu(x)-\nu(x))\sum_{y\in\bar{A}}(\nu(y)-\mu(y))
+\end{align}
+Note that $\sum_{y\in\bar{A}}(\nu(y)-\mu(y))=D_{TV}(\mu,\nu)$ by our definition of $\bar{A}$, so by setting $C=1/D_{TV}(\mu,\nu)$ we can get 
+\begin{align}
+  \forall x\in A,\quad \sum_{y\in\Omega}\omega^*(x,y)&=\nu(x)+\mu(x)-\nu(x)\\
+  &=\mu(x)
+\end{align}
+We use the same $C$ and consider the cases where $x\in\bar{A}$. Similarly
+\begin{align}
+  \forall x\in \bar{A},\quad \sum_{y\in\Omega}\omega^*(x,y)&=\min\{\mu(x),\nu(x)\}+\sum_{y\in\Omega\wedge y\neq x}\omega^*(x,y)\\
+  &=\mu(x)+D_{TV}(\mu,\nu)\max\{\mu(x)-\nu(x),0\}\sum_{y}\max\{\nu(y)-\mu(y),0\}\\
+  &=\mu(x)+D_{TV}(\mu,\nu)\cdot 0\cdot\sum_{y}\max\{\nu(y)-\mu(y),0\}\\
+  &=\mu(x)
+\end{align}
+Now we have proved such a coupling satisfies that the marginal distribution of $X$ is indeed $\mu(x)$. The same argument works for $Y$ as well. So by setting $C=1/D_{TV}(\mu,\nu)$ we actually constructed 
+$$\omega^*(x,y)=\begin{cases}
+  \min\{\mu(x),\nu(y)\},\quad x=y\\
+  \frac{1}{D_{TV}(\mu,\nu)}\cdot\max\{\mu(x)-\nu(x),0\}\cdot\max\{\nu(y)-\mu(y),0\},\quad o.w.
+  \end{cases}$$
+Now we only need to show $Pr_{(X,Y)\sim\omega^*}(X\neq Y)$ is actually $D_{TV}(\mu,\nu)$.
+\subsection{Proof of optimal coupling}
+We show by calculating $Pr_{(X,Y)\sim\omega^*}(X=Y)$.\\
+\begin{align}
+  Pr_{(X,Y)\sim\omega^*}(X=Y)&=\sum_{x\in\Omega}\min\{\mu(x),\nu(x)\}\\
+  &=\sum_{x\in A}\nu(x)+\sum_{x\in\bar{A}}\mu(x)\\
+  &=\nu(A)+\mu(\bar{A})\\
+  &=\nu(A)+(1-\mu(A))\\
+  &=1-(\mu(A)-\nu(A))\\
+  &=1-D_{TV}(\mu,\nu)
+\end{align}
+So $Pr_{(X,Y)\sim\omega^*}(X\neq Y)=D_{TV}(\mu,\nu)$
+\newpage 
+
+\section{Stochastic Dominance}
+
+\section{Total Variation Distance is Non-Increasing}
+
+\section{Acknowledgements}
+The inspiration of constructing the optimal coupling is from the lecture notes of a MIT course 6.896 Probability and Computation. Actually my construction is not entirely like its demonstration, but the core ideas are the same.
+\end{document}
