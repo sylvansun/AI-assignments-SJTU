@@ -105,10 +105,28 @@ We show by calculating $Pr_{(X,Y)\sim\omega^*}(X=Y)$.\\
 So $Pr_{(X,Y)\sim\omega^*}(X\neq Y)=D_{TV}(\mu,\nu)$
 \newpage 
 
-\section{Stochastic Dominance}
 
+\section{Stochastic Dominance}
+\textbf{\underline{The idea of proof comes from our teacher's lecture notes in previous year.}}\\
+Following the idea of that lecture note, I will first prove the proposition about monotone coupling, because the other two questions are actually applications of this proposition.
+
+\subsection{Monotone Coupling}
+
+\subsection{Binomial Distribution}
+\textbf{Sufficiency:}\\
+If $p\geq q$, suppose $X\sim\text{Binom}(n,p)$, $Y\sim\text{Binom}(n,q)$. We define such a coupling $\omega$ of these two Binomial Distributions where we do $n$ trials and for these $n$ trials we independetly pick a real $r$ in $[0,1]$ uniformly at random and every trial is independent. Then let $X=x$ where $x$ is the number of these trials with $r\leq p$ and let $Y=y$ where $y$ is the number of these trials with $r\leq q$.\\
+By our definition we can see clearly $Pr_{(X,Y)\sim\omega}(X\geq Y)=1$. So there exists a monotone coupling of $\text{Binom}(n,p)$ and $\text{Binom}(n,q)$. By the proposition we have proven above, $\text{Binom}(n,p)\succeq\text{Binom}(n,q)$.\\
+\textbf{Necessity:}\\
+Prove by contradiction. If $p<q$, consider the case where $a=n$. $Pr(X\geq a)=Pr(X=n)=p^n<q^n=Pr(Y=n)=Pr(Y\geq a)$. This violates $\text{Binom}(n,p)\succeq\text{Binom}(n,q)$. So $p\geq q$.
+\subsection{Random Graph}
+Suppose $G\sim\mathcal{G}(n,p)$, $H\sim\mathcal{G}(n,q)$. Consider such a coupling $\omega$ of $\mathcal{G}(n,p)$ and $\mathcal{G}(n,q)$ where we generate $G$ and $H$ simultaneously. For each pair of vertices $\{i,j\}$ we independently pick a real $r$ in $[0,1]$ uniformly at random. Let $G$ have edge $\{i,j\}$ iff $r\leq p$ and let $H$ have edge $\{i,j\}$ iff $r\leq q$.\\ 
+For any $p,q\in[0,1]$ satisfying $p\geq q$, $H$ is a subgraph of $G$, so $\omega$ is a monotone coupling. So by the proposition we have proven $Pr_{G\sim\mathcal{G}(n,p)}(G\text{ is connected})\geq Pr_{H\sim\mathcal{G}(n,q)}(H\text{ is connected})$
+
+\newpage
 \section{Total Variation Distance is Non-Increasing}
 
-\section{Acknowledgements}
-The inspiration of constructing the optimal coupling is from the lecture notes of a MIT course 6.896 Probability and Computation. Actually my construction is not entirely like its demonstration, but the core ideas are the same.
+
+\section*{Acknowledgements}
+The inspiration of constructing the optimal coupling is from the lecture notes of a MIT course 6.896 Probability and Computation. Actually my construction is not entirely like its demonstration, but the core ideas are the same.\\
+In Problem 2 I actually learnt our teacher's lecture notes 5 from last year and then solved these questions. I think it will be extremely difficult to solve these questions without knowing the theorem about monotone coupling.
 \end{document}
