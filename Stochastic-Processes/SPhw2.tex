@@ -111,7 +111,17 @@ So $Pr_{(X,Y)\sim\omega^*}(X\neq Y)=D_{TV}(\mu,\nu)$
 Following the idea of that lecture note, I will first prove the proposition about monotone coupling, because the other two questions are actually applications of this proposition.
 
 \subsection{Monotone Coupling}
-
+\textbf{Sufficiency:}\\
+If a monotone coupling of $\mu$ and $\nu$ and exists, denoted by $\omega$. Then 
+\begin{align}
+  \forall a\in\Omega, Pr_{Y\sim\nu}(Y\geq a)&=Pr_{(X,Y)\sim\omega}(Y\geq a)\\
+  &=Pr_{(X,Y)\sim\omega}(X\geq Y\wedge Y\geq a)+Pr_{(X,Y)\sim\omega}(X < Y\wedge Y\geq a)\\
+  &=Pr_{(X,Y)\sim\omega}(X\geq Y\wedge Y\geq a)\\
+  &\leq Pr_{(X,Y)\sim\omega}(X\geq a)\\
+  &=Pr_{X\sim\mu}(X\geq a)
+\end{align}
+Hence $Pr_{X\sim\mu}(X\geq a)\geq Pr_{Y\sim\nu}(Y\geq a),\forall a\in\Omega$.\\
+\textbf{Necessity:}
 \subsection{Binomial Distribution}
 \textbf{Sufficiency:}\\
 If $p\geq q$, suppose $X\sim\text{Binom}(n,p)$, $Y\sim\text{Binom}(n,q)$. We define such a coupling $\omega$ of these two Binomial Distributions where we do $n$ trials and for these $n$ trials we independetly pick a real $r$ in $[0,1]$ uniformly at random and every trial is independent. Then let $X=x$ where $x$ is the number of these trials with $r\leq p$ and let $Y=y$ where $y$ is the number of these trials with $r\leq q$.\\
