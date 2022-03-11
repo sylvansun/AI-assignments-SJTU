@@ -287,16 +287,18 @@ Then we can define the actual algorithm building on that.
 \end{algorithm}
 \newpage
 \subsubsection{Time Complexity Analysis}
-Suppose we line up elements in groups of $m$, $m\in\mathbb{N},m\geq 2$. Then by our analysis in part 4.1 we can see there are $\frac{n}{m}$ groups and hence $\frac{n}{2m}$ groups contain $\frac{m+1}{2}$ elements larger(smaller) than the median we calculated. Then after each iteration we can discard at least $n-\frac{n}{2m}\frac{m+1}{2}$ elements and reduce our problem to a same problem with scale $\frac{3m-1}{4m}n$. Hence the Time Complexity can be expressed as 
-\begin{align}
-    T(n)&=T(\frac{1}{m}n)+T(\frac{3m-1}{4m}n)+\frac{n}{m}O(1)
-\end{align}
-If $m$ is not so large that the time of finding the medians of $m$ elements can not be treated as a constant, we can safely say 
-\begin{align}
-    T(n)&\leq T(\frac{1}{m}n)+T(\frac{3m-1}{4m}n)+c\frac{n}{m} \quad \text{for some c}
-\end{align}
+Suppose we line up elements in groups of $m$, $m\in\mathbb{N},m\geq 2$. Then by our analysis in part 4.1 we can see there are $\frac{n}{m}$ groups and hence $\frac{n}{2m}$ groups contain $\left[\frac{m+1}{2}\right]$ elements larger(smaller) than the median we calculated. Then after each iteration we can discard at least $n-\frac{n}{2m}\left[\frac{m+1}{2}\right]$ elements and reduce our problem to a same problem with scale $\frac{3m-1}{4m}n$ if $m$ is odd and $\frac{3n}{4}$ if $m$ is even. Hence the Time Complexity can be expressed as 
+$$T(n)=\begin{cases}
+    T(\frac{1}{m}n)+T(\frac{3m-1}{4m}n)+\frac{n}{m}O(1),\quad m \quad\text{is odd}\\
+    T(\frac{1}{m}n)+T(\frac{3n}{4})+\frac{n}{m}O(1),\quad m \quad \text{is even}
+\end{cases}$$
+If $m$ is not so large that the time of finding the medians of $m$ elements can not be treated as a constant, we can safely say for some $c>0$ large enough
+$$T(n)\leq \begin{cases}
+    T(\frac{1}{m}n)+T(\frac{3m-1}{4m}n)+c\frac{n}{m},\quad m \quad\text{is odd}\\
+    T(\frac{1}{m}n)+T(\frac{3n}{4})+c\frac{n}{m},\quad m \quad \text{is even}
+\end{cases}$$
 Now we discuss the Time Complexity with different values of $m$.\\
-If $m\geq 4$, then $\frac{1}{m}+\frac{3m-1}{4m}=\frac{3m+3}{4m}<1$. Assume $T(n)\leq\alpha n$ for some $\alpha>0$, it is easy to see that is true when $n=1$. Suppose that is true for $T(\frac{1}{m}n)$ and $T(\frac{3m-1}{4m}n)$, then 
+If $m\geq 5$ and $m$ is odd then $\frac{1}{m}+\frac{3m-1}{4m}=\frac{3m+3}{4m}<1$. Assume $T(n)\leq\alpha n$ for some $\alpha>0$, it is easy to see that is true when $n=1$. Suppose that is true for $T(\frac{1}{m}n)$ and $T(\frac{3m-1}{4m}n)$, then 
 \begin{align}
     T(n)&\leq \alpha\left(\frac{1}{m}+\frac{3m-1}{4m}\right)n+c\frac{n}{m}
 \end{align} 
@@ -304,22 +306,27 @@ With an $\alpha$ large enough
 \begin{align}
     T(n)&\leq \alpha n
 \end{align}
-So $T(n)=O(n)$ with $m\geq 4$ and $m$ not too large. \\
-If $m\leq 3$, then $\frac{1}{m}+\frac{3m-1}{4m}=\frac{3m+3}{4m}>1$. \\
+So $T(n)=O(n)$ with $m\geq 5$, $m$ is odd and $m$ not too large. \\
+A similar argument shows $T(n)=O(n)$ with $m\geq 5$ and $m$ is even. Actually when $m$ is even the inequality is simpler.\\
+Now we consider the cases where $m\leq 4$.\\
 Specifically, with $m=3$
 \begin{align}
     T(n)&=T(\frac{1}{3}n)+T(\frac{2}{3}n)+O(\frac{n}{3})
 \end{align}
 With analysis same as problem 2, we can say $T(n)=O(n\log n)$ with $m=3$. Which means that when $m$ is too small we cannot get an algorithm with speed of linearity.\\
+With $m=4$
+\begin{align}
+    T(n)&=T(\frac{1}{4}n)+T(\frac{3}{4}n)+O(\frac{n}{4})
+\end{align}
 With $m=2$
 \begin{align}
     T(n)&=T(\frac{1}{2}n)+T(\frac{5}{8}n)+O(\frac{n}{2})
 \end{align}
-Similarly we can get $T(n)=O(n\log_{\frac{8}{5}}n)=O(n\log n)$ where it is also not linearity.\\
+Similarly we can get $T(n)=O(n\log n)$ where it is also not linearity.\\
 To sum up, 
 $$T(n)=\begin{cases}
-    O(n), m\geq 4\\
-    O(n\log n), m\leq 3
+    O(n), m\geq 5\\
+    O(n\log n), m\leq 4
 \end{cases}$$
 \newpage
 \section{}
