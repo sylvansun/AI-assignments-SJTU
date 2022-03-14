@@ -9,21 +9,20 @@ struct edge {
 };//An edge with end and cost
 bool vis[max_ve];
 std::vector<edge> ver[max_ve];
-int result = 0;
+int v, e, s, t;
+
+void read_input();
+int BFS();
 
 int main()
 {
-	int v, e, s, t;
-	std::cin >> v >> e >> s >> t;
-	int src, dst, len;
-	for (int i = 1;i <= e;++i) {
-		std::cin >> src >> dst >> len;
-		edge tmp;
-		tmp.end = dst, tmp.cost = len;
-		ver[src].push_back(tmp);
-		tmp.end = src;
-		ver[dst].push_back(tmp);
-	}
+	read_input();
+	std::cout << BFS() << std::endl;
+	return 0;
+}
+
+int BFS() {
+	int result = 0;
 	std::queue<int> loc;
 	std::queue<int> next;
 	loc.push(s);
@@ -62,6 +61,18 @@ int main()
 		}
 		result++;
 	}
-	std::cout << result << std::endl;
-	return 0;
+	return result;
+}
+
+void read_input() {
+	std::cin >> v >> e >> s >> t;
+	int src, dst, len;
+	for (int i = 1;i <= e;++i) {
+		std::cin >> src >> dst >> len;
+		edge tmp;
+		tmp.end = dst, tmp.cost = len;
+		ver[src].push_back(tmp);
+		tmp.end = src;
+		ver[dst].push_back(tmp);
+	}
 }
