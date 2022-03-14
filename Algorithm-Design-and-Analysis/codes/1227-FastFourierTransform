@@ -1,3 +1,16 @@
+/*
+
+DISCLAIMER FOR HONOR CODES
+
+Our teacher recommends that we should learn from the template for this code in order to 
+understand the elegant way in which the author implements the FFT. So I googled and found 
+a version I think is pretty from a website "oiwiki". Here the FFT function is completely 
+from that website. I studied this function for a long time and understands its entire idea
+now. I do not think that I can write a better version than this.
+
+*/
+
+
 #include <iostream>
 #include <cmath>
 #include <complex>
@@ -7,7 +20,7 @@ typedef std::complex<double> Comp;  // STL complex
 const int MAX_N = 1 << 20;
 
 Comp tmp[MAX_N];
-Comp a[MAX_N], b[MAX_N], c[MAX_N];
+Comp a[MAX_N], b[MAX_N];
 
 void FFT(Comp* f, int n, int rev) {
     if (n == 1) return;
@@ -32,10 +45,8 @@ void FFT(Comp* f, int n, int rev) {
 int total_l;
 //a function that returns the minimum of 2's power larger than n
 int power2_generate(int n);
-
 //a function that reads the input and calculates the length of transformation
 int read_input();
-
 //show result
 void show_output(int len);
 
@@ -45,24 +56,17 @@ int main()
     FFT(a, len, 1);
     FFT(b, len, 1);
     for (int i = 0;i < len;++i) {
-        c[i] = a[i] * b[i];
+        a[i] = a[i] * b[i];
     }
-    FFT(c, len, -1);
+    FFT(a, len, -1);
     show_output(len);
     return 0;
 }
 
 void show_output(int len)
 {
-    int end = 0;
-    for (int i = len;i >= 0;--i) {
-        if (c[i].real() > 0.1) {
-            end = i;
-            break;
-        }
-    }
     for (int i = 0;i < total_l;++i) {
-        double tmp = c[i].real() / len;
+        double tmp = a[i].real() / len;
         int rst;
         if (tmp > 0) {
             rst = (int)(tmp + 0.5);
