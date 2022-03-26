@@ -1,8 +1,5 @@
 # Course-Assignments-AISJTU
-Part of the assignments I did studying at SJTU
-
-## Motivations
-Starting from Spring 2022, I decided to upload some of my codes and latex files onto github enlightened by one of my friends. 
+Part of the assignments studying at SJTU
 
 ## FYI
 For anyone who is browsing this page for reference about his or her assignment, I sincerely hope that some of my ideas or codes will be helpful for you. But remember to list this site as source for the courses with honor codes. :D
