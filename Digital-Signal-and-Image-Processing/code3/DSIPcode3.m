@@ -1,9 +1,10 @@
-max_n=3;
+max_n=7;
+step=2;
 x=1:max_n;
 time=zeros(4,max_n);%4 rows represent the time using different methods. Columns are the different sequence length
 
 for a=1:max_n
-    N=2^(a*4);%N is the length of sequence
+    N=2^(a*step);%N is the length of sequence
     array=rand(N,1);%generate an array for calculation
     W_N=exp(-1i*2*pi/N);%root of unity with length N
     %method1
@@ -39,16 +40,14 @@ for a=1:max_n
     
     %method4
     profile on;
-    %fft(gpuArray(array));
+    fft(gpuArray(array));
     profile off;
     time(4,a)=profile('info').FunctionTable.TotalTime();
 
 end
 
-plot(4*x,time(1,:),4*x,time(2,:),4*x,time(3,:),4*x,time(4,:));
+plot(step*x,time(1,:),step*x,time(2,:),step*x,time(3,:),step*x,time(4,:));
 legend('definition','matrix','fft','GPUfft');
 title('Time spent with different DFT computing methods');
 xlabel('exponential sequence length');
 ylabel('time in seconds');
-
-
