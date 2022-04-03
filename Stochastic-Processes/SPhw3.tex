@@ -1,0 +1,86 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage{fullpage}
+\usepackage[top=2cm, bottom=4.5cm, left=2.5cm, right=2.5cm]{geometry}
+\usepackage{amsmath,amsthm,amsfonts,amssymb,amscd}
+\usepackage{lastpage}
+\usepackage{enumerate}
+\usepackage{fancyhdr}
+\usepackage{mathrsfs}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{hyperref}
+\usepackage{mathtools}
+\usepackage{xfrac}
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
+
+\hypersetup{%
+  colorlinks=true,
+  linkcolor=blue,
+  linkbordercolor={0 0 1}
+}
+\linespread{1.1}
+ 
+\renewcommand\lstlistingname{Algorithm}
+\renewcommand\lstlistlistingname{Algorithms}
+\def\lstlistingautorefname{Alg.}
+
+\lstdefinestyle{Python}{
+    language        = Python,
+    frame           = lines, 
+    basicstyle      = \footnotesize,
+    keywordstyle    = \color{blue},
+    stringstyle     = \color{green},
+    commentstyle    = \color{red}\ttfamily
+}
+
+\setlength{\parindent}{0.0in}
+\setlength{\parskip}{0.05in}
+
+% Edit these as appropriate
+\newcommand\course{Stochastic Processes}
+\newcommand\hwnumber{3}                
+\newcommand\NetIDa{SUN Yilin}         
+\newcommand\NetIDb{520030910361}           
+
+\pagestyle{fancyplain}
+\headheight 35pt
+\lhead{\NetIDa}
+\lhead{\NetIDa\\\NetIDb}           
+\chead{\textbf{\Large Homework \hwnumber}}
+\rhead{\course \\ \today}
+\lfoot{}
+\cfoot{}
+\rfoot{\small\thepage}
+\headsep 1.5em
+
+\begin{document}
+\section{FTMC for countably infinite chains}
+\subsection{}
+To prove this, we only need to show $[F]+[A]+[I]$ implies $[PR]+[A]+[I]$.\newline
+To show this, we only need to show $[F]+[I]$ implies $[PR]$, i.e.
+a finite and irreducible markov chain is positive recurrent.\newline
+\newline
+Firstly, for a finite markov chain, there exists at least one recurrent state.
+If not, all the states in this markov chain can only be visited finitely many times.
+But this finite markov chain only contains finite states,
+so when we visit infinitely many times this cannot be true.\\
+Then if the markov chain is also irreducible, since recurrence is a class property,
+the existence of a single recurrent state means this markov chain is recurrent.\\
+\newline
+Now we only need to show a finite irreducible recurrent markov chain is positive recurrent.
+Similar to our proof in lecture notes, we know that positive recurrence and null recurrence are both class properties.
+Then if the recurrent markov chain contains a null recurrent state, it is null recurrent itself.
+Since $\sum_{j\in S}P_{ij}^{n}=1$ and there are only finite number of states,
+it is impossible that $\lim_{n\to\infty}P_{ij}^{n}=0$ for all $j\in S$.
+Thus this markov chain cannot be null recurrent. Then it can only be positive recurrent.\\
+\newline
+To sum up, a finite irreducible markov chain must be positive recurrent.
+So the proposition in this problem about these two implications is correct.
+
+\newpage
+\section{Acknowledgements}
+\subsection{}
+The idea of proving a finite irreducible markov chain is from lecture 5 of STAT253/317, University of Chicago.
+\end{document}
