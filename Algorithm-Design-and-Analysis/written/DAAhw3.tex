@@ -1,0 +1,86 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage{fullpage}
+\usepackage[top=2cm, bottom=4.5cm, left=2.5cm, right=2.5cm]{geometry}
+\usepackage{amsmath,amsthm,amsfonts,amssymb,amscd}
+\usepackage{lastpage}
+\usepackage{enumerate}
+\usepackage{fancyhdr}
+\usepackage{mathrsfs}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{hyperref}
+\usepackage{mathtools}
+\usepackage{xfrac}
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
+
+\hypersetup{%
+  colorlinks=true,
+  linkcolor=blue,
+  linkbordercolor={0 0 1}
+}
+\linespread{1.1}
+ 
+\renewcommand\lstlistingname{Algorithm}
+\renewcommand\lstlistlistingname{Algorithms}
+\def\lstlistingautorefname{Alg.}
+
+\lstdefinestyle{Python}{
+    language        = Python,
+    frame           = lines, 
+    basicstyle      = \footnotesize,
+    keywordstyle    = \color{blue},
+    stringstyle     = \color{green},
+    commentstyle    = \color{red}\ttfamily
+}
+
+\setlength{\parindent}{0.0in}
+\setlength{\parskip}{0.05in}
+
+% Edit these as appropriate
+\newcommand\course{Algorithms}
+\newcommand\hwnumber{3}                
+\newcommand\NetIDa{SUN Yilin}          
+\newcommand\NetIDb{520030910361}          
+
+\pagestyle{fancyplain}
+\headheight 35pt
+\lhead{\NetIDa}
+\lhead{\NetIDa\\\NetIDb}           
+\chead{\textbf{\Large Homework \hwnumber}}
+\rhead{\course \\ \today}
+\lfoot{}
+\cfoot{}
+\rfoot{\small\thepage}
+\headsep 1.5em
+
+\begin{document}
+
+\section{}
+\textbf{Algorithm:}\\
+We sort the customers by ascending order of their service time,
+then serve the customer with smallest service time each time.\\
+\textbf{Proof of Correctness:}\\
+The total time can be expressed as 
+$$T=\sum_{i=1}^{n}\sum_{j=1}^{i}t_j$$
+which is simply
+$$T=\sum_{i=1}^{n}(n-i+1)t_i$$
+So if the sequence $\{t_1,t_2,t_3,\dots,t_n\}$ is in ascending order, i.e.
+$t_1\leq t_2\leq t_3\leq\dots\leq t_n$,
+simply by the \textbf{rearrangement inequality} we know such a $T$ is the minimum waiting time
+because it is the so-called "inverse product sum".\\
+\newline
+Below is the proof of rearrangement inequality for completeness of this problem.\\
+Denote the two sequence that have already sorted by ascending order by $\{a_i\}$ and $\{b_i\}$.
+Let $p_i=\sum_{j=1}^{i}b_j$, $q_i=\sum_{j=1}^{i}b_{k_j}$. It's easy to see $p_i\leq q_i$ for $i\leq n-1$ and $p_n=q_n$.\\
+Then 
+\begin{align}
+    \sum_{i=1}^{n}a_{n-i+1}b_{i}&=\sum_{i=1}^{n-1}a_{i}(p_{n-i+1}-p_{n-i})+a_np_1\\
+    &=\sum_{i=1}^{n-1}(a_{n-i+1}-a_{n-i})p_i+a_1p_n\\
+    &\leq \sum_{i=1}^{n-1}(a_{n-i+1}-a_{n-i})q_i+a_1q_n\\
+    &=\sum_{i=1}^{n}a_{n-i+1}b_{k_i}
+\end{align}
+Another side of the inequality is not used in our problem, 
+so the proof is omitted here.
+\end{document}
