@@ -40,14 +40,14 @@
 
 % Edit these as appropriate
 \newcommand\course{Stochastic Processes}
-\newcommand\hwnumber{3}                
-\newcommand\NetIDa{SUN Yilin}         
-\newcommand\NetIDb{520030910361}           
+\newcommand\hwnumber{3}                  % <-- homework number
+\newcommand\NetIDa{SUN Yilin}           % <-- NetID of person #1
+\newcommand\NetIDb{520030910361}           % <-- NetID of person #2 (Comment this line out for problem sets)
 
 \pagestyle{fancyplain}
 \headheight 35pt
 \lhead{\NetIDa}
-\lhead{\NetIDa\\\NetIDb}           
+\lhead{\NetIDa\\\NetIDb}                 % <-- Comment this line out for problem sets (make sure you are person #1)
 \chead{\textbf{\Large Homework \hwnumber}}
 \rhead{\course \\ \today}
 \lfoot{}
@@ -56,7 +56,9 @@
 \headsep 1.5em
 
 \begin{document}
+
 \section{FTMC for countably infinite chains}
+
 \subsection{}
 To prove this, we only need to show $[F]+[A]+[I]$ implies $[PR]+[A]+[I]$.\newline
 To show this, we only need to show $[F]+[I]$ implies $[PR]$, i.e.
@@ -79,8 +81,73 @@ Thus this markov chain cannot be null recurrent. Then it can only be positive re
 To sum up, a finite irreducible markov chain must be positive recurrent.
 So the proposition in this problem about these two implications is correct.
 
+\subsection{}
+Denote $P(i,i')P(j,j')$ by $Q((i,j),(i',j'))$.
+To prove $\Pr_{(i,j)}[T_{(k,k)}<\infty]=1$,
+we only need to prove that $Q$ is positive recurrent.\\
+To prove this, we first show that $Q$ has a stationary distribution.
+Note that $P$ is positive recurrent and irreducible,
+from what we have proven in class,
+we know that $P$ must have a unique stationary distribution.
+Denote the stationary distribution by $\pi$,
+then we know that the stationary distribution of $Q$ is when it follows the distribution of $\pi$ coordinate-wisely.
+So $Q$ has a unique stationary distribution.\\
+Then we show that $Q$ is irreducible. 
+For any $i,j,i',j'$, we want to find a $n$ such that $Q^{n}((i,j),(i',j'))=P^{n}(i,i')P^{n}(j,j')>0$.
+Since $P$ is aperiodic and irreducible, for any $j,i'$ and sufficiently large $n$,
+$P^{n}(j,i')>0$ always hold.
+So the $n$ such that $Q^{n}((i,j),(i',j'))>0$ always exists.
+Hence $Q$ is irreducible.\\
+Now we show that for any markov chain, irreducible provided,
+if the chain has a unique stationary distribution,
+then it must be positive recurrent.
+Let $N_{i}(n)$ be the number of visits of state $i$ in the first $n$ steps.
+Since the markov chain is irreducible, 
+the strong law of large numbers for markov chain shows that 
+$$P_{j}\left[\lim_{n\to\infty}\frac{N_{i}(n)}{n}=\frac{1}{\mathbb{E}_{i}(T_i)}\right]=1$$
+Denote the stationary distribution by $\pi$ and let $X_0\sim\pi$,
+then by the bounded convergence theorem we have
+$$\mathbb{E}_{X_0\sim\pi}\left[\frac{N_i(n)}{n}\right]=\sum_{t=1}^{n}\frac{\mathbb{E}_{X_0\sim\pi}\left[1_{\left[X_t=i\right]}\right]}{n}=n\frac{\pi(i)}{n}=\frac{1}{\mathbb{E}_i(T_i)}$$
+Since the chain is irreducible, $\pi(i)>0$ for every $i$,
+thus $\mathbb{E}_i(T_i)<\infty$ for every $i$,
+i.e. the markov chain is positive recurrent.\\
+Since $Q$ is such a markov chain irreducible with a unique stationary distribution,
+it is positive recurrent.
+Then it follows that $\Pr_{(i,j)}[T_{(k,k)}<\infty]=1$ for any $i,j,k\in\Omega$.
+
+\subsection{}
+We already know from class that $[I]+[PR]$ implies $[S]+[U]$.
+So we only need to prove that the markov chain will converge if it is aperiodic.\\
+We use total variance distance to describe the convergence. 
+We want to show for any starting distribution $\mu_0$, 
+the total variance distance of $\mu_t$ and stationary distribution $\pi$, $D_{TV}(\mu_t,\pi)$
+goes to $0$ as $t$ goes to $\infty$.\\
+Follow the instructions of finite case from class, 
+we will use two markov chains with the same transition matrix $P$.
+Suppose these two markov chains are $\{X_t\}$ and $\{Y_t\}$ where $Y_0\sim\pi$ yet $X_0\sim\mu_0$, an arbitrary distribution.\\
+Now we construct a coupling $\omega_t$ of $\mu_t$ and $\pi$.
+The coupling is the same as finite case in class.
+Let $(X_t,Y_t)\sim\omega_t$, we construct $\omega_{t+1}$ by the following method.
+If $X_t=Y_t$ for some $t\geq 0$, then let $X_{t'}=Y_{t'}$ for all $t'>t$. 
+If not, we let $X_t$ and $Y_t$ go to $X_{t+1}$ and $Y_{t+1}$ independently.\\
+The coupling lemma tells us that $D_{TV}(\mu_t,\pi)\leq\Pr(X_t\neq Y_t)$. 
+And we have shown in class that with a finite markov chain 
+$$\lim_{t\to\infty}\Pr(X_t\neq Y_t)=\lim_{t\to\infty}\sum_{x_{0},y_{0}}\mu_{0}(x_0)\pi(y_0)\Pr_{x_0,y_0}(X_t\neq Y_t)=0$$
+Now we consider the countably infinite case. For our coupling the transition function before $X_t=Y_t$ is what we have defined in problem $1.2$, denoted by $Q$.
+From what we have proven in problem $1.2$, $\Pr_{(i,j)}[T_{(k,k)}<\infty]=1$ for any $i,j,k\in\Omega$.
+This means that the probability of $X_t$ "meets" $Y_t$ within finite time is 1,
+which is equivalent to saying that $\lim_{t\to\infty}D_{TV}(\mu_t,\pi)=0$.
+So such a positive recurrent countably infinite markov chain will converge to its unique stationary distribution.
+
+
+\newpage
+\section{A Randomized Algorithm for 3-SAT}
+\subsection{}
+
 \newpage
 \section{Acknowledgements}
-\subsection{}
+\subsection*{Q1.1}
 The idea of proving a finite irreducible markov chain is from lecture 5 of STAT253/317, University of Chicago.
+\subsection*{Q1.2-1.3}
+Actually from lecture notes previous year.
 \end{document}
