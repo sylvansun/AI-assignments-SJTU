@@ -89,6 +89,49 @@ so the proof is omitted here.
 
 \newpage
 \section{}
+\subsection{}
+The idea is pretty straightforward.
+Since we only need to determine whether B is reachable from A, 
+the gas cost is not to our concern here.
+So starting from $A$, we fill up the gas tank as soon as we arrive at a gas station.
+Following this method, as long as the two adjacent gas stations are within the distance of our tank capacity $C$,
+we can always reach the next station from our current station. \\
+Given the inputs, i.e. the distance of these $n$ gas stations, we put them in an array $\boldsymbol{d}$ and sort it by ascending order.
+Then we calculate the diffenence between adjacent elements in array $\boldsymbol{d}$.
+If any of the diffenences is larger than $C$, 
+or if the distance between farthest gas station and $D$ is larger than $C$, then $B$ is not reachable.
+If not, then $B$ is reachable.  
+\begin{algorithm}
+  \caption{Determine Reachable}\label{alg:deterreach}
+  \begin{algorithmic}[1]
+  \Procedure{Determine Reachable}{$\boldsymbol{d},C,D$}:\Comment{$\boldsymbol{d}=\{d_1,d_2,d_3,\dots,d_n\}$}
+  \State Sort $\boldsymbol{d}$ by ascending order
+  \If{$D-d_n>C$}
+  \State \textbf{return} Not Reachable
+  \EndIf
+  \State Initialize $i\gets 0$
+  \While{$i<n$}
+  \State $l\gets d_{i+1}-d_i$
+  \If{$l>C$}
+  \State \textbf{return} Not Reachable
+  \EndIf
+  \EndWhile
+  \State \textbf{return} Reachable
+  \EndProcedure
+  \end{algorithmic}
+\end{algorithm}\\
+\textbf{Proof of Correctness:}\\
+The algorithm is correct because, as is described above, 
+it always guarantees that the reachability of next station can be determined by the nearest gas station before it.
+Thus if all the gas stations are reachable from the previous stations and $D$ is reachable from the farthest station, 
+$B$ is reachable from $A$.\\
+\textbf{Analysis of Running Time:}\\
+The time complexity of the sort procedure at line 2 is $O(n\log n)$.
+After we sort the sequence, the while loop will finish with time $O(n)$.
+So the total running time is $O(n\log n)$.
+
+\newpage
+\subsection{}
 
 
 \newpage
@@ -112,7 +155,7 @@ A detailed algorithm is below:\\
   \EndIf
   \State $P\gets$ Find parents of all the leaves in $G$\Comment{by DFS procedure}
   \State $S\gets S\cup P$
-  \State update $G$ by deleting neighbourhood of $P$ and $P$ themselves
+  \State Update $G$ by deleting neighbourhood of $P$ and $P$ themselves
   \EndWhile
   \State \textbf{return} $S$
   \EndProcedure
@@ -167,7 +210,7 @@ Instead, we pick the root when the depth of remaining sub-tree is smaller or equ
   \EndIf
   \State $P\gets$ Find ancestors with exactly distance $k$ of all the leaves in $G$
   \State $S\gets S\cup P$
-  \State update $G$ by deleting ancestors and descendants within distance $k$ of $P$ 
+  \State Update $G$ by deleting ancestors and descendants within distance $k$ of $P$ 
   \EndWhile
   \State \textbf{return} $S$
   \EndProcedure
@@ -182,4 +225,7 @@ because they will cover any vertices if we choose another set of vertices.\\
 Similar to our analysis with $k=1$, now our total time is 
 $$|V|+(|V|-2k-1)+(|V|-4k-2)+\dots+1$$
 which is $O(\frac{|V|^2}{k})$
+
+\section{}
+
 \end{document}
