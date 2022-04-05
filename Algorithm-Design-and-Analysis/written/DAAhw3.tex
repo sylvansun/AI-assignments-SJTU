@@ -207,25 +207,24 @@ So the total running time is $O(n\log n)$.
 \newpage
 \section{}
 \subsection{}
-The idea is to find the leaves and pick all of their parents and delete the vertices that is connected to the parents picked each time,
-then repeat the process until there is no more vertices in the original graph. 
-If the graph is left with a single root after some iterations of the process,
-we also pick the root. 
-(If not, the root vertex must have been deleted when we picked one of its children)\\
-A detailed algorithm is below:\\ 
+The idea is to initialize a root $r$ with degree larger or equal to 2,
+then do BFS from $r$ and calculate the depth of each vertices.
+After this find the deepest leaf and find its parent $p$.\\
+Then do BFS from $p$ for one step to mark all the vertices that is connected to $p$ as covered.
+After this iteration, we pick a single parent $p$ and mark some vertices.\\
+Then we find the deepest leaf that has not been covered and repeat the process
+until all the vertices are covered in the graph.\\
 \begin{algorithm}
   \caption{1-Minimal Cover}\label{alg:1cover}
   \begin{algorithmic}[1]
   \Procedure{1-Minimal Cover}{$G=(V,E)$}:\Comment{G must be a tree}
   \State Initialize set of vertices $S$, $S$ is empty
-  \While {$V$ is not empty}
-  \If {$|V|=1$}
-  \State $S\gets S\cup V$
-  \State \textbf{return} $S$
-  \EndIf
-  \State $P\gets$ Find parents of all the leaves in $G$\Comment{by DFS procedure}
-  \State $S\gets S\cup P$
-  \State Update $G$ by deleting neighbourhood of $P$ and $P$ themselves
+  \State Initialize an arbitrary root $r$ of $G$\Comment{deg($r$)$\geq$2 for convenience} 
+  \State BFS($r$) to get the depth of all vertices in $V$
+  \While {$V$ is not totally covered}
+  \State $p\gets$ Find the parent of the deepest leaf in $G$\Comment{O(1) by a "depth" vector}
+  \State $S\gets S\cup\{p\}$
+  \State Mark all vertices connected to $p$ as already covered.
   \EndWhile
   \State \textbf{return} $S$
   \EndProcedure
