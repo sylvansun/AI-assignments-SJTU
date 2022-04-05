@@ -83,4 +83,103 @@ Then
 \end{align}
 Another side of the inequality is not used in our problem, 
 so the proof is omitted here.
+
+\newpage
+\section{}
+
+\newpage
+\section{}
+
+
+\newpage
+\section{}
+\subsection{}
+The idea is to find the leaves and pick all of their parents and delete the vertices that is connected to the parents picked each time,
+then repeat the process until there is no more vertices in the original graph. 
+If the graph is left with a single root after some iterations of the process,
+we also pick the root. 
+(If not, the root vertex must have been deleted when we picked one of its children)\\
+A detailed algorithm is below:\\ 
+\begin{algorithm}
+  \caption{1-Minimal Cover}\label{alg:1cover}
+  \begin{algorithmic}[1]
+  \Procedure{1-Minimal Cover}{$G=(V,E)$}:\Comment{G must be a tree}
+  \State Initialize set of vertices $S$, $S$ is empty
+  \While {$V$ is not empty}
+  \If {$|V|=1$}
+  \State $S\gets S\cup V$
+  \State \textbf{return} $S$
+  \EndIf
+  \State $P\gets$ Find parents of all the leaves in $G$\Comment{by DFS procedure}
+  \State $S\gets S\cup P$
+  \State update $G$ by deleting neighbourhood of $P$ and $P$ themselves
+  \EndWhile
+  \State \textbf{return} $S$
+  \EndProcedure
+  \end{algorithmic}
+\end{algorithm}\\
+\textbf{Proof of Correctness:}\\
+We prove by showing that our choice of vertices is necessary at each iteration 
+and is global optimal as well.\\
+If $|V|=1$, then our algorithm is trivally true.\\
+Suppose at current iteration $|V|>1$, 
+we know that an optimal minimal cover set must cover all the leaves in $G$,
+and we also know that the leaves can ony be covered by picking themselves or their parents.
+But obviously the choice of parents are better than picking the leaves themselves 
+because for any pick of parent, 
+the parent can cover at least the same set of vertices as its child.
+So our choice of parents is indeed necessary at each iteration.\\
+The reason why the update process at Line 9 does not violate global optimal is that
+once a vertex is covered, 
+we do not have to consider it ever again.
+So we can immediately delete the vertices that are covered by the parents each iteration
+and reduce our problem to a similar one with smaller scale.\\
+To sum up, our choice of vertices must be necessary,
+so it can generate the minimal cover set of $G$.\\
+\textbf{Analysis of Running Time:}\\
+Since $|E|=|V|-1$, we can describe the time complexity only by $|V|$.
+The time spent by our algorithm that is not constant time only comes from the while loop and the DFS at line 7.
+At line 7 the DFS process must visit each vertex and edge at least once,
+causing a time complexity of $O(|V|)$ each time.
+But note that after each iteration the size of $|V|$ is slightly reduced by the updating process,
+in the worst case the updating process only deletes 3 vertices from $V$,
+so the worst time complexity is 
+$$|V|+(|V|-3)+(|V|-6)+\dots+1$$
+which is $O(|V|^2)$.
+\subsection{}
+The idea is similar to the case with $k=1$ and we only need to make some subtle changes to our algorithm.\\
+The first change is that we do not pick the parents of all the leaves.
+We still need to find all the leaves, 
+but we are going to pick the ancestors which have a path with exactly length $k$ of all those leaves.
+And we delete the ancestors that are within distance $k$ of these ancestors picked at each iteration.
+The descendants are deleted as well.\\
+Another change is that we do not end by picking the only root if it remains in the original graph.
+Instead, we pick the root when the depth of remaining sub-tree is smaller or equal to $k$ and end the procedure.
+\begin{algorithm}
+  \caption{k-Minimal Cover}\label{alg:kcover}
+  \begin{algorithmic}[1]
+  \Procedure{k-Minimal Cover}{$G=(V,E)$}:\Comment{G must be a tree}
+  \State Initialize set of vertices $S$, $S$ is empty
+  \While {$V$ is not empty}
+  \If {the depth of $G$ is smaller or equal to $k$}
+  \State $S\gets S\cup\{r\}$\Comment{$r$ is the root of tree}
+  \State \textbf{return} $S$
+  \EndIf
+  \State $P\gets$ Find ancestors with exactly distance $k$ of all the leaves in $G$
+  \State $S\gets S\cup P$
+  \State update $G$ by deleting ancestors and descendants within distance $k$ of $P$ 
+  \EndWhile
+  \State \textbf{return} $S$
+  \EndProcedure
+  \end{algorithmic}
+\end{algorithm}\\
+\textbf{Proof of Correctness:}\\
+Similar to our proof with $k=1$, at each itertaion,
+our choice of the ancestors is necessary because we still need to cover all the leaves.
+And to cover the leaves, finding the ancestors with exactly distance $k$ is the best choice 
+because they will cover any vertices if we choose another set of vertices.\\
+\textbf{Analysis of Running Time:}\\
+Similar to our analysis with $k=1$, now our total time is 
+$$|V|+(|V|-2k-1)+(|V|-4k-2)+\dots+1$$
+which is $O(\frac{|V|^2}{k})$
 \end{document}
