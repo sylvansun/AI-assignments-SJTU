@@ -208,10 +208,10 @@ So the total running time is $O(n\log n)$.
 \section{}
 \subsection{}
 The idea is to initialize a root $r$ with degree larger or equal to 2,
-then do BFS from $r$ and calculate the depth of each vertices.
+then do BFS from $r$ and calculate the depth of all the vertices.
 After this find the deepest leaf and find its parent $p$.\\
 Then do BFS from $p$ for one step to mark all the vertices that is connected to $p$ as covered.
-After this iteration, we pick a single parent $p$ and mark some vertices.\\
+At each iteration, we pick a single parent $p$ and mark some vertices.\\
 Then we find the deepest leaf that has not been covered and repeat the process
 until all the vertices are covered in the graph.\\
 \begin{algorithm}
@@ -222,9 +222,9 @@ until all the vertices are covered in the graph.\\
   \State Initialize an arbitrary root $r$ of $G$\Comment{deg($r$)$\geq$2 for convenience} 
   \State BFS($r$) to get the depth of all vertices in $V$
   \While {$V$ is not totally covered}
-  \State $p\gets$ Find the parent of the deepest leaf in $G$\Comment{O(1) by a "depth" vector}
+  \State $p\gets$ Find parent of the \textbf{deepest uncovered} leaf in $G$\Comment{O(1) by "depth" vector}
   \State $S\gets S\cup\{p\}$
-  \State Mark all vertices connected to $p$ as already covered.
+  \State Mark all vertices connected to $p$ as already covered.\Comment{BFS for one step}
   \EndWhile
   \State \textbf{return} $S$
   \EndProcedure
@@ -233,31 +233,36 @@ until all the vertices are covered in the graph.\\
 \textbf{Proof of Correctness:}\\
 We prove by showing that our choice of vertices is necessary at each iteration 
 and is global optimal as well.\\
-If $|V|=1$, then our algorithm is trivally true.\\
-Suppose at current iteration $|V|>1$, 
+For convenience of analysis, suppose at current iteration $|V|>2$, 
 we know that an optimal minimal cover set must cover all the leaves in $G$,
-and we also know that the leaves can ony be covered by picking themselves or their parents.
-But obviously the choice of parents are better than picking the leaves themselves 
-because for any pick of parent, 
-the parent can cover at least the same set of vertices as its child.
+and we also know that the deepest uncovered leaf can ony be covered
+by picking itself or its parent.
+But obviously the choice of parent is better than picking the leaf itself
+because the parent can cover at least the same set of vertices as its child.
 So our choice of parents is indeed necessary at each iteration.\\
-The reason why the update process at Line 9 does not violate global optimal is that
+The reason why the update process at Line 8
+does not violate global optimal is that
 once a vertex is covered, 
 we do not have to consider it ever again.
-So we can immediately delete the vertices that are covered by the parents each iteration
-and reduce our problem to a similar one with smaller scale.\\
-To sum up, our choice of vertices must be necessary,
+So again we find the deepest uncovered leaf and carry out the same procedure.
+The reason why we choose the deepest leaf is not explained here because
+for $k=1$ it is not that obvious why we must choose the deepest one each iteration.
+But we will show that for general $k$ this algorithm will not perform well
+if not choosing the deepest leaf.\\
+To sum up, our choice of vertices at each iteration must be necessary,
+or equivalently and more specificly, for any optimal cover set for this tree,
+at least all the vertices chosen by our algorithm must be in this optimal set 
 so it can generate the minimal cover set of $G$.\\
 \textbf{Analysis of Running Time:}\\
 Since $|E|=|V|-1$, we can describe the time complexity only by $|V|$.
-The time spent by our algorithm that is not constant time only comes from the while loop and the DFS at line 7.
-At line 7 the DFS process must visit each vertex and edge at least once,
-causing a time complexity of $O(|V|)$ each time.
-But note that after each iteration the size of $|V|$ is slightly reduced by the updating process,
-in the worst case the updating process only deletes 3 vertices from $V$,
-so the worst time complexity is 
-$$|V|+(|V|-3)+(|V|-6)+\dots+1$$
-which is $O(|V|^2)$.
+The time spent by our algorithm that is not constant time only comes from
+BFS at line 4 and while loop at line 5.
+The BFS at line 4 will traverse the whole tree once
+and the while loop will only mark all the vertices once.
+As for the BFS at line 8,
+it will be carried out within constant time because we only do BFS for one step.
+So the algorithm kind of traverse the graph twice,
+causing a time complexity of $O(|V|)$.
 \subsection{}
 The idea is similar to the case with $k=1$ and we only need to make some subtle changes to our algorithm.\\
 The first change is that we do not pick the parents of all the leaves.
