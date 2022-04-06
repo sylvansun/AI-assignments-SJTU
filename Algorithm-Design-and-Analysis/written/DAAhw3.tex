@@ -203,11 +203,11 @@ So the total running time is $O(n\log n)$.
 \newpage
 \subsection{}
 
-
 \newpage
 \section{}
 \subsection{}
 The idea is to initialize a root $r$ with degree larger or equal to 2,
+make the parent of $r$ itself,
 then do BFS from $r$ and calculate the depth of all the vertices.
 After this find the deepest leaf and find its parent $p$.\\
 Then do BFS from $p$ for one step to mark all the vertices that is connected to $p$ as covered.
@@ -219,7 +219,7 @@ until all the vertices are covered in the graph.\\
   \begin{algorithmic}[1]
   \Procedure{1-Minimal Cover}{$G=(V,E)$}:\Comment{G must be a tree}
   \State Initialize set of vertices $S$, $S$ is empty
-  \State Initialize an arbitrary root $r$ of $G$\Comment{deg($r$)$\geq$2 for convenience} 
+  \State Initialize an arbitrary root $r$ of $G$, let parent$(r)=r$\Comment{deg($r$)$\geq$2 for convenience} 
   \State BFS($r$) to get the depth of all vertices in $V$
   \While {$V$ is not totally covered}
   \State $p\gets$ Find parent of the \textbf{deepest uncovered} leaf in $G$\Comment{O(1) by "depth" vector}
@@ -263,28 +263,41 @@ As for the BFS at line 8,
 it will be carried out within constant time because we only do BFS for one step.
 So the algorithm kind of traverse the graph twice,
 causing a time complexity of $O(|V|)$.
+
+\newpage
 \subsection{}
-The idea is similar to the case with $k=1$ and we only need to make some subtle changes to our algorithm.\\
-The first change is that we do not pick the parents of all the leaves.
-We still need to find all the leaves, 
-but we are going to pick the ancestors which have a path with exactly length $k$ of all those leaves.
-And we delete the ancestors that are within distance $k$ of these ancestors picked at each iteration.
-The descendants are deleted as well.\\
-Another change is that we do not end by picking the only root if it remains in the original graph.
-Instead, we pick the root when the depth of remaining sub-tree is smaller or equal to $k$ and end the procedure.
+The idea is similar to the case with $k=1$ 
+and we only need to make some subtle changes to our algorithm.
+But pay attention that this time the choice of the deepest uncovered leaf 
+at each iteration is crucial to the correctness of our algorithm.\\
+The first change is that we do not pick the parent of a leaf.
+We still need to find all the deepest leaf,
+but we are going to pick the ancestor $p$
+which has a path with exactly length $k$ of the leaf.
+Then we do BFS from $p$ for $k$ steps and mark all the vertices that is
+within distance $k$ with $p$ as covered.
+Similarly at each iteration we find an ancestor and mark some vertices.\\
+The other change is how we exit the procedure.
+We cannot guarantee that after some iterations the deepest uncovered leaf 
+still has an ancestor with exactly distance $k$
+So we pick the root when the depth of deepest uncovered leaf  
+is smaller or equal to $k$ and end the procedure.\\
 \begin{algorithm}
   \caption{k-Minimal Cover}\label{alg:kcover}
   \begin{algorithmic}[1]
   \Procedure{k-Minimal Cover}{$G=(V,E)$}:\Comment{G must be a tree}
   \State Initialize set of vertices $S$, $S$ is empty
-  \While {$V$ is not empty}
-  \If {the depth of $G$ is smaller or equal to $k$}
-  \State $S\gets S\cup\{r\}$\Comment{$r$ is the root of tree}
+  \State Initialize an arbitrary root $r$ of $G$\Comment{deg($r$)$\geq$2 for convenience}
+  \State BFS($r$) to get the depth of all vertices in V
+  \While {$V$ is not totally covered}
+  \State $l\gets$ the deepest uncovered leaf
+  \If {the depth of $l$ is smaller or equal to $k$}
+  \State $S\gets S\cup\{r\}$
   \State \textbf{return} $S$
   \EndIf
-  \State $P\gets$ Find ancestors with exactly distance $k$ of all the leaves in $G$
-  \State $S\gets S\cup P$
-  \State Update $G$ by deleting ancestors and descendants within distance $k$ of $P$ 
+  \State $p\gets$ Find ancestor with exactly distance $k$ of $l$
+  \State $S\gets S\cup \{p\}$
+  \State Mark all vertices within distance $k$ of $p$ as already covered 
   \EndWhile
   \State \textbf{return} $S$
   \EndProcedure
@@ -292,13 +305,24 @@ Instead, we pick the root when the depth of remaining sub-tree is smaller or equ
 \end{algorithm}\\
 \textbf{Proof of Correctness:}\\
 Similar to our proof with $k=1$, at each itertaion,
-our choice of the ancestors is necessary because we still need to cover all the leaves.
-And to cover the leaves, finding the ancestors with exactly distance $k$ is the best choice 
-because they will cover any vertices if we choose another set of vertices.\\
+our choice of the ancestor $p$ is necessary because 
+we still need to cover the current deepest leaf.
+And to cover this leaf,
+using the ancestor $p$ with exactly distance $k$ is the best choice 
+because $p$ is capable of covering any other vertices
+that can be covered by $p'$s descendants.
+But we cannot choose any ancestor of $p$
+because that will cause current deepest leaf remaining uncovered.\\
+The reason why we choose the deepest uncovered leaf
+is revealed here:
+Only by choosing the deepest one can we guarantee that
+this leaf cannot be covered by other leaves' ancestors chosen in this way.\\
 \textbf{Analysis of Running Time:}\\
-Similar to our analysis with $k=1$, now our total time is 
-$$|V|+(|V|-2k-1)+(|V|-4k-2)+\dots+1$$
-which is $O(\frac{|V|^2}{k})$
+Although this problem is a general one, 
+it turns out that the total running time is the same as 
+the case where $k=1$
+because we still only need to traverse each single vertex constant times.
+So the total time complexity is still $O(|V|)$.
 
 \section{Comments}
 \subsection{}
