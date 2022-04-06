@@ -386,11 +386,15 @@ is revealed here:
 Only by choosing the deepest one can we guarantee that
 this leaf cannot be covered by other leaves' ancestors chosen in this way.\\
 \textbf{Analysis of Running Time:}\\
-Although this problem is a general one, 
-it turns out that the total running time is the same as 
-the case where $k=1$
-because we still only need to traverse each single vertex constant times.
-So the total time complexity is still $O(|V|)$.
+The time complexity of a general $k$ is a little bit different.
+Although in the case $k=1$ any vertex will only be visited constant times,
+in general case there is no guarantee that a vertex will not be visited many times.\\
+because we still only need to traverse some vertex each time if the tree is ill-shaped.
+But after each iteration the number of vertices reduced is at least $k$
+because the parent $p$ has at least $k$ descendants.\\
+Thus the running time can be expressed as 
+$$|V|+(|V|-k)+(|V|-2k)+\dots+1$$
+So the total time complexity is still $O(\frac{|V|^2}{k})$.
 
 \section{Comments}
 \subsection{}
