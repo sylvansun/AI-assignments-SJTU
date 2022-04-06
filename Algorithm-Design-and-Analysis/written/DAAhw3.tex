@@ -203,6 +203,47 @@ If the input in $\boldsymbol{d}$ is given us ordered,
 the total running time is just $O(n)$.
 
 \newpage
+\subsection{}
+Since the total distance $D$ is definite,
+the total amount of gas needed is $D$.
+To be specific, we do not have to pre-fuel the tank to reach $B$.\\
+So the idea is to always use the cheapest gas possible.
+We put the price of $n$ gas stations and put them in an array $\boldsymbol{p}$,
+then we sort $\boldsymbol{p}$ in a ascending order. 
+We pick the cheapest $p_i$ each time and calculate the interval
+on which we can use the gas from $i$-th station to travel.
+A detailed algorithm is below:
+\begin{algorithm}
+  \caption{Minimal Cost}\label{alg:mcost}
+  \begin{algorithmic}[1]
+  \Procedure{Minimal Cost}{$\boldsymbol{p},\boldsymbol{d},C,D$}:
+  \State Make pair of elements in $\boldsymbol{p}$ and $\boldsymbol{d}$ for sort
+  \State Sort $\boldsymbol{p}$ by ascending order of $p_i$
+  \State Initialize an empty interval $L=\emptyset$\Comment{Update $L$ at each iteration}
+  \State Initialize $c\gets 0$\Comment{$c$ is the total cost}
+  \State Initialize $i\gets 0$
+  \While{$i\leq n$}
+  \State calculate a closed interval $L_i=[d_i,d_i+C]\cap[0,D]$
+  \State calculate the length $l_i$ of $L_i\backslash L$
+  \State $c\gets c+p_il_i$\Comment{Update the total cost}
+  \State $L\gets L\cup L_i$\Comment{Update the interval that has been covered}
+  \If{$L=[0,D]$}
+  \State \textbf{return} $c$
+  \EndIf
+  \EndWhile
+  \State \textbf{return} -1
+  \EndProcedure
+  \end{algorithmic}
+\end{algorithm}\\
+Actually this algorithm can also help us determine whether $B$ is reachable.
+If the result given by this algorithm is negative,
+then $B$ is not reachable.\\
+\textbf{Proof of Correctness:}\\
+Suppose there is another gas expenditure plan with minimal total cost,
+we will show that our algorithm will provide a solution at least better.\\
+We can assume that our car can sort of "decide" 
+
+\newpage
 \section{}
 \subsection{}
 The idea is to initialize a root $r$ with degree larger or equal to 2,
