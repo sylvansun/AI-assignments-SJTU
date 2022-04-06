@@ -262,8 +262,15 @@ while the cost outside $L_k\backslash L$ remain unchanged.
 So after the iterations finally our $P_n$ is better than $P_0=P^*$.
 Since $P^*$ is optimal, our $P_n$ is also optimal.\\
 \textbf{Analysis of Running Time:}\\
-aaa
-
+The time complexity of our algorithm comes from line 3, 9 and 11.\\
+The time complexity of line 3 is $O(n\log n)$ for the sort process,
+and for the operations at line 9 and 11,
+if we maintain a binary search tree with nodes representing the intervals already calculated.
+we can finish each iteration with time $O(\log n)$.
+This is possible because, given the properties of the intervals added are all of the same length $C$,
+we will be combining at most three intervals together each time.
+So the total time for while loop is $O(n\log n)$.\\
+Thus the total time complexity of our algorithm is $O(n\log n)$.
 \newpage
 \section{}
 \subsection{}
