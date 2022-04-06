@@ -224,9 +224,9 @@ A detailed algorithm is below:
   \State Initialize $i\gets 0$
   \While{$i\leq n$}
   \State calculate a closed interval $L_i=[d_i,d_i+C]\cap[0,D]$
-  \State calculate the length $l_i$ of $L_i\backslash L$
+  \State calculate the length $l_i$ of $L_i\backslash L$\Comment{O($\log n$) with binary search tree}
   \State $c\gets c+p_il_i$\Comment{Update the total cost}
-  \State $L\gets L\cup L_i$\Comment{Update the interval that has been covered}
+  \State $L\gets L\cup L_i$\Comment{O($\log n$) by maintaining a binary search tree}
   \If{$L=[0,D]$}
   \State \textbf{return} $c$
   \EndIf
@@ -241,10 +241,29 @@ then $B$ is not reachable.\\
 \textbf{Proof of Correctness:}\\
 Suppose there is another gas expenditure plan with minimal total cost,
 we will show that our algorithm will provide a solution at least better.\\
-We can assume that our car can sort of "decide" \\
-
+We can assume that our car can sort of "remember" to use gas
+from which gas station on any of these intervals.
+Or to be specific, on the interval $Li\backslash L$ of each iteration,
+we assume our car is using gas from the $i$-th gas station.
+Under this definition, 
+we prove our "gas plan" is at least better than another optimal gas plan by induction.\\
+In this induction, we construct our plan $P_n$ from $P^*$ and show that 
+$P_i$ is a improvement over $P^*$ at each iteration.\\
+Let $P_0=P^*$ and we then do induction.\\
+Outside interval $L_1\backslash L$, we use plan $P_0$,
+on interval $L_1\backslash L$, we use our plan $P_n$, 
+we update $P_1$ by combining the plans at $P_0$ and $P_n$ on the whole interval $[0,D]$.
+then obviously $P_1$ is better than $P_0=P^*$ because at least it is better on $L_1\backslash L$.\\
+We now construct $P_{k}$ from $P_{k-1}$:\\
+Outside interval $L_k\backslash L$, we use plan $P_{k-1}$,
+on interval $L_k\backslash L$, we use our plan $P_n$, 
+Then at each iteration our $P_k$ is at least an improvement on interval $L_k\backslash L$
+while the cost outside $L_k\backslash L$ remain unchanged.
+So after the iterations finally our $P_n$ is better than $P_0=P^*$.
+Since $P^*$ is optimal, our $P_n$ is also optimal.\\
 \textbf{Analysis of Running Time:}\\
 aaa
+
 \newpage
 \section{}
 \subsection{}
