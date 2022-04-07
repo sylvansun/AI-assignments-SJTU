@@ -168,10 +168,14 @@ And there are seven possible assignments of $\sigma(x),\sigma(y)$ and $\sigma(z)
 of which three are only one of $x,y,z$ is $T$,
 three are exactly two of $x,y,z$ are $T$,
 one is all of $x,y,z$ are $T$.\\
-In the first three cases $\Pr\left[X_{t+1}=X_{t}+1\right]=\frac{1}{3}$ and $\Pr\left[X_{t+1}=X_{t}-1\right]=\frac{2}{3}$.\\
-In the middle trree cases  $\Pr\left[X_{t+1}=X_{t}+1\right]=\frac{2}{3}$ and $\Pr\left[X_{t+1}=X_{t}-1\right]=\frac{1}{3}$.\\
-In the last case $\Pr\left[X_{t+1}=X_{t}+1\right]=1$ and $\Pr\left[X_{t+1}=X_{t}-1\right]=0$.\\
-Thus we have $\Pr\left[X_{t+1}=X_{t}+1\right]\geq \frac{1}{3}$ and $\Pr\left[X_{t+1}=X_{t}-1\right]\leq\frac{2}{3}$.\\
+In the first three cases 
+$$\Pr\left[X_{t+1}=X_{t}+1\right]=\frac{1}{3},\quad \Pr\left[X_{t+1}=X_{t}-1\right]=\frac{2}{3}$$
+In the middle trree cases  
+$$\Pr\left[X_{t+1}=X_{t}+1\right]=\frac{2}{3},\quad \Pr\left[X_{t+1}=X_{t}-1\right]=\frac{1}{3}$$
+In the last case 
+$$\Pr\left[X_{t+1}=X_{t}+1\right]=1,\quad \Pr\left[X_{t+1}=X_{t}-1\right]=0$$
+Thus we have 
+$$\Pr\left[X_{t+1}=X_{t}+1\right]\geq \frac{1}{3},\quad \Pr\left[X_{t+1}=X_{t}-1\right]\leq\frac{2}{3}$$
 
 \subsection{}
 We use the same notations in class.
@@ -254,8 +258,9 @@ $$\alpha\geq \ln100\sqrt{5}n^{\frac{1}{2}}\left(\frac{4}{3}\right)^n$$
 we can guarantee our algorithm can find a solution with probability 0.99.\\
 Since we are going to run $3n$ rounds each time,
 the total running time is 
-$$cn^{\frac{3}{2}}\left(\frac{4}{3}\right)^n$$
-and hence the smallest $c$ for the required running time is $\frac{4}{3}$.
+$$Cn^{\frac{3}{2}}\left(\frac{4}{3}\right)^n$$
+where $C$ is some constant.
+And hence the smallest $c$ for the required running time is $\frac{4}{3}$.
 
 \newpage
 \section{Acknowledgements}
