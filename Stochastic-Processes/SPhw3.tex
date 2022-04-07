@@ -215,7 +215,23 @@ So the lower bound for this probability is
 $$\frac{1}{\sqrt{5i}}\cdot\frac{1}{2^i}$$.
 
 \subsection{}
-
+Based on the analysis of last problem,
+if we start with some $\sigma_0$ which is uniform at random from all $2^n$ assignments,
+then we need to add up the probabilities with $X_0=n-i,i\in[n]$.\\
+The probability of $X_0=n-i$ is simply 
+$$\binom{n}{i}\cdot\frac{1}{2^n}$$
+Then by using the total probability rule, 
+we can calculate the lower bound of the probability that the algorithm outputs a satisfying assignment.\\
+The lower bound can be expressed by
+\begin{align}
+  \sum_{i=0}^{n}\binom{n}{i}\cdot\frac{1}{2^n}\binom{3i}{i}\left(\frac{1}{3}\right)^{2i}\left(\frac{2}{3}\right)^i
+  &\geq \frac{1}{\sqrt{5n}}\cdot\frac{1}{2^n}\sum_{i=0}^{n}\binom{n}{i}\left(\frac{3^{3i}}{2^{2i}}\right)\left(\frac{2^i}{3^{3i}}\right)\\
+  &=\frac{1}{\sqrt{5n}}\cdot\frac{1}{2^n}\sum_{i=0}^{n}\binom{n}{i}\cdot\frac{1}{2^i}\\
+  &=\frac{1}{\sqrt{5n}}\cdot\frac{1}{2^n}(1+\frac{1}{2})^n\\
+  &=\frac{1}{\sqrt{5n}}\cdot\left(\frac{3}{4}\right)^n
+\end{align}
+Hence the probability that the algorithm outputs a satisfying assignment
+with n variables has such a lower bound.
 \subsection{}
 
 
