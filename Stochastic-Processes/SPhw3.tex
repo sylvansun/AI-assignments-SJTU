@@ -233,7 +233,29 @@ The lower bound can be expressed by
 Hence the probability that the algorithm outputs a satisfying assignment
 with n variables has such a lower bound.
 \subsection{}
-
+Our strategy is to run the algorithm on 3-SAT questions for several times 
+until it can find a solution with probability 0.99.\\
+In previous problem we have calculated the probability for a single running for $3n$ rounds,
+which is $\frac{1}{\sqrt{5n}}\left(\frac{3}{4}\right)^n$.
+We use $p$ to denote this probability, 
+then if we run the algorithm for $\alpha$ times, 
+the probability of finding a solution(if it exists) is 
+$$1-(1-p)^{\alpha}$$
+To guarantee a probability larger than 0.99,
+we let 
+$$1-(1-p)^{\alpha}\geq 0.99$$
+and get
+$$\alpha\geq \frac{\ln0.01}{\ln(1-p)}$$
+which is approximately 
+$$\frac{\ln 100}{p}$$
+for $n$ large enough.\\
+So if we let 
+$$\alpha\geq \ln100\sqrt{5}n^{\frac{1}{2}}\left(\frac{4}{3}\right)^n$$
+we can guarantee our algorithm can find a solution with probability 0.99.\\
+Since we are going to run $3n$ rounds each time,
+the total running time is 
+$$cn^{\frac{3}{2}}\left(\frac{4}{3}\right)^n$$
+and hence the smallest $c$ for the required running time is $\frac{4}{3}$.
 
 \newpage
 \section{Acknowledgements}
