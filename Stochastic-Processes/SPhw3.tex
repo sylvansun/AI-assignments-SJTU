@@ -160,8 +160,17 @@ then the probability of the CNF indeed being satisfiable is
 $(\frac{1}{2})^{50}$.
 Thus the probability of our algorithm is correct is $1-(\frac{1}{2})^{50}$.
 
-
-
+\subsection{}
+Without loss of generality, assume we choose clause $c=x\vee y\vee z$ at round $t$.
+Then we have $\sigma_t(x)=\sigma_t(y)=\sigma_t(z)=F$ where $F$ indicates that those variables are false.
+And there are seven possible assignments of $\sigma(x),\sigma(y)$ and $\sigma(z)$,
+of which three are only one of $x,y,z$ is $T$,
+three are exactly two of $x,y,z$ are $T$,
+one is all of $x,y,z$ are $T$.\\
+In the first three cases $\Pr\left[X_{t+1}=X_{t}+1\right]=\frac{1}{3}$ and $\Pr\left[X_{t+1}=X_{t}-1\right]=\frac{2}{3}$.\\
+In the middle trree cases  $\Pr\left[X_{t+1}=X_{t}+1\right]=\frac{2}{3}$ and $\Pr\left[X_{t+1}=X_{t}-1\right]=\frac{1}{3}$.\\
+In the last case $\Pr\left[X_{t+1}=X_{t}+1\right]=1$ and $\Pr\left[X_{t+1}=X_{t}-1\right]=0$.\\
+Thus we have $\Pr\left[X_{t+1}=X_{t}+1\right]\geq \frac{1}{3}$ and $\Pr\left[X_{t+1}=X_{t}-1\right]\leq\frac{2}{3}$.\\
 \newpage
 \section{Acknowledgements}
 \subsection*{Q1.1}
