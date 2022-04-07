@@ -143,6 +143,24 @@ So such a positive recurrent countably infinite markov chain will converge to it
 \newpage
 \section{A Randomized Algorithm for 3-SAT}
 \subsection{}
+We use the same notations as defined in class.
+Similar to our analysis in class, 
+if we repeat the random flipping operation for $2n^2$ times,
+the lower bound for 
+$$1-\Pr\left[\exists t\in [0,2n^2]\quad s.t.\quad Y_t=n\right]$$
+is equal to 
+$$\Pr\left[T_{Y_0\to n}>2n^2\right]\leq\frac{\mathbb{E}[T_{Y_0\to n}]}{2n^2}\leq\frac{1}{2}$$
+Thus the probability that this algorithm is \textbf{not} correct 
+after one iteration is $\frac{1}{2}$.
+But we will run our algorithm 50 times, 
+if after any iteration our algorithm gives a correct assignment,
+then the algorithm is correct.
+If none of the 50 iterations says the CNF is satisfiable,
+then the probability of the CNF indeed being satisfiable is 
+$(\frac{1}{2})^{50}$.
+Thus the probability of our algorithm is correct is $1-(\frac{1}{2})^{50}$.
+
+
 
 \newpage
 \section{Acknowledgements}
@@ -150,4 +168,5 @@ So such a positive recurrent countably infinite markov chain will converge to it
 The idea of proving a finite irreducible markov chain is from lecture 5 of STAT253/317, University of Chicago.
 \subsection*{Q1.2-1.3}
 Actually from lecture notes previous year.
+\subsection*{Q2.4-2.6}
 \end{document}
