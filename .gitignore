@@ -3,3 +3,8 @@
 
 #for latex
 *.fdb_latexmk
+*.log
+*.out
+*.fls
+*.aux
+*.synctex.gz
