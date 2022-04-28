@@ -1,1 +1,2 @@
-*.slides
+#MAC OS
+.DS_Store
