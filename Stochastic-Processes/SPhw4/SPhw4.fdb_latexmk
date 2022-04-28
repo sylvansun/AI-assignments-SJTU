@@ -1,7 +1,7 @@
 # Fdb version 3
-["pdflatex"] 1651142066 "/Users/emrakul/Course-Assignments-AISJTU/Stochastic-Processes/SPhw4/SPhw4.tex" "/Users/emrakul/Course-Assignments-AISJTU/Stochastic-Processes/SPhw4/SPhw4.pdf" "SPhw4" 1651142085
-  "/Users/emrakul/Course-Assignments-AISJTU/Stochastic-Processes/SPhw4/SPhw4.aux" 1651142067 1695 3ed00437212b95a8dd8c32775d9d80b9 ""
-  "/Users/emrakul/Course-Assignments-AISJTU/Stochastic-Processes/SPhw4/SPhw4.tex" 1651142082 4887 2286a7ae985751e5e13cf9c16d113910 ""
+["pdflatex"] 1651151867 "/Users/emrakul/Course-Assignments-AISJTU/Stochastic-Processes/SPhw4/SPhw4.tex" "/Users/emrakul/Course-Assignments-AISJTU/Stochastic-Processes/SPhw4/SPhw4.pdf" "SPhw4" 1651151885
+  "/Users/emrakul/Course-Assignments-AISJTU/Stochastic-Processes/SPhw4/SPhw4.aux" 1651151868 1826 692e99706b8539ac125416a55499d130 ""
+  "/Users/emrakul/Course-Assignments-AISJTU/Stochastic-Processes/SPhw4/SPhw4.tex" 1651151885 8718 dc430a8c362688b17afab163c36fd844 ""
   "/Users/emrakul/Library/texlive/2021/texmf-var/fonts/pk/ljfour/public/bbm/bbm12.600pk" 1651130034 8424 b6a9a8e28cf36a91b7dd1537d9018a77 ""
   "/usr/local/texlive/2021/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2021/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1246382020 1004 54797486969f23fa377b128694d548df ""
@@ -38,6 +38,7 @@
   "/usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb" 1248133631 32734 69e00a6b65cedb993666e42eedb3d48f ""
   "/usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb" 1248133631 32726 0a1aea6fcd6468ee2cf64d891f5c43c8 ""
   "/usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb" 1248133631 32569 5e5ddc8df908dea60932f3c484a54c0d ""
+  "/usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb" 1248133631 32587 1788b0c1c5b39540c96f5e42ccd6dae8 ""
   "/usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb" 1248133631 32626 4f5c1b83753b1dd3a97d1b399a005b4b ""
   "/usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb" 1248133631 34694 ad62b13721ee8eda1dcc8993c8bd7041 ""
   "/usr/local/texlive/2021/texmf-dist/tex/context/base/mkii/supp-pdf.mkii" 1461363279 71627 94eb9990bed73c364d7f53f960cc8c5b ""
@@ -124,13 +125,13 @@
   "/usr/local/texlive/2021/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1616695603 5169178 a2ce6e2d73f603b690db6777d06dbccb ""
   "/usr/local/texlive/2021/texmf-var/web2c/pdftex/pdflatex.fmt" 1645752890 2724740 e57d09ac16f4d7b81c9b49ae6a05d103 ""
   "/usr/local/texlive/2021/texmf.cnf" 1616695596 577 4c1911a7228e554c6032256d3cf5567d ""
-  "SPhw4.aux" 1651142067 1695 3ed00437212b95a8dd8c32775d9d80b9 "pdflatex"
-  "SPhw4.out" 1651142067 835 ca65a320d3a330ef234156aea6c15508 "pdflatex"
-  "SPhw4.tex" 1651142082 4887 2286a7ae985751e5e13cf9c16d113910 ""
+  "SPhw4.aux" 1651151868 1826 692e99706b8539ac125416a55499d130 "pdflatex"
+  "SPhw4.out" 1651151868 1054 0748571cc0f958f28f1b42db25ab4b1c "pdflatex"
+  "SPhw4.tex" 1651151885 8718 dc430a8c362688b17afab163c36fd844 ""
   (generated)
-  "SPhw4.pdf"
   "SPhw4.aux"
-  "SPhw4.out"
-  "/Users/emrakul/Course-Assignments-AISJTU/Stochastic-Processes/SPhw4/SPhw4.pdf"
+  "SPhw4.pdf"
   "/Users/emrakul/Course-Assignments-AISJTU/Stochastic-Processes/SPhw4/SPhw4.log"
+  "/Users/emrakul/Course-Assignments-AISJTU/Stochastic-Processes/SPhw4/SPhw4.pdf"
   "SPhw4.log"
+  "SPhw4.out"
