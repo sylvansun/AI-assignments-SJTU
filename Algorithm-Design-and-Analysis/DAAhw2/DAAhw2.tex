@@ -128,18 +128,9 @@ Consider a simple case where $V=\{1,2\}$, $E=\{(1,2)\}$ in the undirected connec
 \subsection{}
 Prove by contradiction. If there is a bridge in $G$ denoted by $(u,v)$, we now show that $u$ and $v$ are not mutually reachable in $G'$. If $u$ and $v$ are mutually reachable, then there is a cycle in $G'$ containing $u$ and $v$. Since $(u,v)$ is a bridge in $G$, it must be in this cycle. Thus removing $(u,v)$ in $G$ will not make $G$ unconnected. So there is no bridge in $G$.
 \subsection{}
-We prove by showing that any two vertices $u,v$ in $G'$ are mutually reachable.\\
-We are going to use a lemma from course discrete maths. This lemma says that for any vertices $u,v,w$, if $u$ is an ancestor of $v$ and there is an edge between $v,w$ in the corresponding DFS search tree, then either $u$ is $w$'s ancestor or $w$ is $u$'s ancestor or $u=w$. \\
-What this lemma tells us is that any back edge will not be connecting a vertex to another branch in the DFS search tree. Namely, all the back edges in $G'$ are connecting vertices to one of their ancestors.\\
-Now we consider two cases.\\
-If $u,v$ are ancestor and descendant of each other, without loss of generality, always assume $u$ is $v$'s ancestor. Then $v$ is reachable from $u$. Now we consider $v$ and all of $v$'s descendants.
-There exists at least one edge from $v$ or its descendants to $w$. If $w=u$ or $w$ is $u$'s ancestor then $u$ is reachable from $v$ and we are done. If not, i.e. none of $v$ or its descendants has a back edge to $u$ or $u$'s ancestors, then it must follows that 
-the very first edge on the path in DFS search tree from $u$ to $v$ is a bridge in $G$, which is in contradiction with our assumption that there is no bridge in $G$.\\
-So in this case $u,v$ are mutually reachable.\\
-If $u,v$ are not in the relationship of ancestor and descendant, then we there exists at least one common ancestor $s$ of $u$ and $v$. Then we can see $s$ and $u$ are mutually reachable, $s$ and $v$ are mutually reachable, thus $u$ and $v$ are mutually reachable. 
-So in this case $u,v$ are also mutually reachable to each other.\\
-So $G'$ must be strongly connected.
-
+Since removing any edge of $G$ will not violate its connectivity, then there exists at least one leaf node in the DFS search tree which has a back edge from itself to the root. We use $r$ to denote the root of DFS search tree and $l$ to denote the very leaf.\\
+Now we consider any two vertices $u,v$ and prove that they are mutually reachable. Firstly there exists ancestor $u'$ of $u$ which satisfies the condition that it is reachable by $u$ or descendants of $u$ by one of their back edges and $l$ is reachable by $u'$, by the connectivity of $G$. (Note that it is possible $u'=u$). Also there exists such a $v'$ for $v$. So $u$ and $u'$ are mutually connective, $v$ and $v'$ are mutually connective.\\
+Since $l$ is reachable by $u'$ and $v'$, $r$ is reachable by $l$, and any vertex is reachable by $r$, we can safely say $u'$ and $v'$ are mutually connective. It follows that $u$ and $v$ are mutually connective, so the graph $G'$ is strongly connected.
 \subsection{}
 We describe the procedure by which the edges are provided.\\
 Firstly we generate $G'$ by a DFS process described in this problem.\\
@@ -165,3 +156,4 @@ Problem 4 has difficulty in between the previous questions, so the rating is $4$
 \subsection{}
 No collaborators this time.(Big thanks to the hint.)
 \end{document}
+
