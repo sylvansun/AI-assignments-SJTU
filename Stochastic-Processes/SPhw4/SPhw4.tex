@@ -101,7 +101,31 @@ So $\{S_t\}$ is a martingale.
 \end{align}
 So $\{P_t\}$ is a martingale.
 \subsection{}
+If $p=\frac{1}{2}$, we have shown in class that $\mathbb{E}(\tau)=ab$ in class.
+Here we only show the case where $p\neq\frac{1}{2}$.\\
+Clearly, $\Pr(\tau<\infty)$ also holds when $p\neq\frac{1}{2}$. 
+$|X_t|$ is bounded, so $|P_t|$ is bounded,
+indicating that $\{P_t\}$ satisfies the second condition of OST.
+Also, $\mathbb{E}(|S_{t+1}-S_{t}||\mathcal{F}_t)\leq 2p+1$,
+indicating that $\{S_t\}$ satisfies the third condition of OST.
+So we can apply the Optional Stopping theorem on them and thus we have
+$\mathbb{E}(S_{\tau})=\mathbb{E}(S_{1})$ and $\mathbb{E}(P_{\tau})=\mathbb{E}(P_{1})$.\\
+Denote $\Pr$(ending at $-a$) by $P_a$, $\Pr$(ending at $b$) by $P_b$.
+From $\mathbb{E}(S_{\tau})=\mathbb{E}(S_{1})=0$ we have 
+$$\mathbb{E}(\tau)\cdot(2p-1)=aP_a-bP_b$$
+From $\mathbb{E}(P_{\tau})=\mathbb{E}(P_{1})=1$ we have
+$$\left(\frac{p}{1-p}\right)^{-a}P_a+\left(\frac{p}{1-p}\right)^{b}P_b=1$$
+By the latter equation we can calculate $P_a$ and $P_b$,
+$$P_a=\frac{1-\left(\frac{p}{1-p}\right)^b}{\left(\frac{p}{1-p}\right)^{-a}-\left(\frac{p}{1-p}\right)^b}\qquad
+P_b=\frac{\left(\frac{p}{1-p}\right)^{-a}-1}{\left(\frac{p}{1-p}\right)^{-a}-\left(\frac{p}{1-p}\right)^b}$$
+By putting these two results to the former equation we get
+$$\mathbb{E}(\tau)=\frac{(a-b)-a\left(\frac{p}{1-p}\right)^b+b\left(\frac{p}{1-p}\right)^{-a}}
+{(2p-1)\left[\left(\frac{p}{1-p}\right)^{-a}-\left(\frac{p}{1-p}\right)^b\right])} \quad (p\neq\frac{1}{2})$$
 
 \section{Longest Common Subsequence}
+
+\subsection{}
+
+\subsection{}
 
 \end{document}

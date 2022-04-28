@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021) (preloaded format=pdflatex 2022.2.25)  28 APR 2022 17:01
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021) (preloaded format=pdflatex 2022.2.25)  28 APR 2022 18:34
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -488,23 +488,23 @@ File: ubbm.fd 1999/03/15 V 1.2 Font definition for bbm font - TH
 
 ] 
 AED: lastpage setting LastPage
-[2] (/Users/emrakul/Course-Assignments-AISJTU/Stochastic-Processes/SPhw4/SPhw4.aux)
+[2] [3] (/Users/emrakul/Course-Assignments-AISJTU/Stochastic-Processes/SPhw4/SPhw4.aux)
 Package rerunfilecheck Info: File `SPhw4.out' has not changed.
-(rerunfilecheck)             Checksum: 39C5BE989AA411286BC16915CEEE7FBD;737.
+(rerunfilecheck)             Checksum: CA65A320D3A330EF234156AEA6C15508;835.
  ) 
 Here is how much of TeX's memory you used:
- 12538 strings out of 478994
- 189689 string characters out of 5858184
- 518938 words of memory out of 5000000
- 29798 multiletter control sequences out of 15000+600000
+ 12543 strings out of 478994
+ 189755 string characters out of 5858184
+ 520946 words of memory out of 5000000
+ 29800 multiletter control sequences out of 15000+600000
  410782 words of font info for 57 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  71i,12n,75p,330b,340s stack positions out of 5000i,500n,10000p,200000b,80000s
  </Users/emrakul/Library/texlive/2021/texmf-var/fonts/pk/ljfour/public/bbm/bbm12.600pk></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on /Users/emrakul/Course-Assignments-AISJTU/Stochastic-Processes/SPhw4/SPhw4.pdf (2 pages, 112244 bytes).
+Output written on /Users/emrakul/Course-Assignments-AISJTU/Stochastic-Processes/SPhw4/SPhw4.pdf (3 pages, 118764 bytes).
 PDF statistics:
- 107 PDF objects out of 1000 (max. 8388607)
- 89 compressed objects within 1 object stream
- 18 named destinations out of 1000 (max. 500000)
- 49 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 121 PDF objects out of 1000 (max. 8388607)
+ 101 compressed objects within 2 object streams
+ 21 named destinations out of 1000 (max. 500000)
+ 65 words of extra memory for PDF output out of 10000 (max. 10000000)
 
