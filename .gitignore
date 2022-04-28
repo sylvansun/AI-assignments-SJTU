@@ -1,2 +1,5 @@
 #MAC OS
 .DS_Store
+
+#for latex
+*.fdb_latexmk

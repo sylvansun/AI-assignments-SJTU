@@ -82,9 +82,24 @@ which completes our proof.
 
 \section{Biased One-dimensional Random Walk}
 \subsection{}
-
+\begin{align}
+  \mathbb{E}(S_{t+1}|\overline{Z_{1,n}})
+  &=\mathbb{E}(S_t+Z_{t+1}+2p-1|\overline{Z_{1,n}})\\
+  &=S_t+2p-1+\mathbb{E}(Z_{t+1}|\overline{Z_{1,n}})\\
+  &=S_t+2p-1+(-1)\cdot p+1\cdot(1-p)\\
+  &=S_t
+\end{align}
+So $\{S_t\}$ is a martingale.
 \subsection{}
-
+\begin{align}
+  \mathbb{E}(P_{t+1}|\overline{Z_{1,n}})
+  &=\mathbb{E}((\frac{p}{1-p})^{X_t+Z_{t+1}}|\overline{Z_{1,n}})\\
+  &=\mathbb{E}((\frac{p}{1-p})^{X_t}\cdot(\frac{p}{1-p})^{Z_{t+1}}|\overline{Z_{1,n}})\\
+  &=P_t\cdot\mathbb{E}((\frac{p}{1-p})^{Z_{t+1}}|\overline{Z_{1,n}})\\
+  &=P_t\cdot(\frac{p}{1-p}\cdot(1-p)+\frac{1-p}{p}\cdot p)\\
+  &=P_t
+\end{align}
+So $\{P_t\}$ is a martingale.
 \subsection{}
 
 \section{Longest Common Subsequence}
