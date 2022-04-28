@@ -12,6 +12,7 @@
 \usepackage{hyperref}
 \usepackage{mathtools}
 \usepackage{xfrac}
+\usepackage{bbm}
 
 \hypersetup{
   colorlinks=true,
@@ -56,6 +57,28 @@
 \begin{document}
 
 \section{Doob's Martingale Inequality}
+Consider $\tau=\arg\min_{t\leq n}\{X_t\geq\alpha\}$ or $\tau=n$ if $\forall 0\leq t\leq n, X_t<\alpha$.\\
+Clearly $\tau$ is a stopping time because by our definition 
+for any $t\geq 0$, $\mathbbm{1}[\tau\leq t]$ is $\mathcal{F}_t$-measurable.\\
+Then denote event $X_{\tau}\geq\alpha$ by $A$,
+denote event $\max_{0\leq t\leq n}X_t\geq\alpha$ by $B$.
+We have $B\subset A$ because by our definition of stopping time $\tau$,
+if $X_{\tau}\geq\alpha$,
+then if must follows that $\exists k, 0\leq k\leq n$ such that $X_t\geq\alpha$,
+hence $\max_{0\leq t\leq n}X_t\geq\alpha$.
+We know that if $B\subset A$, then $\Pr(B)\leq\Pr(A)$.
+This means that
+$$\Pr \left[\max_{0\leq t\leq n}X_t\geq\alpha\right]\leq \Pr\left[X_{\tau}\geq\alpha\right]$$
+Since $X_t\geq 0$, by applying the Markov Inequality we have
+$$\Pr\left[X_{\tau}\geq\alpha\right]\leq \frac{\mathbb{E}\left[X_{\tau}\right]}{\alpha}$$
+By our definition of $\tau$ we can easily see $\Pr[\tau\leq n]=1$,
+which means that $\tau$ is bounded almost surely,
+satisfying the first condition for Optional Stopping Theorem.
+Then by OST we have
+$$\mathbb{E}[X_{\tau}]=\mathbb{E}[{X_0}]$$
+Adding up all the inequalities together we get 
+$$\Pr \left[\max_{0\leq t\leq n}X_t\geq\alpha\right]\leq \frac{\mathbb{E}\left[X_{0}\right]}{\alpha}$$
+which completes our proof.
 
 \section{Biased One-dimensional Random Walk}
 
