@@ -12,7 +12,8 @@
 \usepackage{hyperref}
 \usepackage{mathtools}
 \usepackage{xfrac}
-\usepackage{bbm}
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
 
 \hypersetup{
   colorlinks=true,
@@ -57,6 +58,124 @@
 \begin{document}
 
 \section{}
+\subsection{}
+The idea is to scan the array from left to right and update the maximum revenue meanwhile.
+See algorithm below for details.
+\begin{algorithm}
+  \caption{Max Revenue-1,1($\boldsymbol{a}$)}\label{alg:mr11}
+  \begin{algorithmic}[1]
+  \Procedure{Max Revenue-1,1}{$\boldsymbol{a}$}:\Comment{$\boldsymbol{a}=\{a_1,a_2,a_3,\dots,a_n\}$}
+  \State result$\gets0$, sum$\gets0$, $i\gets1$ \Comment{sum is our current optimal to maintain}
+  \While{$i<n+1$}
+  \State sum$\gets$sum+$a_i$
+  \If{sum$>$result}
+  \State result$\gets$sum\Comment{Update the optimal subsequence}
+  \EndIf
+  \If{sum$<$0}
+  \State sum$\gets$0\Comment{Discard the bad subsequence we do not want}
+  \EndIf
+  \State $i\gets i+1$
+  \EndWhile
+  \State \textbf{return} result
+  \EndProcedure
+  \end{algorithmic}
+\end{algorithm}\\
+Since our algorithm only requires us to scan the array once,
+clearly the time complexity is $O(n)$.
+
+\newpage
+\subsection{}
+The idea is still scanning the array from left to right once,
+but we will use an array $\boldsymbol{s}[n]$ to store the maximum revenue
+of a subsequence ending at position $i,i\in[n]$.\\
+First we initialize $s_1,s_2,s_3,\dots,s_L$.
+Then for each element $a_i,i\in[n]$, 
+we need to update $R-L+1$ elements in $\boldsymbol{s}[n]$,
+which are $s_{i+L},s_{i+L+1},\dots,s_{i+R}$.
+The initialize rule and update rule are given in the algorithm below.
+\begin{algorithm}
+  \caption{Max Revenue($L,R,\boldsymbol{a}$)}\label{alg:mrlrNsquare}
+  \begin{algorithmic}[1]
+  \Procedure{Max Revenue}{$L,R,\boldsymbol{a}$}:\Comment{$\boldsymbol{a}=\{a_1,a_2,a_3,\dots,a_n\}$}
+  \State result$\gets0$, $i\gets1$ $s_i\gets 0,\forall i\in[n]$\Comment{$\boldsymbol{s}$ is described above}
+  \While{$i<L+1$}
+  \If{$a_i>0$}
+  \State $s_i\gets a_i$\Comment{Initialization for the first $L$ elements}
+  \EndIf
+  \If{$a_i>$result}
+  \State result$\gets a_i$\Comment{Update the result}
+  \EndIf
+  \State $i\gets i+1$
+  \EndWhile
+  \State $i\gets1$
+  \While{$i+L<n+1$}
+  \State step$\gets L$
+  \While{$i+$step$<n+1$}
+  \If{$s_i+a[i+$step$]>s[i+$step$]$}
+  \State $s[i+$step$]=s_i+a[i+$step$]$\Comment{update the optimal result at $i$}
+  \EndIf
+  \If{$s[i+$step$]>$result}
+  \State result$\gets s[i+$step$]$ 
+  \EndIf
+  \State step$\gets$step+1
+  \EndWhile
+  \State $i\gets i+1$ 
+  \EndWhile
+  \State \textbf{return} result
+  \EndProcedure
+  \end{algorithmic}
+\end{algorithm}\\
+We need to do $R-L+1$ updates at each round and there are $n$ rounds in total,
+so the time complexity is $O((R-L+1)n)$.
+So with the difference between $L$ and $R$ approaching $n$,
+our algorithm actually becomes $O(n^2)$.
+
+\newpage
+\subsection{}
+We still need to scan the array from left to right once,
+but instead of updating $R-L+1$ elements at each iteration,
+we use a better strategy.\\
+For each $a_i$,
+we look for the largest $s_j,i-R\leq j\leq i-L$
+and use this largerst result to update $s_i$.
+Then by our algorithm in class,
+we can find all the largest $s_j$ for our current $a_i$ with only $O(n)$ time.
+A detailed algorithm is given below.
+\begin{algorithm}
+  \caption{Max Revenue($L,R,\boldsymbol{a}$)}\label{alg:mrlrn}
+  \begin{algorithmic}[1]
+  \Procedure{Max Revenue}{$L,R,\boldsymbol{a}$}:\Comment{$\boldsymbol{a}=\{a_1,a_2,a_3,\dots,a_n\}$}
+  \State result$\gets0$, $i\gets1$ $s_i\gets 0,\forall i\in[n]$ 
+  \While{$i<L+1$}
+  \If{$a_i>0$}
+  \State $s_i\gets a_i$\Comment{Initialization is the same as algorithm 2}
+  \EndIf
+  \If{$a_i>$result}
+  \State result$\gets a_i$\Comment{Update the result}
+  \EndIf
+  \State $i\gets i+1$
+  \EndWhile
+  \State $i\gets L+1$
+  \While{$i<n+1$}
+  \State max$\gets$ k-Largest($\boldsymbol{s},i-R,i-L$)\Comment{Algorithm in class to find max in $O(1)$ time}
+  \If{max+$a_i>s_i$}
+  \State $s_i\gets$max+$a_i$
+  \EndIf
+  \If{$s_i>$result}
+  \State result$\gets s_i$
+  \EndIf
+  \State $i\gets i+1$
+  \EndWhile
+  \State \textbf{return} result
+  \EndProcedure
+  \end{algorithmic}
+\end{algorithm}\\
+The reason why this algorithm is faster is that
+by using the k-Largest algorithm, 
+we do not have to update $R-L+1$ times each round.
+We only need to look up the largest result before a certain element 
+and the look up process is $O(1)$ for each element.
+As a result, the total running time of our algorithm can be reduced to $O(n)$.
 
 
 \end{document}
