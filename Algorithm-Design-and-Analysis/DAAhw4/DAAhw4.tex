@@ -250,4 +250,116 @@ Our algorithm requires us to fill in a table of $n*n$ where each calculation can
 by comparing three numbers, 
 which can be done in $O(1)$ time.
 So the total running time is $O(n^2)$.
+
+\newpage
+\section{}
+
+\subsection{}
+\textbf{Algorithm Description:}\\
+Denote the number of independent sets in a subtree rooted at $v$ by $f(v)$,
+we can calculate by the following state transition equation.\\
+$$f(v)=\prod_{w: \text{grandchild of } v}f(w)+\prod_{w: \text{child of }v}f(w)$$
+Then let the root of given tree $G$ be $r$, our result is given by $f(r)$.
+By our definition of algorithm, we can calculate $f(r)$ recursively.\\
+As for the initial states of recursion,
+all the leaves $l$ of original graph $G$ should have $f(l)=1$.
+\textbf{Running Time:}\\
+We are going to calculate $f(r)$ recursively.
+Since all the sub trees are independent of each other,
+their calculation process will not need information of each other.
+As a result, for any single vertex $v$ of $G$,
+$f(v)$ need and only need calculating once. 
+Since we assume it takes $O(1)$ time to store and multiply two integers,
+the total running time is constant times total number of calculations of $f(v)$.
+So the running time is $O(n)$.\\
+\textbf{Proof of correctness:}\\
+We prove by induction.\\
+Clearly the base step is correct.
+We only need to show at each induction step,
+our state transition equation can actually give us a correct result.\\
+Suppose the current root of our subtree $T_v$ is $v$,
+we now want to calculate the number of independent sets in $T_v$.
+There are two kinds of indepent sets, 
+we can calculate them respectively and add them together.\\
+First are the independent sets which include the root $v$.
+Since $v$ is in those independent sets, 
+their children cannot be in the sets,
+but we can choose from the independent sets of the grandchildren of $v$ freely.
+Each grandchild $w$ of $v$ has $f(w)$ independent sets,
+so the total number is multiplying all those $f(w)$ together,
+as shown by our equation.\\
+Second are the independent sets which do not include the root $v$.
+Since $v$ is not in those independent sets,  
+we can choose from the independent sets of the children of $v$ freely,
+similarly, the total number is multiplying $f(w)$ where $w$ is a child of $v$.\\
+Finally by adding up these two kinds of independent sets together,
+we get the total number of independent sets rooted at $v$.\\
+So the induction process can actually give us the correct result at each iteration,
+finally $f(r)$ is the result we want.
+
+\newpage
+\subsection{}
+\textbf{Algorithm Description:}\\
+Denote the number of maximum independent sets in a subtree rooted at $v$ by $f(v)$,
+denote the size of maximum independent set in the same subtree by $g(v)$.
+We initialize $f(l)=g(l)=1$ for all the leaves $l$ in the tree $G$
+and calculate $f(v),g(v)$ according to the following state transition equations.\\
+$$g(v)=\max\left\{\sum_{w:\text{child of }v}g(w),\quad 1+\sum_{w:\text{grandchild of }v}g(w)\right\}$$
+$$f(v)=\begin{cases}
+  \prod_{w:\text{child of }v}f(w),\quad \text{if}\quad \sum_{w:\text{child of }v}g(w)>1+\sum_{w:\text{grandchild of }v}g(w)\\
+  \prod_{w:\text{grandchild of }v}f(w),\quad \text{if}\quad \sum_{w:\text{child of }v}g(w)<1+\sum_{w:\text{grandchild of }v}g(w)\\
+  \prod_{w:\text{child of }v}f(w)+\prod_{w:\text{grandchild of }v}f(w),\text{\quad otherwise}
+\end{cases}$$
+Then let the root of given tree $G$ be $r$, our result is given by $f(r)$.\\
+\textbf{Running Time:}\\
+Likewise, we are going to calculate $f(r)$ and $g(r)$ recursively.
+Since all the sub trees are independent of each other,
+their calculation process will not need information of each other.
+As a result, for any single vertex $v$ of $G$,
+we first calculate $g(v)$ and 
+$g(v)$ need and only need calculating once.
+During the process we calculate $g(v)$,
+we can know the larger of the two numbers we are comparing.
+This means that although there are three cases of $f(v)$,
+when we are actually calculating $f(v)$,
+we do not need to check which case it is because we already know 
+when we were calculating $g(v)$ for the same $v$.
+Since we assume it takes $O(1)$ time to store and multiply two integers,
+the total running time is constant times total number of calculations of $f(v)$ plus $g(v)$,
+which remains $O(n)$.\\ 
+\textbf{Proof of correctness:}\\
+The method of calculation of number of maximum independent sets is exactly the same 
+as the case where we calculate independent sets,
+we only need to prove that at each iteration,
+we are picking the actual maximum independent set in the subtree $T_v$ rooted at $v$.\\
+The size of maximum independent set at $T_v$ defined as $g(v)$ 
+and $g(v)$ is given by 
+$$\max\left\{\sum_{w:\text{child of }v}g(w),\quad 1+\sum_{w:\text{grandchild of }v}g(w)\right\}$$
+This equation means that the size of maximum independent set is
+either $\sum_{w:\text{child of }v}g(w)$ if we do not choose $r$ in the set,
+or $1+\sum_{w:\text{grandchild of }v}g(w)$ if we choose $r$ in the set.\\
+By picking the larger of these two sizes we guarantee that our outcome is optimal.
+So we can make sure that the final size of maximum independent set is correct.
+Then the counting of number of such sets is also correct by our proof in  problem 4.1.
+\newpage
+\section{Comments}
+\subsection{}
+Although the DP algorithms are more difficult than the greedy algorithms,
+this assignment does not require proof of correctness for most of the problems.
+As it turns out, this time I took about a whole day to finish the assignment.
+\subsection{}
+Q1$\to$3. The intuition is straightforward and we can use the hint.
+By applying the algorithm from class,
+it is not hard to figure out this problem. \\
+Q2$\to$5. I myself spent great time on thinking about the state transition equation of this dynamic programming.
+It is difficult, from my perspective, because the relying relationship between the states is not that easy to figure out.\\
+Q3$\to$4. This problem is also a difficult one. But based on the algorithm from class about DP on intervals,
+it is not that hard as question 2.\\
+Q4$\to$3. Since we have learnt the algorithm to find the size of maximum independent set in class,
+the algorithm for this problem can be built from that algorithm and it is not very demanding to figure out solution for this problem.
+\subsection{}
+I got all the ideas of these algorithms from class or our lecture notes,
+but I indeed talked with some of my classmates for the simplicity of description of algorithm
+and proof of correctness.\\
+But the actual work is finished on my own.
 \end{document}
