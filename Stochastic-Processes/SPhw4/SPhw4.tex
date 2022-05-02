@@ -63,11 +63,11 @@ for any $t\geq 0$, $\mathbbm{1}[\tau\leq t]$ is $\mathcal{F}_t$-measurable.\\
 Then denote event $X_{\tau}\geq\alpha$ by $A$,
 denote event $\max_{0\leq t\leq n}X_t\geq\alpha$ by $B$.
 We have $B\subset A$ because by our definition of stopping time $\tau$,
-if $X_{\tau}\geq\alpha$,
-then if must follows that $\exists k, 0\leq k\leq n$ such that $X_t\geq\alpha$,
-hence $\max_{0\leq t\leq n}X_t\geq\alpha$.
+if $\exists k, 0\leq k\leq n$ such that $X_t\geq\alpha$,
+hence $\max_{0\leq t\leq n}X_t\geq\alpha$,
+then it must follows that $X_{\tau}\geq\alpha$,
 We know that if $B\subset A$, then $\Pr(B)\leq\Pr(A)$.
-This means that
+This means thats
 $$\Pr \left[\max_{0\leq t\leq n}X_t\geq\alpha\right]\leq \Pr\left[X_{\tau}\geq\alpha\right]$$
 Since $X_t\geq 0$, by applying the Markov Inequality we have
 $$\Pr\left[X_{\tau}\geq\alpha\right]\leq \frac{\mathbb{E}\left[X_{\tau}\right]}{\alpha}$$
@@ -119,7 +119,7 @@ By the latter equation we can calculate $P_a$ and $P_b$,
 $$P_a=\frac{1-\left(\frac{p}{1-p}\right)^b}{\left(\frac{p}{1-p}\right)^{-a}-\left(\frac{p}{1-p}\right)^b}\qquad
 P_b=\frac{\left(\frac{p}{1-p}\right)^{-a}-1}{\left(\frac{p}{1-p}\right)^{-a}-\left(\frac{p}{1-p}\right)^b}$$
 By putting these two results to the former equation we get
-$$\mathbb{E}(\tau)=\frac{(a-b)-a\left(\frac{p}{1-p}\right)^b+b\left(\frac{p}{1-p}\right)^{-a}}
+$$\mathbb{E}(\tau)=\frac{(a+b)-a\left(\frac{p}{1-p}\right)^b-b\left(\frac{p}{1-p}\right)^{-a}}
 {(2p-1)\left[\left(\frac{p}{1-p}\right)^{-a}-\left(\frac{p}{1-p}\right)^b\right])} \quad (p\neq\frac{1}{2})$$
 
 \section{Longest Common Subsequence}
@@ -154,7 +154,7 @@ $$\frac{n!}{(c_2n)!(n-c_2n)!}\cdot\frac{1}{2^{c_2n}}$$
 Then by applying the Stirling's Formula we get 
 $$\frac{1}{\sqrt{2\pi nc_2(1-c_2)}\left(\frac{1}{2c_{2}^{c_2}(1-c_2)^{1-c_2}}\right)^n}$$
 For a sufficiently larger $n$, 
-if $c_2$ approaches $1$ with linear speed, clearly
+if $c_2$ approaches $1$, clearly
 $$\left(\frac{1}{2c_{2}^{c_2}(1-c_2)^{1-c_2}}\right)^n$$ 
 approaches $0$ with exponential speed (approximately $(\frac{1}{2})^n$).\\
 Also, $\sqrt{2\pi n c_2(1-c_2)}\to+\infty$ with such a constant $c_2<1$.\\
