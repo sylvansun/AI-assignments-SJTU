@@ -1,7 +1,7 @@
 # Fdb version 3
-["pdflatex"] 1651504622 "/Users/emrakul/Course-Assignments-AISJTU/Stochastic-Processes/SPhw4/SPhw4.tex" "/Users/emrakul/Course-Assignments-AISJTU/Stochastic-Processes/SPhw4/SPhw4.pdf" "SPhw4" 1651504623
-  "/Users/emrakul/Course-Assignments-AISJTU/Stochastic-Processes/SPhw4/SPhw4.aux" 1651504623 1826 692e99706b8539ac125416a55499d130 ""
-  "/Users/emrakul/Course-Assignments-AISJTU/Stochastic-Processes/SPhw4/SPhw4.tex" 1651504621 8701 c590d5b59338847510537125c4f89004 ""
+["pdflatex"] 1651539635 "/Users/emrakul/Course-Assignments-AISJTU/Stochastic-Processes/SPhw4/SPhw4.tex" "/Users/emrakul/Course-Assignments-AISJTU/Stochastic-Processes/SPhw4/SPhw4.pdf" "SPhw4" 1651539637
+  "/Users/emrakul/Course-Assignments-AISJTU/Stochastic-Processes/SPhw4/SPhw4.aux" 1651539637 1826 692e99706b8539ac125416a55499d130 ""
+  "/Users/emrakul/Course-Assignments-AISJTU/Stochastic-Processes/SPhw4/SPhw4.tex" 1651539635 8706 fe67b1c1fbbf4fcdb0f44059f75e0ff0 ""
   "/Users/emrakul/Library/texlive/2021/texmf-var/fonts/pk/ljfour/public/bbm/bbm12.600pk" 1651130034 8424 b6a9a8e28cf36a91b7dd1537d9018a77 ""
   "/usr/local/texlive/2021/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2021/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1246382020 1004 54797486969f23fa377b128694d548df ""
@@ -125,13 +125,13 @@
   "/usr/local/texlive/2021/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1616695603 5169178 a2ce6e2d73f603b690db6777d06dbccb ""
   "/usr/local/texlive/2021/texmf-var/web2c/pdftex/pdflatex.fmt" 1645752890 2724740 e57d09ac16f4d7b81c9b49ae6a05d103 ""
   "/usr/local/texlive/2021/texmf.cnf" 1616695596 577 4c1911a7228e554c6032256d3cf5567d ""
-  "SPhw4.aux" 1651504623 1826 692e99706b8539ac125416a55499d130 "pdflatex"
-  "SPhw4.out" 1651504623 1054 0748571cc0f958f28f1b42db25ab4b1c "pdflatex"
-  "SPhw4.tex" 1651504621 8701 c590d5b59338847510537125c4f89004 ""
+  "SPhw4.aux" 1651539637 1826 692e99706b8539ac125416a55499d130 "pdflatex"
+  "SPhw4.out" 1651539637 1054 0748571cc0f958f28f1b42db25ab4b1c "pdflatex"
+  "SPhw4.tex" 1651539635 8706 fe67b1c1fbbf4fcdb0f44059f75e0ff0 ""
   (generated)
   "SPhw4.pdf"
-  "SPhw4.out"
-  "/Users/emrakul/Course-Assignments-AISJTU/Stochastic-Processes/SPhw4/SPhw4.log"
   "SPhw4.log"
-  "/Users/emrakul/Course-Assignments-AISJTU/Stochastic-Processes/SPhw4/SPhw4.pdf"
   "SPhw4.aux"
+  "/Users/emrakul/Course-Assignments-AISJTU/Stochastic-Processes/SPhw4/SPhw4.log"
+  "/Users/emrakul/Course-Assignments-AISJTU/Stochastic-Processes/SPhw4/SPhw4.pdf"
+  "SPhw4.out"
