@@ -28,7 +28,7 @@ def write_result(dir):
     for i in range(len(dir)):
         file.write(dir[i].split('.')[0]+' ')
         data,nframe,framerate=read_wave(os.getcwd()+'/wavs/test/'+dir[i])
-        time_point,pred=sf.check_points(data)
+        time_point,pred=sf.cal_interval(data)
         for j in range(len(time_point)):
             file.write(str(time_point[j][0])+','+str(time_point[j][1])+' ')
         file.write('\n')
@@ -47,12 +47,12 @@ def read_wave(path):
 
 def generate_labels(data,dataloader,window=512,shift=128,sample_rate=16000,use_default=True,amphigh=20,amplow=10,zcrhigh=0.2,zcrlow=0.1):
     if use_default==False:
-        zcrhigh,zcrlow,amphigh,amplow=get_statistics(dataloader,window,shift)
+        zcrhigh,zcrlow,amphigh,amplow=sf.solve_task1(dataloader,window,shift)
     ground_truth=np.zeros(0)
     prediction=np.zeros(0)
     for i in range(len(dataloader)):
         curr_data,nframe,framerate=read_wave(dataloader[i])
-        time_point,curr_pred=sf.check_points(curr_data,amphigh,amplow,zcrhigh,zcrlow,window,shift)
+        time_point,curr_pred=sf.cal_interval(curr_data,amphigh,amplow,zcrhigh,zcrlow,window,shift)
         curr_label=np.zeros(len(curr_pred))
         true_point=data[3][i].split()
         curr_len=len(true_point)
