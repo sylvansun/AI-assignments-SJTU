@@ -21,4 +21,5 @@ Voice-Activity-Detection/report/
 Voice-Activity-Detection/models_saved/
 Voice-Activity-Detection/wavs/
 Voice-Activity-Detection/signal_functions.py
+Voice-Activity-Detection/dnn_train.py
 
