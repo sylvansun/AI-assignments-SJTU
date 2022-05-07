@@ -16,12 +16,7 @@
 __pycache__/
 
 #Voice Activity Detection Course Assignment
-Voice-Activity-Detection/data/
-Voice-Activity-Detection/report/
-Voice-Activity-Detection/models_saved/
-Voice-Activity-Detection/wavs/
-Voice-Activity-Detection/signal_functions.py
-Voice-Activity-Detection/dnn_train.py
+Voice-Activity-Detection/
 
 #####
 .idea/
