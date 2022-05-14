@@ -73,10 +73,17 @@ simply take the derivative and the result is
 $$(1-\lambda s)\lambda e^{-\lambda s}$$
 So the optimal value of $s$ is $\frac{1}{\lambda}$ 
 and the corresponding success probability is $\frac{1}{e}$.
+
 \section{}
-
 \subsection{}
-
+We prove this by brutal calculations.\newline
+To prove that $$\Pr(X=\lambda +k)\geq \Pr(X=\lambda -k-1)$$
+We only need to show 
+$$e^{-\lambda}\frac{\lambda^{\lambda+k}}{(\lambda +k)!}\geq e^{-\lambda}\frac{\lambda^{\lambda-k-1}}{(\lambda -k-1)!}$$
+This entails
+$$\lambda^{2k+1}\geq \frac{(\lambda +k)!}{(\lambda-k-1)!}$$
+or equivalently 
+$$\lambda^{2k+1}\geq (\lambda+k)(\lambda+k-1)\cdots (\lambda -k)$$
 \subsection{}
 
 \subsection{}
