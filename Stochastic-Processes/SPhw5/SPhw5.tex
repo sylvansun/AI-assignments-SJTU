@@ -1,0 +1,84 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage{fullpage}
+\usepackage[top=2cm, bottom=4.5cm, left=2.5cm, right=2.5cm]{geometry}
+\usepackage{amsmath,amsthm,amsfonts,amssymb,amscd}
+\usepackage{lastpage}
+\usepackage{enumerate}
+\usepackage{fancyhdr}
+\usepackage{mathrsfs}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{hyperref}
+\usepackage{mathtools}
+\usepackage{xfrac}
+\usepackage{bbm}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue,
+  linkbordercolor={0 0 1}
+}
+\linespread{1.1}
+ 
+\renewcommand\lstlistingname{Algorithm}
+\renewcommand\lstlistlistingname{Algorithms}
+\def\lstlistingautorefname{Alg.}
+
+
+\lstdefinestyle{Python}{
+    language        = Python,
+    frame           = lines, 
+    basicstyle      = \footnotesize,
+    keywordstyle    = \color{blue},
+    stringstyle     = \color{green},
+    commentstyle    = \color{red}\ttfamily
+}
+
+\setlength{\parindent}{0.0in}
+\setlength{\parskip}{0.05in}
+
+\newcommand\course{Stochastic Processes}
+\newcommand\hwnumber{5}
+\newcommand\NetIDa{SUN Yilin}
+\newcommand\NetIDb{520030910361}
+
+\pagestyle{fancyplain}
+\headheight 35pt
+\lhead{\NetIDa}
+\lhead{\NetIDa\\\NetIDb}
+\chead{\textbf{\Large Homework \hwnumber}}
+\rhead{\course \\ \today}
+\lfoot{}
+\cfoot{}
+\rfoot{\small\thepage}
+\headsep 1.5em
+
+\begin{document}
+
+\section{}
+\subsection{}
+Assume the first customer arrives at time $T-s+t$, $0 \leq t\leq s$.
+Since customers arrive according to a Poisson process of rate $\lambda$ per hour,
+the time it takes for the first customer to arrive follows Exponential distribution with parameter $\lambda$.
+Then the time it takes for the second customer to arrive also follows a same distribution.
+So the probability for achieving his goal is 
+$$\int_{0}^{s}\lambda e^{-\lambda t}e^{-\lambda(s-t)}dt$$
+which is 
+$$\int_{0}^{s}\lambda e^{-\lambda s}dt$$
+which is $\lambda se^{-\lambda s}$.
+\subsection{}
+To achieve the best probability, 
+simply take the derivative and the result is 
+$$(1-\lambda s)\lambda e^{-\lambda s}$$
+So the optimal value of $s$ is $\frac{1}{\lambda}$ 
+and the corresponding success probability is $\frac{1}{e}$.
+\section{}
+
+\subsection{}
+
+\subsection{}
+
+\subsection{}
+
+\end{document}
