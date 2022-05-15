@@ -84,8 +84,44 @@ This entails
 $$\lambda^{2k+1}\geq \frac{(\lambda +k)!}{(\lambda-k-1)!}$$
 or equivalently 
 $$\lambda^{2k+1}\geq (\lambda+k)(\lambda+k-1)\cdots (\lambda -k)$$
+But it is obvious that $\lambda^2\geq \lambda^2 -a^2$ for any $a$.
+So that inequality holds for any $k=0,1,2,\dots,\lambda-1$.
+So for any $k=0,1,\dots,\lambda-1$,
+it holds that $\Pr(X=\lambda +k)\geq \Pr(X=\lambda -k-1)$.
+It then follows that $\Pr(X\geq\lambda)\geq \frac{1}{2}$.
 \subsection{}
-
+As shown in the lecture notes,
+$$\mathbb{E}\left[f(Y_1,Y_2,\dots,Y_n)\right]=
+\sum_{k=0}^{\infty}\mathbb{E}\left[f(Y_1,Y_2,\dots,Y_n)\bigg|
+\sum_{i=1}^{n}Y_i=k\right]
+\Pr(\sum_{i=1}^{n}Y_i=k)$$
+In the lecture notes, to derive an inequality,
+we discard all the other terms with only 
+$\sum_{i=1}^{n}Y_i=m$ left.
+This is too loose.
+Here to prove this inequality we only discard 
+the terms from $\sum_{i=1}^{n}Y_i=0$ to $\sum_{i=1}^{n}Y_i=m-1$,
+this gives us 
+$$\mathbb{E}\left[f(Y_1,Y_2,\dots,Y_n)\right]\geq
+\sum_{k=m}^{\infty}\mathbb{E}\left[f(Y_1,Y_2,\dots,Y_n)\bigg|
+\sum_{i=1}^{n}Y_i=k\right]
+\Pr(\sum_{i=1}^{n}Y_i=k)$$ 
+Since $\mathbb{E}\left[f(X_1,X_2,\dots,X_n)\right]$ is monotonically increasing in $m$,
+$$\mathbb{E}\left[f(Y_1,Y_2,\dots,Y_n)\bigg|
+\sum_{i=1}^{n}Y_i=k\right]\geq \mathbb{E}\left[f(X_1,X_2,\dots,X_n)\right], \forall k\geq m$$
+Then the inequality becomes 
+$$\mathbb{E}\left[f(Y_1,Y_2,\dots,Y_n)\right]\geq
+\mathbb{E}\left[f(X_1,X_2,\dots,X_n)\right]
+\sum_{k=m}^{\infty}\Pr(\sum_{i=1}^{n}Y_i=k)$$ 
+Since $\sum_{i=1}^{n}Y_i\sim \text{Poisson}(m)$,
+from problem 2.1 we know 
+$$\sum_{k=m}^{\infty}\Pr(\sum_{i=1}^{n}Y_i=k)
+=\Pr(\sum_{i=1}^{n}Y_i\geq m)\geq\frac{1}{2}$$
+So $$\mathbb{E}\left[f(Y_1,Y_2,\dots,Y_n)\right]\geq
+\mathbb{E}\left[f(X_1,X_2,\dots,X_n)\right]\frac{1}{2}$$
+Or equivalently,
+$$\mathbb{E}\left[f(X_1,X_2,\dots,X_n)\right]\leq 
+2\cdot\mathbb{E}\left[f(Y_1,Y_2,\dots,Y_n)\right]$$ 
 \subsection{}
 
 \end{document}
