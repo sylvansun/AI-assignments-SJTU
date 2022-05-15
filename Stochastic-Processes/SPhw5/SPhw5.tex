@@ -123,5 +123,32 @@ Or equivalently,
 $$\mathbb{E}\left[f(X_1,X_2,\dots,X_n)\right]\leq 
 2\cdot\mathbb{E}\left[f(Y_1,Y_2,\dots,Y_n)\right]$$ 
 \subsection{}
-
+Here we can simulate this problem by throwing 50 identical balls into 365 bins.\\
+For $i\in [365]$, let $X_i$ be the number of balls in the $i$-th bin.
+Then the distribution of $(X_1,X_2,\dots,X_n)$ is the same as that of 
+$(Y_1,Y_2,\dots,Y_n$ on condition that $\sum_{i=1}^{n}Y_i=50$.\\
+We define $$f(X_1,X_2,\dots,X_n)=\mathbbm{1}\left[\exists i, X_i\geq 4\right]$$
+then clearly 
+$$\mathbb{E}\left[f(X_1,X_2,\dots,X_n)\right]
+=\Pr\left[\exists i,X_i\geq 4\right]$$
+It is also clear that such an expectation $\mathbb{E}\left[f(X_1,X_2,\dots,X_n)\right]$
+is indeed monotonically increasing in the number of balls,
+because the more balls there are,
+the more likely there is going to be a bin which contains at least four balls.\\
+Then by result in problem 2.2 we conclude that
+$$\Pr\left[\exists i,X_i\geq 4\right]=
+\mathbb{E}\left[f(X_1,X_2,\dots,X_n)\right]\leq
+2\cdot\mathbb{E}\left[f(Y_1,Y_2,\dots,Y_n)\right]=
+2\cdot\Pr\left[\exists i,Y_i\geq 4\right]$$
+Now we can estimate the probability by calculating 
+$\Pr\left[\exists i,Y_i\geq 4\right]$.\\
+Since $Y_i, i\in[n]$ are independent Poisson random variables with rate $\lambda=\frac{50}{365}$,
+$\Pr\left[\exists i,Y_i\geq 4\right]=1-\Pr\left[\forall i,Y_i\leq 3\right]$.
+Then such a probability can be expressed as 
+$$1-\Pr\left[\forall i, Y_i \leq 3\right]=1-\left(\frac{\lambda^3+3\lambda^2+6\lambda+6}{6}e^{-\lambda}\right)^{365}$$
+The results from computer shows that 
+$$1-\Pr\left[\forall i, Y_i \leq 3\right]=0.4789\%$$
+So our probability to estimate is 
+$$\Pr\left[\exists i,X_i\geq 4\right]\leq 0.9578\%$$
+which is less than $1\%$.
 \end{document}
