@@ -1,0 +1,129 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage{fullpage}
+\usepackage[top=2cm, bottom=4.5cm, left=2.5cm, right=2.5cm]{geometry}
+\usepackage{amsmath,amsthm,amsfonts,amssymb,amscd}
+\usepackage{lastpage}
+\usepackage{enumerate}
+\usepackage{fancyhdr}
+\usepackage{mathrsfs}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{hyperref}
+\usepackage{mathtools}
+\usepackage{xfrac}
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
+\usepackage{bbm}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue,
+  linkbordercolor={0 0 1}
+}
+\linespread{1.1}
+ 
+\renewcommand\lstlistingname{Algorithm}
+\renewcommand\lstlistlistingname{Algorithms}
+\def\lstlistingautorefname{Alg.}
+
+
+\lstdefinestyle{Python}{
+    language        = Python,
+    frame           = lines, 
+    basicstyle      = \footnotesize,
+    keywordstyle    = \color{blue},
+    stringstyle     = \color{green},
+    commentstyle    = \color{red}\ttfamily
+}
+
+\setlength{\parindent}{0.0in}
+\setlength{\parskip}{0.05in}
+
+\newcommand\course{Algorithms}
+\newcommand\hwnumber{4}
+\newcommand\NetIDa{SUN Yilin}
+\newcommand\NetIDb{520030910361}
+
+\pagestyle{fancyplain}
+\headheight 35pt
+\lhead{\NetIDa}
+\lhead{\NetIDa\\\NetIDb}
+\chead{\textbf{\Large Homework \hwnumber}}
+\rhead{\course \\ \today}
+\lfoot{}
+\cfoot{}
+\rfoot{\small\thepage}
+\headsep 1.5em
+
+\begin{document}
+
+\section{}
+
+
+\newpage
+\section{}
+\subsection{}
+We first construct a weighted directed graph $H$ from $G$.
+Then we can find maxflow on graph $H$ to see whether there is a perfect matching in $G$.\\
+Firstly, we let all the edges in $G$ point from $V_1$ to $V_2$ in $H$,
+and we assign them a weight of $+\infty$.\\
+Then we add a source vertex $s$ and 
+add an edge with weight $1$ from $s$ to all vertices in $V_1$.\\
+Finally we add a sink vertex $t$ and 
+add an edge with weight $1$ from all vertices in $V_2$ to $t$.\\
+Now we have constructed the graph $H$,
+we can run the Network Flow algorithm to find a maxflow of $H$.
+If the maxflow of $H$, denoted by $f$,
+turns out to be $f=|V_1|=|V_2|$,
+then there exists a perfect matching in $G$.
+And the perfect matching contains exactly the edges in $G$ used 
+by us to construct the maxflow of $H$.
+\subsection{}
+\textbf{Proof of Necessity:}\\
+This part is very straightforward.\\
+Suppose there is a perfect matching $M$ from $V_1$ to $V_2$.
+Then for any $S\subset V_1$, 
+for every vertex $v\in S$,
+there is an edge in $M$ connecting $v$ to a vertex in $V_2$.
+This means that there are at least as many vertices in $V_2$ that are neighbors of vertices in $V_1$
+as there are vertices in $V_1$.\\
+That is to say, for any $S\subset V_1$,
+$|N(S)|\geq|S|$.\\
+\textbf{Proof of Sufficiency:}\\
+Following the hint, we would like to prove by showing that the mincut 
+of the graph we construct is exactly $|V_1|$(or $|V_2|$ if you like).\\
+Firstly, any mincut can only contain the edges in $H$ which are not in $G$
+because we assign edges in $G$ with a weight of $+\infty$.\\
+Then there is a cut with capacity $|V_1|$ 
+if we make our $S$-$T$ cut to be $S=\{s\}$, the singleton.
+So the capacity of mincut of $H$ is at most $|V_1|$.\\
+Suppose there is another minimum $S$-$T$ cut where $S\backslash V_2=\{s\}\cup (V_1\backslash V_1')$
+and $T\backslash V_1=\{t\}\cup (V_2\backslash V_2')$,
+since this is a mincut, 
+there are no edges from $V_1\backslash V_1'$ to $V_2\backslash V_2'$.
+This means that all the neighbors of $V_1\backslash V_1'$ must be in $V_2'$.
+Then by the property that $|N(S)|\geq |S|$ for any $S\subset V_1$,
+$|V_1\backslash V_1'|\leq |V_2'|$.\\
+Finally the capacity of this cut is $|V_1'|+|V_2'|$,
+$|V_1'|+|V_2'|\geq |V_1'|+|V_1\backslash V_1'|=|V_1|$.
+This means that the capacity of any $S$-$T$ cut is at least $|V_1|$.
+Then by our instance where $S=\{s\}$, the mincut is indeed $|V_1|$.
+Finally by the Maxflow-Mincut Theorem, 
+the maxflow of $H$ equals its mincut $|V_1|$,
+which means that there is a perfect matching in $G$.
+ 
+\newpage
+\section{}
+
+
+
+\newpage
+\section{Comments}
+\subsection{}
+
+\subsection{}
+
+\subsection{}
+
+\end{document}
