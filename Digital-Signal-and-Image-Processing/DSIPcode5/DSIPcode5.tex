@@ -1,0 +1,106 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage{fullpage}
+\usepackage[top=2cm, bottom=4.5cm, left=2.5cm, right=2.5cm]{geometry}
+\usepackage{amsmath,amsthm,amsfonts,amssymb,amscd}
+\usepackage{lastpage}
+\usepackage{enumerate}
+\usepackage{fancyhdr}
+\usepackage{mathrsfs}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{hyperref}
+\usepackage{mathtools}
+\usepackage{xfrac}
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
+\usepackage{bbm}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue,
+  linkbordercolor={0 0 1}
+}
+\linespread{1.1}
+ 
+\renewcommand\lstlistingname{Algorithm}
+\renewcommand\lstlistlistingname{Algorithms}
+\def\lstlistingautorefname{Alg.}
+
+
+\lstdefinestyle{Python}{
+    language        = Python,
+    frame           = lines, 
+    basicstyle      = \footnotesize,
+    keywordstyle    = \color{blue},
+    stringstyle     = \color{green},
+    commentstyle    = \color{red}\ttfamily
+}
+
+\setlength{\parindent}{0.0in}
+\setlength{\parskip}{0.001cm}
+
+\newcommand\course{DSIP}
+\newcommand\hwnumber{5}
+\newcommand\NetIDa{SUN Yilin}
+\newcommand\NetIDb{520030910361}
+
+\pagestyle{fancyplain}
+\headheight 35pt
+\lhead{\NetIDa}
+\lhead{\NetIDa\\\NetIDb}
+\chead{\textbf{\Large Homework \hwnumber}}
+\rhead{\course \\ \today}
+\lfoot{}
+\cfoot{}
+\rfoot{\small\thepage}
+\headsep 0.1em
+
+\begin{document}
+\section{}
+First we extract the Red channel of the original image,
+then we use histeq function directly to see the results.\\
+As it turns out,
+the original image is dark,
+which can also be revealed in its histogram.\\
+After the histogram equalization process, 
+it gains a higher contrast,
+the grey-scale graph becomes brighter
+and the histogram is more evenly distributed.
+
+\section{}
+The grey-scale image after exponential matching is more similar to the 
+original image.\\
+This is because,
+as we can see from the histogram of the original image,
+its original histogram is similar to an exponential distribution.
+So as we do a histogram matching equalization,
+if we use exponential distribution,
+more features about the original image can be reserved.
+
+\section{}
+Here we use a uniform distribution to compare our result 
+with the default settings of the histeq function.
+By generating a histogram of uniformly distributed vatiables 
+and letting out histogram match the uniform histogram,
+we managed to do such an equalization.\\
+As it turns out,
+here the result is more similar to our result in question 1.
+
+\section{}
+By using the cat function we generate a new image from the equalized RGB channels.
+
+\section{}
+The problem of method in question 4 is that it carries out 
+the equalization process respectively and 
+then put the results of different channels together to generate a new image.
+There might be two underlying problems.\\
+First is that the RGB channels might have a different histogram distribution,
+second is that their histogram might not be evenly distributed.
+Here in our problem I checked that the RGB channels indeed follow a similar distribution,
+so our major problem is that we should not directly use histeq function.
+Instead, we should try to match the histogram to a exponential distribution histogram,
+then the result will be much more similar to our original graph, 
+which can be seen in the graph attached below. 
+
+\end{document}
