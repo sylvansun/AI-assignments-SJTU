@@ -117,8 +117,45 @@ $$\max_{\mathscr{X}\sim\mathcal{X}}\min_{a\in\mathcal{A}}\mathbb{E}_{X\sim\maths
 \min_{\mathscr{A}\sim\mathcal{A}}\max_{x\in\mathcal{X}}\mathbb{E}_{A\sim\mathscr{A}}\left[T(A,x)\right]$$
 
 \subsection{}
+The worst running time for a deterministic algorithm is $n$ 
+because at the worst case this deterministic algorithm would probe the 
+array $n$ times to find the location we want.\\
+By using randomization we can use a randomized algorithm
+which do not probe the array in a determined order,
+i.e. each time this randomized algorithm probe uniform randomly a 
+position $i$ which has not been probed ever to check whether $A[i]=x$.
+Then the expected cost of this randomized algorithm can be calculated 
+by summing up all the possible deterministic algorithms with probability $\frac{1}{n}$.
+And that is 
+$$\left(\sum_{i=1}^{n-1}i+n-1\right)/n$$
+which is $$\frac{n+1}{2}-\frac{1}{n}$$
 
 \subsection{}
+To prove that each randomized algorithm for the above problem
+costs at least $\frac{n+1}{2}-\frac{1}{n}$ in expectation in the worst case, 
+i.e. a lower bound for the expected running time of the best algorithm,
+from problem 1.2 we know that we only need to construct a distribution 
+over all inputs of length $n$ and show that every deterministic 
+algorithm performs bad on average when the inputs are drawn from the distribution.\\
+Here we construct the distribution of inputs of length $n$ from the following method:\\
+For any input array $A$, 
+we let the number $x$ the location of which we want to find to 
+be uniformly distributed among the $n$ positions of the array.\\
+This means that on average every deterministic algorithm needs 
+a time of 
+$$\left(\sum_{i=1}^{n-1}i+n-1\right)/n=\frac{n+1}{2}-\frac{1}{n}$$
+Note that although here we use a same equation as in problem 1.3,
+there meaning is different.
+In problem 1.3 the algorithm are randomized whereas here the algorithm
+is determined, what is random is the inputs.
+So here we are summing up all the possible inputs and illustrating that 
+any deterministic algorithm will perform bad on average 
+with the inputs drawing from this distribution.\\
+Then by what we have shown in problem 1.2 
+each randomized algorithm costs at least $\frac{n+1}{2}-\frac{1}{n}$ 
+in expectation in the worst case.\\
+My algorithm in problem 1.3 matches the lower bound.
+
 
 \newpage
 \section{}
@@ -211,9 +248,12 @@ So out construction of $H$ can indeed make sure that the debts are paid off at l
 \newpage
 \section{Comments}
 \subsection{}
-
+About a whole day.
 \subsection{}
-
+Q1 is 5 because it is too abstract.
+I personally think this is a mathematical analysis question instead of an algorithm question.\\
+Q2 and Q3 both are 3 because the situations of these underlying questions 
+are not that hard to comprehend.
 \subsection{}
-
+No collaborators.
 \end{document}
