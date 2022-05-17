@@ -59,7 +59,66 @@
 \begin{document}
 
 \section{}
+\subsection{}
+For any fixed input $x$, 
+every time we run our randomized algorithm $\overline{A}$,
+the peformance of $\overline{A}$ on $x$ is determined.
+Say our algorithm $\overline{A}$ on given input $x$ 
+has a probability of $p_i$ to perform as deterministic algorithm $A_i$,
+then since our given input $x$ is definite and finite, 
+we can always find a set $S=\{A_1,A_2,\dots,A_m\}$ and some corresponding 
+possibilities $p_1,p_2,\dots,p_m$ where $\sum_{i=1}^{m}=1$,
+by which the performance of our algorithm $\overline{A}$ 
+belongs to $S$.\\
+So the expected running time of $\overline{A}$ on input $x$ is 
+$$\mathbb{E}\left[T(\overline{A},x)\right]=\sum_{i=1}^{m}p_iT(A_i,x)$$
+Then we define distribution $\mathscr{A}$ to be 
+$$A=A_i \quad \text{with probability} \quad p_i ,\forall i\in[m]$$
+Clearly 
+$$\mathbb{E}_{A\sim\mathscr{A}}\left[T(A,x)\right]=\sum_{i=1}^{m}p_iT(A_i,x)$$
+So for any randomized algorithm $\overline{A}$ we can find a distribution 
+$\mathscr{A}$ over $\mathcal{A}$ to represent the expected running time of $\overline{A}$\\
+As for the expected running time of the best algorithm for $\Pi$,
+since it is the best algorithm, 
+it must have the minimum expected running time,
+i.e. the $\mathbb{E}_{A\sim\mathscr{A}}\left[T(A,x)\right]$
+for this algorithm must be the smallest.
+We also want the expected running time to be upper bounded by the worst input distribution,
+which means that we would like to minimize the running time over the maximum among $x\in\mathcal{X}$.
+So the overall running time of the best randomized algorithm can be 
+optimized by finding the best distribution $\mathscr{A}$ over $\mathcal{A}$
+and the best randomized algorithm should follow the distribution of $\mathscr{A}$.
+So the expected running time of the best algorithm for $\Pi$ is 
+$$\min_{\mathscr{A}\sim\mathcal{A}}\max_{x\in\mathcal{X}}\mathbb{E}_{A\sim\mathscr{A}}\left[T(A,x)\right]$$
+\subsection{}
+To use Von Neumann's minimax theorem,
+we would like to show that the expected running time can be viewed as 
+elements in a matrix.\\
+Imagine that we have two players denoted by the Column and Row players.
+Our Column player has a set of algorithms to solve a question 
+and our Row player has the set of all possible inputs for such a question.
+Denote the running time of specific algorithm $a$ on given input $x$ to be $T(a,x)$
+The goal of Column player is to optimize his distribution $\mathscr{A}$
+so that for any distribution of inputs given by Row player, 
+the expected running time is smallest.
+While the goal of Row player is to optimize his distribution $\mathscr{X}$
+so that for any distribution of algorithms given by Column player,
+the expected tunning time is largest.\\
+Any element of the matrix can be expressed as $T(a,x)$ 
+where $T(a,x)$ is the running time of algorithm $a$ on input $x$.
+So the goal of the Column player can be expressed as 
+$$\min_{\mathscr{A}\sim\mathcal{A}}\max_{x\in\mathcal{X}}\mathbb{E}_{A\sim\mathscr{A}}\left[T(A,x)\right]$$
+And the goal of the Row player can be expressed as 
+$$\max_{\mathscr{X}\sim\mathcal{X}}\min_{a\in\mathcal{A}}\mathbb{E}_{X\sim\mathscr{X}}\left[T(a,X)\right]$$
+Then Von Neumann's minimax theorem says there exists mixed strategies that are optimal for both players and 
+this mixed strategies provide the same optimal value for them, 
+which means that 
+$$\max_{\mathscr{X}\sim\mathcal{X}}\min_{a\in\mathcal{A}}\mathbb{E}_{X\sim\mathscr{X}}\left[T(a,X)\right]=
+\min_{\mathscr{A}\sim\mathcal{A}}\max_{x\in\mathcal{X}}\mathbb{E}_{A\sim\mathscr{A}}\left[T(A,x)\right]$$
 
+\subsection{}
+
+\subsection{}
 
 \newpage
 \section{}
