@@ -211,38 +211,8 @@ which means that there is a perfect matching in $G$.
  
 \newpage
 \section{}
-We prove by showing that the debt network $G$ can be equivalently transformed to 
-another network $H$ which has $n-1$ edges at most.\\
-In the original debt graph $G$, 
-for any vertex $v\in V$, 
-we define 
-$$W(v)=\sum_{(u,v)\in E}w(u,v)-\sum_{(v,p)\in E}w(v,p)$$
-$W(v)$ is the amount of money that $v$ owes other roommates or other roommates owe $v$.
-We then divide $V$ into a partition $V=V_1\cup V_2\cup V_3$, 
-where $\forall v\in V_1$, $W(v)>0$,
-$\forall v\in V_2$, $W(v)<0$,
-$\forall v\in V_3$, $W(v)=0$.\\
-To sum up, $V_1$ is the set of all creditors, 
-$V_2$ is the set of all debtors and $V_3$ is the set of all people who 
-do not need to pay of receive money from anyone else.
-In graph $H=(V',E')$ we do not have to consider vertices in $V_3$,
-so $V'=V_1\cup V_2$.\\
-Then we pick anyone from $V_2$ and call him the pivot $p$.
-We construct the graph $H$ by the following method:\\
-For all vertices $v$ in $V_1$, 
-we add an edge $(p,v)$ with weight $W(v)$.\\
-For all vertices $v$ in $V_2\backslash\{p\}$,
-we add an edge $(v,p)$ with weight $W(v)$.\\
-I.e., all debtors excluding pivot $p$ give money to $p$,
-then $p$ gives money to all creditors(on behalf of all debtors).
-So the total times it takes to carry out person-to-person payments is 
-at most $|V_1|+|V_2|-1$, which is at most $n-1$.\\
-\textbf{Proof of Correctness:}\\
-The reason why $H$ and $G$ are equivalent when deciding the amount of payments
-is that graph $H$ guarantees that every single person is 
-receiving or giving out exactly the amount of money that he should collect 
-or in debt.
-So out construction of $H$ can indeed make sure that the debts are paid off at last.
+The original proof is wrong, 
+I'm still working on the new one.
 
 
 \newpage
