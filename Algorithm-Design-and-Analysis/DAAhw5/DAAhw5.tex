@@ -211,9 +211,33 @@ which means that there is a perfect matching in $G$.
  
 \newpage
 \section{}
-The original proof is wrong, 
-I'm still working on the new one.
-
+We prove by showing that we can construct a new graph $H=(V',E')$
+where if $(u,v)\in E'$ then $(u,v)\in E$ (they might have different weight in $G$ and $H$).\\
+We will carry out the following process:\\
+\textbf{1}.Ignore the directions of edges, find a cycle $C$ in the graph $G$. If no cycle, go to step \textbf{5}.\\
+\textbf{2}.Find the edge with smallest weight in $C$ denoted by $(u,v_0)\in E$ with weight $w$.\\
+\textbf{3}.Denote the undirected cycle by $C=(u,v_0),(v_0,v_1),(v_1,v_2),\dots(v_n,u)$,
+we update the weights of edges in $C$. We delete $(u,v_0)$. If $(v_i,v_{i+1})\in E$ 
+then $w'(v_i,v_{i+1})=w(v_i,v{i+1})-w$; if not, $w'(v_i,v_{i+1})=w(v_i,v{i+1})+w$.\\
+\textbf{4}.If there is still undirected cycle in $G$, go to step \textbf{1}.
+If not, go to step \textbf{5}\\
+\textbf{5}.Now the graph $H=(V',E')$ is our new debt cycle which has no cycle, so it must contain at most $n-1$ edges.\\
+\textbf{Prove that the new graph $H$ is equivalent to $G$:}\\
+In step \textbf{3}, we pick out the edge with the smallest weight and 
+update all weights of the other edges in the cycle.
+In this process we will not add any new edges in the original graph.
+This is because we pick out the edge with smallest weight and 
+when we modify all the weights of the other edges, 
+they remain their original direction.\\
+Also in this process we are not changing any amount of debt that anybody should repay somebody else.
+This is because in this process everyone is receiving and giving out exact the same amount of money.\\
+By the above two arguments, 
+by our procudure we can delete at least one edge of the original graph $G$ at each iteration.
+And finally we can remove all cycles in the original graph.\\
+Finally in the new graph $G$ there is no cycle.
+Since it has $n$ vertices,
+it contains at most $n-1$ edges.
+Then the debt can be cleared by at most $n-1$ person-to-person transactions.
 
 \newpage
 \section{Comments}
