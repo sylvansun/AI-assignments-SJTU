@@ -1,0 +1,137 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage{fullpage}
+\usepackage[top=2cm, bottom=4.5cm, left=2.5cm, right=2.5cm]{geometry}
+\usepackage{amsmath,amsthm,amsfonts,amssymb,amscd}
+\usepackage{lastpage}
+\usepackage{enumerate}
+\usepackage{fancyhdr}
+\usepackage{mathrsfs}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{hyperref}
+\usepackage{mathtools}
+\usepackage{xfrac}
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
+\usepackage{bbm}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue,
+  linkbordercolor={0 0 1}
+}
+\linespread{1.1}
+ 
+\renewcommand\lstlistingname{Algorithm}
+\renewcommand\lstlistlistingname{Algorithms}
+\def\lstlistingautorefname{Alg.}
+
+
+\lstdefinestyle{Python}{
+    language        = Python,
+    frame           = lines, 
+    basicstyle      = \footnotesize,
+    keywordstyle    = \color{blue},
+    stringstyle     = \color{green},
+    commentstyle    = \color{red}\ttfamily
+}
+
+\setlength{\parindent}{0.0in}
+\setlength{\parskip}{0.05in}
+
+\newcommand\course{Algorithms}
+\newcommand\hwnumber{6}
+\newcommand\NetIDa{SUN Yilin}
+\newcommand\NetIDb{520030910361}
+
+\pagestyle{fancyplain}
+\headheight 35pt
+\lhead{\NetIDa}
+\lhead{\NetIDa\\\NetIDb}
+\chead{\textbf{\Large Homework \hwnumber}}
+\rhead{\course \\ \today}
+\lfoot{}
+\cfoot{}
+\rfoot{\small\thepage}
+\headsep 1.5em
+
+\begin{document}
+
+\section*{Problem 1}
+\textbf{Proof of NP}:\\
+For any possible solution denoted by $G'=(V',E')$,
+we show that we can check if $G'$ is a clique with size exactly $n/2$ in ploynomial time.\\
+This solution should provide us with a injective mapping $f$ from $V'$ to $V$
+where for any $v\in V'$, $f(v)\in V$.\\
+Thus we only need to check whether $|V'|=n/2, |E'|=\frac{n(n-1)}{2}$ and 
+check whether $\forall e=(u,v)\in E',(f(u),f(v))\in E$.
+Clearly this verification process can be done in ploynomial time.\\
+\textbf{Proof of NP-Completeness}:\\
+We prove by showing that the k-clique problem is reducible to our probelm here.\\
+For any k-clique problem on given graph $G=(V,E)$ where $|V|=n$,
+we can construct a new graph $G'$ in ploynomial time by the following rule:\\
+If $k=\frac{n}{2}$, $G'=G$.\\
+If $k<\frac{n}{2}$, we construct $G'=(V',E')$ by adding $n-2k$ vertices 
+which are mutually connected to each other and are also connected to all
+vertices in $V$.\\
+If $k>\frac{n}{2}$, we construct $G'=(V',E')$ by adding $2k-n$ vertices
+which are not connected to any other vertices in the new graph.\\\\
+We now show that there is a k-clique in $G$ if and only if 
+there is a clique of size $\frac{|V'|}{2}$ in the new graph $G'$.\\
+If $k=\frac{n}{2}$, trivally true.\\
+If $k<\frac{n}{2}$, $|V'|=2n-2k$. If there is a k-clique in $G$,
+clearly there is a clique of size $k+n-2k=n-k=\frac{|V'|}{2}$ in $G'$,
+and vice versa.\\
+If $k>\frac{n}{2}$, $|V'|=2k$. If there is a k-clique in $G$,
+clearly there is a clique of size $k$ in the new graph $G'$, and vice versa.\\
+So our k-clique probelm can be reduced to a $\frac{n}{2}$-clique problem in ploynomial time.
+Since k-clique problem is an NP-Complete problem,
+our $\frac{n}{2}$-clique probelm is also NP-Complete.
+
+\newpage
+\section*{Problem 2}
+\textbf{Proof of NP}:\\
+For any possible solution denoted by $S=\{s_1,s_2,\dots,s_n\}, s_i\in \{0,1\}$ 
+where $s_i=1$ denotes picking item $i$ and $s_i=0$ denotes not picking,
+simply check whether $\sum_{i=1}^{n}s_iw_i\leq C$ and $\sum_{i=1}^{n}s_iv_i\geq V$
+at the same time. 
+Clearly this verification process can be done in ploynomial time.\\
+\textbf{Proof of NP-Completeness}:\\
+We prove by showing that the Subset Sum problem is reducible to our problem here.\\
+For a set $A=\{a_1,a_2,\dots,a_n\}$ and a sum $B$,
+the Subset Sum problem asks us whether there is a solution $S=\{s_1,s_2,\dots,s_n\}, s_i\in \{0,1\}$
+such that $\sum_{i=1}^{n}s_ia_i=B$,
+we can reduce it to a decision version of Knapsack problem
+by setting the capacity $C$ and total value $V$ to be $C=V=B$
+and set the weights $w_i=a_i$ and values $v_i=a_i$ respectively for all $i\in[n]$.\\
+Clearly this process can be done in ploynomial time.\\
+Also a solution $S$ which satisfies the Subset Sum problem 
+clearly also satisfies the reduced Knapsack problem and vice versa.\\
+
+
+\section*{Problem 3}
+\textbf{Proof of NP}:\\
+For any possible solution which provides a subgraph $G'$ of $G$ 
+and a mapping $f$ from $G'$ to $H$,
+we can easily check whether $G'$ and $H$ are isomorphic to each other 
+following the mapping $f$ in ploynomial time. \\
+\textbf{Proof of NP-Completeness}:\\
+We prove by showing that the k-clique probelm can be reduced to our problem.\\
+Actually, finding a k-clique of graph $G$ is actually finding a 
+subgraph which is also a \textbf{complete graph of size $k$}.
+This means that if a graph $G$ has a complete subgraph of size $k$,
+this subgraph is also its k-clique and vice versa.\\
+Since k-clique problem is an NP-Complete problem,
+our subgraph probelm is also NP-Complete. 
+
+
+\newpage
+\section*{Comments}
+I assume the difficulties of these problems are in an ascending order,
+so for canvas submission of this homework assignment, 
+I only chose the problems $1\sim 3$.\\
+For these three problems that I submitted,
+there are no collaborators and I did not spend too much time on them.\\
+But I will spend more time on the rest of the problems(probably).
+\end{document}
