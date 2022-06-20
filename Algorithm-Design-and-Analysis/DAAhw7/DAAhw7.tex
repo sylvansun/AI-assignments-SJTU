@@ -1,0 +1,115 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage{fullpage}
+\usepackage[top=2cm, bottom=4.5cm, left=2.5cm, right=2.5cm]{geometry}
+\usepackage{amsmath,amsthm,amsfonts,amssymb,amscd}
+\usepackage{lastpage}
+\usepackage{enumerate}
+\usepackage{fancyhdr}
+\usepackage{mathrsfs}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{hyperref}
+\usepackage{mathtools}
+\usepackage{xfrac}
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
+\usepackage{bbm}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue,
+  linkbordercolor={0 0 1}
+}
+\linespread{1.1}
+ 
+\renewcommand\lstlistingname{Algorithm}
+\renewcommand\lstlistlistingname{Algorithms}
+\def\lstlistingautorefname{Alg.}
+
+
+\lstdefinestyle{Python}{
+    language        = Python,
+    frame           = lines, 
+    basicstyle      = \footnotesize,
+    keywordstyle    = \color{blue},
+    stringstyle     = \color{green},
+    commentstyle    = \color{red}\ttfamily
+}
+
+\setlength{\parindent}{0.0in}
+\setlength{\parskip}{0.05in}
+
+\newcommand\course{Algorithms}
+\newcommand\NetIDa{SUN Yilin}
+\newcommand\NetIDb{520030910361}
+
+\pagestyle{fancyplain}
+\headheight 35pt
+\lhead{\NetIDa}
+\lhead{\NetIDa\\\NetIDb}
+\chead{\textbf{\Large Edmonds' Blossom Algorithm }}
+\rhead{\course \\ \today}
+\lfoot{}
+\cfoot{}
+\rfoot{\small\thepage}
+\headsep 1.5em
+
+\begin{document}
+
+\section{}
+\subsection{}
+Proof of $M$ is a maximum matching $\implies$ no $M$-augmenting path exists:\\
+If there is an $M$-augmenting path denoted by $P=e_1e_2e_3\dots e_n$,
+where $e_i=(v_{i-1},v_i), \forall i\in [n]$.
+Then by definition of augmenting path we know that $e_1\notin M, e_n\notin M$.
+It follows that, by definition of $M$-alternating path, 
+$E_{even}=\{e_2,e_4,\dots,e_{n-1}\}\in M$
+and $E_{odd}=\{e_1,e_3,e_5,\dots,e_{n-2},e_{n}\}\notin M$.
+Then simply by switching the edges between $E_{even}$ and $E_{odd}$
+and construct another matching $M'=(M\backslash E_{even})\cup E_{odd}$,
+we would be able to construct a larger matching $M'$,
+because obviously $|E_{even}|<|E_{odd}|$.\\
+\subsection{}
+Proof of $M$ is a maximum matching $\impliedby$ no $M$-augmenting path exists:\\
+If $M$ is not a maximum matching, following the hint,
+let $M'$ be a maximum matching such that $|M\cap M'|$ is maximized,
+we now consider the subgraph $H=M\cup M'$ of $G$.
+Here when constructing the subgraph we do a subtle but important modification that 
+\textbf{for any edge that is both in $M$ and $M'$ we count it twice.}
+We want to analyse the connected components of $H$.
+The degree of any vertex in $H$ is at most 2 
+because any vertex has at most two edges incident to it.
+Thus the connected components of $H$ is either a single vertex,
+a path, or a cycle.
+We now consider the edge distribution of these cases respectively.\\
+\textbf{Case 1: Single vertex.}\\
+Trivial since no edges in these components.\\
+\textbf{Case 2: Cycle.}\\
+Any cycle of $H$ must be even length otherwise there will be 
+two edges adjacent to each other and from the same matching.
+It follows that any cycle must contain exactly the same number of edges from $M$ and $M'$.\\
+\textbf{Case 3: Path.}\\
+The paths can be either even length or odd length.
+For those even length path, like the cycles,
+they also contain same number of edges from $M$ and $M'$.
+For those odd length path denoted by $P=e_1e_2e_3\dots e_n$,
+we define $E_{even}=\{e_2,e_4,\dots,e_{n-1}\}$
+and $E_{odd}=\{e_1,e_3,e_5,\dots,e_{n-2},e_{n}\}$. 
+Then either $E_{even}\in M, E_{odd}\in M'$ or $E_{even}\in M', E_{odd}\in M$.\\
+\newline
+From the above three cases, the only case where a connected component
+contains more edges from $M'$ than $M$ is in case 3 where 
+there is a path $P$ with odd length and $E_{odd}\in M', E_{even}\in M$.
+Since we know $M'$ is a maximum matching, $|M'|>|M|$,
+then at least one connected component is in the form of such a path $P$ with 
+odd length.
+But such a path $P$ is actually an $M-augmenting$ path because,
+as $E_{odd}\in M'$ the endpoints of $P$ are not covered by matching $M$.
+Thus we can conclude that if $M$ is not a maximum matching, 
+there will be an $M$-augmenting path.
+So if no $M$-augmenting path exists $M$ must be a maximum matching.
+
+\section{}
+
+\end{document}
