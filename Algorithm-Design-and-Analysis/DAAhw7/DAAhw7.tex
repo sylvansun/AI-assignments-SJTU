@@ -111,5 +111,52 @@ there will be an $M$-augmenting path.
 So if no $M$-augmenting path exists $M$ must be a maximum matching.
 
 \section{}
+First we introduce some notations that will be used in the proof.\\
+Denote $M\backslash C$ by $M'$.\\
+Denote vertices in a cycle $C$ in $G$ with $2k+1$ vertices by $\{v_1,v_2,\dots,v_{2k+1}\}$.\\
+Denote the vertex added by the contraction process in the new graph $G'$ by $u$.
+\subsection{}
+Proof of $M$ is a maximum matching of $G \implies M'$ is a maximum matching of $G'$:\\
+Suppose $M'$ is not a maximum matching of $G'$,
+then there is an $M'$-augmenting path $P'$ in $G'$
+by what we have proven in problem 1.
+Since $C$ contains exactly $k$ edges in $M$ and meets no other edges in $M$,
+any edge in $G'$ incident with $u$ must not be in $M'$.
+Then $u$ must be an endpoint of $P'$,
+otherwise $P'$ would also be an $M$-augmenting path in $G$.
+And clearly the other endpoint $s$ of $P'$ must not be in $C$.\\
+Now consider the path $P'$ in $G$. 
+Denote the vertex in $C$ which is not covered by edge in $M$ by $v^*$,
+clearly $v^*$ is unique.
+Denote the vertex in $C$ which is an endpoint of $P'$ by $v_i$,
+clearly $v_i$ is also unique. 
+(Note that $v_i$ and $v^*$ may be equal but that does not matter.)\\
+For $v_i$, we starts from the edge that is both incident with $v_i$ 
+and in $C\cap M$ and moves along the cycle till we meet $v^*$,
+denote such a path by $P^*$($P^*$ is empty when $v_i=v^*$ but that does not affect our proof).
+Then clearly $P'\cup P^*$ with endpoints $s$ and $v^*$ is an $M$-augmenting path in $G$,
+which means that $M$ cannot be a maximum matching, 
+hence contradicts with our assumption.
+Thus $M'$ must be a maximum matching of $G'$.
+
+\subsection{}
+Proof of $M$ is a maximum matching of $G \impliedby M'$ is a maximum matching of $G'$:\\
+Suppose $M$ is not a maximum matching of $G$,
+then there is an $M$-augmenting path $P$ in $G$.
+If $P$ does not intersect any of the vertices in $C$,
+then obviously $P$ is an $M'$-augmenting path in $G'$.
+If $P$ intersects cycle $C$,
+we can always find an endpoint of $P$ which is not in $C$
+since $C$ contains exactly one vertex that is not covered by $M$.
+Denote such an endpoint outside $C$ by $w$.
+In $G'$, we starts from $w$ and moves along the path $P$ 
+till we reach $u$,
+as we have shown in part 2.2,
+$u$ is not covered by $M'$,
+so we have found a path $P'$ starting from $w$ and ending at $u$ 
+which is an $M'$-augmenting path in $G'$.
+In either case there is an $M'$-augmenting path in $G'$,
+which contradicts with our assumption,
+hence $M$ must be a maximum matching of $G$.
 
 \end{document}
