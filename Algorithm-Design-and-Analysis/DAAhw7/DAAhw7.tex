@@ -16,6 +16,7 @@
 \usepackage[noend]{algpseudocode}
 \usepackage{bbm}
 
+
 \hypersetup{
   colorlinks=true,
   linkcolor=blue,
@@ -158,5 +159,113 @@ which is an $M'$-augmenting path in $G'$.
 In either case there is an $M'$-augmenting path in $G'$,
 which contradicts with our assumption,
 hence $M$ must be a maximum matching of $G$.
+
+\section{}
+Firstly, if all the vertices are already covered by the matching $M$,
+there will be no valid root for the tree,
+now the $M$-alternating tree for this special case is an empty set.
+Actually, even if there are uncovered vertices for a matching $M$,
+there can be valid root in a possible $M$-alternating tree.
+Yet we can still choose the empty set as an $M$-alternating tree,
+which completes the proof of the existence of $M$-alternating tree.\\
+What's important here is to find a maximal one in polynomial-time,
+we can carry out this task by a modified DFS process with certain search rules.\\
+\textbf{Step 1:}\\
+Find the set of all uncovered vertices $R=\{r_1,r_2,\dots,r_n\}$.\\
+\textbf{Step 2:}\\
+Pick an element that has not been traversed $r^*$,
+$r^*$ will be the root of a component of the maximal $M$-alternating tree.\\
+\textbf{Step 3:}\\
+Start a DFS from root $r^*$ by the following rule:\\
+In this DFS, never traverse a vertex that has already been visited before.\\
+If current vertex is a root or an outer vertex,
+we must do DFS along an edge that connects a vertex that is covered.\\
+If current vertex is an inner vertex,
+we must do DFS along the edge that covers the very inner vertex.\\
+\textbf{Step 4:}\\
+If all vertices have been traversed, 
+then we have already find a maximal $M$-alternating forest.
+If not, go to step 2.\\
+Clearly all the steps mentioned above can be done in polynomial time,
+Even though step 2 is a loop,
+it will be carried out at most $|V|$ times where $V$ is the set of all vertices.
+So this process can be done in polynomial time.\\
+We now prove that such an $M$-alternating forest is maximal. 
+To prove this, 
+we only need to show that adding an edge will make this forest not an 
+$M$-alternating forest any more.\\
+For those edges that are within a component of such a forest,
+clearly we cannot add them because the components must be a tree.
+For those edges that are between two components of such a forest,
+we cannot add them because once we add them, 
+we merge two trees and generate a tree which has two vertices that are not covered,
+which violates the definition 1 of an $M$-alternating forest.
+So such a forest is maximal.
+
+\section{}
+Firstly, since $M$ is a maximal matching, 
+there will be no edges between roots of components of $F$.
+(Otherwise we can add this edge to $M$, $M$ is not maximal)\\
+Also, any $M$-augmenting path $P$ must have two endpoints which are not covered by $M$,
+thus the endpoints can only be the roots of components of $F$.\\
+\newline
+We first consider the situation where
+the $M$-augmenting path contains only one edge
+denoted by $w$ which connets two components of forest $F$.
+Now consider the vertices incident with $w$,
+there are three possible cases.\\
+\textbf{Case 1:}
+$w=(u,v)$ connects two outer vertices from two trees.\\
+In this case $u,v$ are the two consecutive outer vertices we want.\\
+\textbf{Case 2:}
+$w=(u,v)$ connects an inner vertex $u$ and an outer vertex $v$.\\
+We consider the tree $T$ where $u\in T$. 
+Since $w$ connects two components of $F$, $w\notin E$. 
+Then the subset of augmenting path $P$ that passes through vertices in $T$ must 
+start with the root of $T$ and end with an edge $e\in M$
+where $e=(s,u)$ and $s$ is an outer vertex and $s$ is a child of $u$.
+Since $s$ is a child of $u$, 
+the path starting from root of $T$ must first path another branch and then reaches $s$.
+For an augmenting path, the edge between two branches of an alternating tree
+must be connecting two outer vertices,
+so there are two consecutive outer vertices in the augmenting path.\\
+\textbf{Case 3:}
+$w=(u,v)$ connects two inner vertices from two trees.\\
+Like case 2, here the proof is the same other than that 
+both the trees containing $u$ and $v$ will have an edge 
+which is connecting two outer vertices.\\
+To sum up, in the above three cases,
+there will always be two consecutive outer vertices.\\
+\newline 
+We then consider the situation where the $M$-augmenting path contains more than one edge
+connecting components of forest $F$.
+In this situation,
+if there is an edge that is connecting two outer vertices, 
+then we are done.
+If not, like the proof in case 2,
+we can always find a tree of $F$ where the $M$-augmenting path
+connects two consecutive outer vertices of the tree.\\
+\newline
+To sum up, 
+any $M$-augmenting path must contain two consecutive outer vertices.
+
+\section{}
+\subsection{}
+If belong to distinct components of $F$,
+then denote the root of $u$ by $r_{u}$, denote the root of $v$ by $r_{v}$,
+denote the path from $r_{u}$ to $u$ in the component of $F$ by $P_{u}$,
+denote the path from $r_{v}$ to $v$ in the component of $F$ by $P_{v}$,
+then clearly $P_u+(u,v)+P_v$ is an $M$-augmenting path with endpoints $r_u,r_v$.
+
+\subsection{}
+If belong to the same component of $F$,
+then there is a unique path $P$ from $u$ to $v$ in the very component.
+By definition of $M$-alternating forest the lowest common ancestor of $u$ and $v$ must also be an outer vertex 
+and the length of the unique path between any two outer vertices must be even.
+Then we know the length of path $P$ is also even.
+Then path $P$ plus the extra edge that connects $u$ and $v$ in $G$ but not in $F$
+forms an odd cycle.
+
+\section{}
 
 \end{document}
