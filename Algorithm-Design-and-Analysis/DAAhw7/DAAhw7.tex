@@ -111,6 +111,7 @@ Thus we can conclude that if $M$ is not a maximum matching,
 there will be an $M$-augmenting path.
 So if no $M$-augmenting path exists $M$ must be a maximum matching.
 
+\newpage
 \section{}
 First we introduce some notations that will be used in the proof.\\
 Denote $M\backslash C$ by $M'$.\\
@@ -160,6 +161,7 @@ In either case there is an $M'$-augmenting path in $G'$,
 which contradicts with our assumption,
 hence $M$ must be a maximum matching of $G$.
 
+\newpage
 \section{}
 Firstly, if all the vertices are already covered by the matching $M$,
 there will be no valid root for the tree,
@@ -202,6 +204,7 @@ we merge two trees and generate a tree which has two vertices that are not cover
 which violates the definition 1 of an $M$-alternating forest.
 So such a forest is maximal.
 
+\newpage
 \section{}
 Firstly, since $M$ is a maximal matching, 
 there will be no edges between roots of components of $F$.
@@ -249,6 +252,8 @@ connects two consecutive outer vertices of the tree.\\
 To sum up, 
 any $M$-augmenting path must contain two consecutive outer vertices.
 
+
+\newpage
 \section{}
 \subsection{}
 If belong to distinct components of $F$,
@@ -266,6 +271,77 @@ Then we know the length of path $P$ is also even.
 Then path $P$ plus the extra edge that connects $u$ and $v$ in $G$ but not in $F$
 forms an odd cycle.
 
+\newpage
 \section{}
+\textbf{Algorithm Description:}\\
+Step 1:\\
+Pick the edges whose endpoints have not been covered one by one,
+till we have got a maximal matching $M$.\\
+Step 2:($M$-alternating forest building)\\
+Build a maximal $M$-alternating forest using the method we described in problem 3.
+Meanwhile, mark all the edges that are not in this $M$-alternating forest,
+i,e, mark all the edges in $E\backslash F$
+as we need to check these edges in the next step.\\
+Step 3:(Blossom contraction)\\
+For all those edges in $E\backslash F$,
+if there is still an edge $(u,v)$ which connects two outer vertices in $F$
+belonging to the same component in $F$.
+start a DFS \textbf{with only edges in $F$} from either $u$ or $v$
+until we find a cycle(the Blossom),
+then contracts this Blossom.\\
+Step 4:($M$-augmenting path finding)\\
+For all those edges in $E\backslash F$,
+find an edge connecting two outer vertices belonging to different components of $F$
+then DFS \textbf{with only edges in $F$} from either $u$ or $v$
+to find an $M$-augmenting path.\\
+If there is no such edges, go to step 7.\\
+Repeatedly find all such edges and all disjoint $M$-augmenting paths,
+denote the set of disjoint $M$-augmenting paths by $P$.\\
+Step 5:\\
+For all paths in $P$, 
+switch those edges that are in $M$ and not in $M$ to update out matching $M$,
+after which we will have a new matching with larger cardinality.\\
+Step 6:\\
+With the new matching $M$,
+go to step 2 again(to build a new $M$-alternating forest corresponding with updated $M$).\\
+Step 7:\\
+We have got us a maximum matching in the graph with all the blossoms contracted,
+then by openning all those blossoms we can get the maximum matching in the original graph.\\
+\newline
+\textbf{Proof of Correctness:}\\
+Firstly, the only way this algorithm exits at step 7 
+is from step 4 when there is no two consecutive outer vertices belonging to different components.
+Since we have contracted all blossoms in step 3, 
+there will be no two consecutive outer vertices in the graph,
+then by problem 4,
+there will be no $M$-augmenting path in this graph.
+Then by problem 1, this matching is a maximum matching.\\
+Also, py problem 2, the blossom contracting process will not affect the maximum matching 
+in the graph generated or the original graph.
+This means that at step 3 we can safely contract those blossoms and 
+use the maximum matching in the contracted graph to generate a maximum matching in the original graph.\\
+As we have shown in problem 3, 
+steps 1 and 2 can always be finished within polynomial time and we can
+always find such maximal matching and maximal forests.\\
+At step 5 when we are updating the maximal matching,
+since we are replacing edges from all those disjoint augmenting paths,
+we can guarantee that we will still get a maximal matching.\\
+By the above statements, we have completed our proff of correctness or our algorithm.\\
+\newline
+\textbf{Time complexity:}\\
+Here we use $V,E$ to represent the cardinality of set of all vertices and edges respectively.\\
+Step 1 can be done in $O(E)$ time, we only need to initialize once,
+so actually this time is not that important.\\
+Since each vertex can only be covered by one edge,
+the forest building process at step 2 only takes $O(V)$ times.\\
+At each iteration after step 2, 
+it takes us $O(V)$ time to find all those consecutive outer vertices,
+either this leads to a blossom or an augmenting path,
+it takes us $O(E)$ time to check
+and also $O(E)$ time to contract the blossom
+or update matching $M$ according to the augmenting paths.\\
+So the total time complexity is $O(V)$ iterations times
+$O(V)$ outer vertices finding times $O(E)$ checking,
+which is $O(EV^2)$.
 
 \end{document}
