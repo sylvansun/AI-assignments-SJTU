@@ -1,0 +1,92 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage{fullpage}
+\usepackage[top=2cm, bottom=4.5cm, left=2.5cm, right=2.5cm]{geometry}
+\usepackage{amsmath,amsthm,amsfonts,amssymb,amscd}
+\usepackage{lastpage}
+\usepackage{enumerate}
+\usepackage{fancyhdr}
+\usepackage{mathrsfs}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{hyperref}
+\usepackage{mathtools}
+\usepackage{xfrac}
+\usepackage{bbm}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue,
+  linkbordercolor={0 0 1}
+}
+\linespread{1.1}
+ 
+\renewcommand\lstlistingname{Algorithm}
+\renewcommand\lstlistlistingname{Algorithms}
+\def\lstlistingautorefname{Alg.}
+
+
+\lstdefinestyle{Python}{
+    language        = Python,
+    frame           = lines, 
+    basicstyle      = \footnotesize,
+    keywordstyle    = \color{blue},
+    stringstyle     = \color{green},
+    commentstyle    = \color{red}\ttfamily
+}
+
+\setlength{\parindent}{0.0in}
+\setlength{\parskip}{0.05in}
+
+\newcommand\course{Computer Vision}
+\newcommand\hwnumber{1}
+\newcommand\NetIDa{SUN Yilin}
+\newcommand\NetIDb{520030910361}
+
+\pagestyle{fancyplain}
+\headheight 35pt
+\lhead{\NetIDa}
+\lhead{\NetIDa\\\NetIDb}
+\chead{\textbf{\Large Homework \hwnumber}}
+\rhead{\course \\ \today}
+\lfoot{}
+\cfoot{}
+\rfoot{\small\thepage}
+\headsep 1.5em
+
+\begin{document}
+
+\section{Written Assignment}
+\subsection*{a}
+The shape of the image will still be a circular disk, with different radius.\\
+\textbf{Explanations:}
+We use the same setting as our lecture notes, i.e. $\boldsymbol{r_o}=(x_o,y_o,z_o)$ denotes
+the coordinate of actual object pixel and $\boldsymbol{r_i}=(x_i,y_i,f)$ denotes its image.
+We set the pinhole $(x,y,z)=(0,0,0)$ and let the optical axis be the $z$-axis.
+Now we prove our argument by deriving the equation of the image of the disk.\\
+The equation of the circular disk in original space can be described as $(x_o-a)^2+(y_o-b)^2=c^2$
+where $(a,b)$ is its center and $c$ is its radius. Then by applying the rule of similar triangles 
+we get $(x_i,y_i)=(\frac{fx_o}{z_o},\frac{fy_o}{z_o})$, then by substituting the coordinates
+we get the equation of image disk as $(\frac{z_ox_i}{f}-a)^2+(\frac{z_oy_i}{f}-b)^2=c^2$,
+or equivalently $$(x_i-\frac{af}{z_o})^2+(y_i-\frac{bf}{z_o})=(\frac{cf}{z_o})^2$$
+which is still a circular disk in image plane.
+\subsection*{b}
+\textbf{Case 1:} plane $y=0$\\
+The direction vectors on this plane can be expressed generally as $(x_i,0,z_i)$.
+Then the vanishing points of the family of lines represented by these family of vectors
+can be expressed as $(f\frac{x_i}{z_i},0)$ by our formula from lecture slides.
+Then we know the vanishing points $(f\frac{x_i}{z_i})$ actual lie on line $y=0$ in the image plane.\\
+\textbf{Case 2:} plane $x=0$\\
+Now the direction vectors are $(0,y_i,z_i)$ and the vanishing points are $(0,f\frac{y_i}{z_i})$.
+This time the vanishing points lie on the line $x=0$ in the image plane.
+\subsection*{c}
+Generally, the normal vector of plane $Ax+By+Cz+D=0$ is $(A,B,C)$, thus any direction vector $(x_i,y_i,z_i)$
+that lies in this plane must satisfy that $Ax_i+By_i+Cz_i=0$. 
+Then we know that the vanishing point of line $(x_i,y_i,z_i)$ is $(f\frac{x_i}{z_i},f\frac{y_i}{z_i})$.
+(Note that $z_i$ cannot be zero, otherwise there will not be a vanishing point for these lines parallel to the image plane)\\
+These vanishing points $(f\frac{x_i}{z_i},f\frac{y_i}{z_i})$ actually lie on line
+$$Ax+By+Cf=0$$
+
+\newpage
+\section{Programming Assignment Documentation and Results}
+\end{document}
