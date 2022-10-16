@@ -37,12 +37,7 @@ def label(binary_image):
                     num_types += 1
                     parent.append(num_types)
                     labeled_img[i + 1][j + 1] = num_types
-                    # print(num_types, i, j)
                 else:
-                    if i==227 and j==200:
-                        print(neighbour_type)
-                        print(labeled_img[i][j], labeled_img[i][j+1], labeled_img[i+1][j])
-                        print(parent)
                     labeled_img[i + 1][j + 1] = neighbour_type
                     if labeled_img[i][j] < inf:
                         parent[labeled_img[i][j]] = min(neighbour_type, parent[labeled_img[i][j]])
@@ -50,10 +45,6 @@ def label(binary_image):
                         parent[labeled_img[i+1][j]] = min(neighbour_type, parent[labeled_img[i+1][j]])
                     if labeled_img[i][j+1] < inf:
                         parent[labeled_img[i][j+1]] = min(neighbour_type, parent[labeled_img[i][j+1]])
-                    if i==227 and j==200:
-                        print(parent)
-
-    print(parent)
 
     # union find set
     for i in range(len(parent)):
@@ -61,10 +52,19 @@ def label(binary_image):
         while p != parent[p]:
             p = parent[p]
         parent[i] = p
-        # print(i, parent[i])
-    print(set(parent))
-    # second pass
+    print(parent)
 
+    # second pass
+    types = set(parent)
+    types.discard(0)
+    for i in range(len(parent)):
+        labeled_img[labeled_img == i] = parent[i]
+    curr_cc = 0
+    labeled_img[labeled_img == inf] = 0  # background
+    for elem in types:
+        curr_cc += 1
+        print(int(255 * curr_cc / len(types)))
+        labeled_img[labeled_img == elem] = int(255 * curr_cc / len(types))
     return labeled_img
 
 
@@ -81,13 +81,15 @@ def main(argv):
 
     binary_image = binarize(gray_image, thresh_val=thresh_val)
     labeled_image = label(binary_image)
-    attribute_list = get_attribute(labeled_image)
 
     cv2.imwrite('output/' + img_name + "_gray.png", gray_image)
     cv2.imwrite('output/' + img_name + "_binary.png", binary_image)
     cv2.imwrite('output/' + img_name + "_labeled.png", labeled_image)
+
+    attribute_list = get_attribute(labeled_image)
     print(attribute_list)
 
 
 if __name__ == '__main__':
     main(sys.argv[1:])
+    
