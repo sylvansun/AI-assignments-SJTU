@@ -6,7 +6,6 @@ import math
 
 
 def binarize(gray_image, thresh_val):
-    # TODO: 255 if intensity >= thresh_val else 0
     binary_image = np.zeros(gray_image.shape, dtype='uint8')
     binary_image[gray_image >= thresh_val] = 255
     return binary_image
@@ -74,8 +73,8 @@ def get_attribute(labeled_image):
     att_list = []
     height, width = labeled_image.shape[0], labeled_image.shape[1]
 
-    def calculate_E(theta, a, b, c):
-        return a * math.sin(theta) ** 2 - b * math.sin(theta) * math.cos(theta) + c * math.cos(theta) ** 2
+    def calculate_e(theta, a1, b1, c1):
+        return a1 * math.sin(theta) ** 2 - b1 * math.sin(theta) * math.cos(theta) + c1 * math.cos(theta) ** 2
 
     # tackle these objects one at a time
     for elem in types:
@@ -96,7 +95,7 @@ def get_attribute(labeled_image):
                   np.sum(y_prime ** 2 * obj_img)
         theta1 = math.atan(b / (a - c)) / 2
         theta2 = theta1 + math.pi/2
-        e1, e2 = calculate_E(theta1, a, b, c), calculate_E(theta2, a, b, c)
+        e1, e2 = calculate_e(theta1, a, b, c), calculate_e(theta2, a, b, c)
         if e1 < e2:
             parameters['orientation'], parameters['roundedness'] = theta1, e1/e2
         else:
