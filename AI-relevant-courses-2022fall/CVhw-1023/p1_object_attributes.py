@@ -52,7 +52,6 @@ def label(binary_image):
         while p != parent[p]:
             p = parent[p]
         parent[i] = p
-    print(parent)
 
     # second pass
     types = set(parent)
@@ -63,14 +62,37 @@ def label(binary_image):
     labeled_img[labeled_img == inf] = 0  # background
     for elem in types:
         curr_cc += 1
-        print(int(255 * curr_cc / len(types)))
         labeled_img[labeled_img == elem] = int(255 * curr_cc / len(types))
     return labeled_img
 
 
 def get_attribute(labeled_image):
-    # TODO
-    return attribute_list
+    # initialization
+    types = set(np.unique(labeled_image))
+    types.discard(0)
+    att_list = []
+    height, width = labeled_image.shape[0], labeled_image.shape[1]
+
+    # tackle these objects one at a time
+    for elem in types:
+        # generate image with single object each time
+        obj_img = np.zeros(labeled_image.shape, dtype='uint8')
+        obj_img[labeled_image == elem] = 1
+        parameters = {'position': {'x': 0, 'y': 0}, 'orientation': 0, 'roundedness': 0}
+
+        # calculate the position
+        area = np.sum(obj_img)
+        x = np.arange(width).reshape(1, -1)
+        y = height - np.arange(height).reshape(height, -1)
+        x_bar = np.sum(obj_img * x)/area
+        y_bar = np.sum(obj_img * y)/area
+        parameters['position']['x'], parameters['position']['y'] = x_bar, y_bar
+
+        # calculate the orientation
+
+        print(parameters)
+
+    return att_list
 
 
 def main(argv):
@@ -82,14 +104,14 @@ def main(argv):
     binary_image = binarize(gray_image, thresh_val=thresh_val)
     labeled_image = label(binary_image)
 
+    attribute_list = get_attribute(labeled_image)
+
     cv2.imwrite('output/' + img_name + "_gray.png", gray_image)
     cv2.imwrite('output/' + img_name + "_binary.png", binary_image)
     cv2.imwrite('output/' + img_name + "_labeled.png", labeled_image)
 
-    attribute_list = get_attribute(labeled_image)
     print(attribute_list)
 
 
 if __name__ == '__main__':
     main(sys.argv[1:])
-    
