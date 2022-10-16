@@ -2,6 +2,7 @@
 import cv2
 import numpy as np
 import sys
+import math
 
 
 def binarize(gray_image, thresh_val):
@@ -73,6 +74,9 @@ def get_attribute(labeled_image):
     att_list = []
     height, width = labeled_image.shape[0], labeled_image.shape[1]
 
+    def calculate_E(theta, a, b, c):
+        return a * math.sin(theta) ** 2 - b * math.sin(theta) * math.cos(theta) + c * math.cos(theta) ** 2
+
     # tackle these objects one at a time
     for elem in types:
         # generate image with single object each time
@@ -82,16 +86,22 @@ def get_attribute(labeled_image):
 
         # calculate the position
         area = np.sum(obj_img)
-        x = np.arange(width).reshape(1, -1)
-        y = height - np.arange(height).reshape(height, -1)
-        x_bar = np.sum(obj_img * x)/area
-        y_bar = np.sum(obj_img * y)/area
+        x, y = np.arange(width).reshape(1, -1), height - np.arange(height).reshape(height, -1)
+        x_bar, y_bar = np.sum(obj_img * x)/area, np.sum(obj_img * y)/area
         parameters['position']['x'], parameters['position']['y'] = x_bar, y_bar
 
-        # calculate the orientation
-
-        print(parameters)
-
+        # calculate the orientation and roundedness
+        x_prime, y_prime = x - x_bar, y - y_bar
+        a, b, c = np.sum(x_prime ** 2 * obj_img), 2 * np.sum(x_prime * y_prime * obj_img),\
+                  np.sum(y_prime ** 2 * obj_img)
+        theta1 = math.atan(b / (a - c)) / 2
+        theta2 = theta1 + math.pi/2
+        e1, e2 = calculate_E(theta1, a, b, c), calculate_E(theta2, a, b, c)
+        if e1 < e2:
+            parameters['orientation'], parameters['roundedness'] = theta1, e1/e2
+        else:
+            parameters['orientation'], parameters['roundedness'] = theta2, e2/e1
+        att_list.append(parameters)
     return att_list
 
 
