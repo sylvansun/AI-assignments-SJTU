@@ -1,20 +1,40 @@
 #!/usr/bin/env python3
 import cv2
-import numpy
+import numpy as np
 import sys
 
 
 def detect_edges(image):
-  """Find edge points in a grayscale image.
+    """Find edge points in a grayscale image.
 
-  Args:
-  - image (2D uint8 array): A grayscale image.
+      Args:
+      - image (2D uint8 array): A grayscale image.
 
-  Return:
-  - edge_image (2D float array): A heat map where the intensity at each point
-      is proportional to the edge magnitude.
-  """
-  raise NotImplementedError  #TODO
+      Return:
+      - edge_image (2D float array): A heat map where the intensity at each point
+          is proportional to the edge magnitude.
+    """
+    pad_img = np.pad(image, ((1, 1), (1, 1)), 'constant')  # actually we do not use this
+    sobel_x = np.array([-1, 0, 1, -2, 0, 2, -1, 0, 1]).reshape(3, -1)
+    sobel_y = np.array([1, 2, 1, 0, 0, 0, -1, -2, -1]).reshape(3, -1)
+    grad_x, grad_y = cv2.filter2D(image, -1, sobel_x), cv2.filter2D(image, -1, sobel_y)
+    edge_image = np.sqrt(grad_x ** 2 + grad_y ** 2)
+    return edge_image
+
+
+def save_edges_as_image(edges, name):
+    """
+
+    Args:
+        - edges (2D float array): A heat map where the intensity at each point
+            is proportional to the edge magnitude.
+        - name (string): file name
+
+    Returns:
+        - None
+    """
+    scale = int(255/np.max(edges))
+    cv2.imwrite('output/' + name + "_edge.png", edges.astype('uint8') * scale)
 
 
 def hough_circles(edge_image, edge_thresh, radius_values):
@@ -61,8 +81,12 @@ def main(argv):
     img_name = argv[0]
     img = cv2.imread('data/' + img_name + '.png', cv2.IMREAD_COLOR)
     gray_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-    print(gray_img.shape)
+
+    # Q1
     edge = detect_edges(gray_img)
+    save_edges_as_image(edge, img_name)
+
+    # Q2
 
 
 if __name__ == '__main__':
