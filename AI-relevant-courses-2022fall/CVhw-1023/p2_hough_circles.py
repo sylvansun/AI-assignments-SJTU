@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import cv2
 import numpy
+import sys
 
 
 def detect_edges(image):
@@ -56,6 +57,14 @@ def find_circles(image, accum_array, radius_values, hough_thresh):
   raise NotImplementedError  #TODO
 
 
+def main(argv):
+    img_name = argv[0]
+    img = cv2.imread('data/' + img_name + '.png', cv2.IMREAD_COLOR)
+    gray_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    print(gray_img.shape)
+    edge = detect_edges(gray_img)
+
+
 if __name__ == '__main__':
-  #TODO
+    main(sys.argv[1:])
 

@@ -20,6 +20,8 @@ Gram = Tuple[int]
 
 _splitor_pattern = re.compile(r"[^a-zA-Z']+|(?=')")
 _digit_pattern = re.compile(r"\d+")
+
+
 def normaltokenize(corpus: List[str]) -> Corpus:
     """
     Normalizes and tokenizes the sentences in `corpus`. Turns the letters into
@@ -44,6 +46,7 @@ def normaltokenize(corpus: List[str]) -> Corpus:
                ]
     return tokeneds
 
+
 def extract_vocabulary(corpus: Corpus) -> Dict[str, int]:
     """
     Extracts the vocabulary from `corpus` and returns it as a mapping from the
@@ -62,6 +65,7 @@ def extract_vocabulary(corpus: Corpus) -> Dict[str, int]:
                 enumerate(
                     sorted(vocabulary))))
     return vocabulary
+
 
 def words_to_indices(vocabulary: Dict[str, int], sentence: Sentence) -> IntSentence:
     """
@@ -99,6 +103,7 @@ def words_to_indices(vocabulary: Dict[str, int], sentence: Sentence) -> IntSente
 #
     #def __delitem__(self, key: Gram):
         #pass
+
 
 class NGramModel:
     def __init__(self, vocab_size: int, n: int = 4):
@@ -246,10 +251,11 @@ class NGramModel:
         # TODO: calculates the PPL
         pass
 
+
 if __name__ == "__main__":
     action = "train"
 
-    if action=="train":
+    if action == "train":
         with open("data/news.2007.en.shuffled.deduped.train") as f:
             texts = list(map(lambda l: l.strip(), f.readlines()))
 
@@ -257,7 +263,7 @@ if __name__ == "__main__":
 
         corpus = normaltokenize(texts)
         vocabulary = extract_vocabulary(corpus)
-        #print(vocabulary)
+        # print(vocabulary)
         corpus = list(
                 map(functools.partial(words_to_indices, vocabulary),
                     corpus))
@@ -272,7 +278,7 @@ if __name__ == "__main__":
 
         print("Dumped model.")
 
-    elif action=="eval":
+    elif action == "eval":
         with open("model.pkl", "rb") as f:
             vocabulary = pkl.load(f)
             model = pkl.load(f)
@@ -286,7 +292,7 @@ if __name__ == "__main__":
                     test_corpus))
         ppls = []
         for t in test_corpus:
-            #print(t)
+            # print(t)
             ppls.append(model.ppl(t))
             print(ppls[-1])
         print("Avg: ", sum(ppls)/len(ppls))
