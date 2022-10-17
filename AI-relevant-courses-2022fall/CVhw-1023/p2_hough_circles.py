@@ -34,7 +34,10 @@ def save_edges_as_image(edges, name):
         - None
     """
     scale = int(255/np.max(edges))
-    cv2.imwrite('output/' + name + "_edge.png", edges.astype('uint8') * scale)
+    edge_int = edges.astype('uint8') * scale
+    edge_int[edge_int >= 128] = 255
+    edge_int[edge_int < 128] = 0
+    cv2.imwrite('output/' + name + "_edge.png", edge_int)
 
 
 def hough_circles(edge_image, edge_thresh, radius_values):
