@@ -71,7 +71,7 @@ def save_normalized_edges(edges, name):
     """
     edge_normalized = (edges - np.min(edges)) / (np.max(edges) - np.min(edges)) * 255
     edge_int = edge_normalized.astype('uint8')
-    cv2.imwrite('output/' + name + "_normalized_edges.png", edge_int)
+    cv2.imwrite('output/' + name + "_normalized.png", edge_int)
 
 
 def save_binary_edges(edges, name, thresh=116):
@@ -117,14 +117,20 @@ def hough_circles(edge_image, edge_thresh, radius_values):
     height, width, num_r = edge_image.shape[0], edge_image.shape[1], len(radius_values)
     accum_array = np.zeros([num_r, height, width])
     edge_points = np.where(thresh_edge_image == 255)
-    num_points = len(edge_points)
+    num_points = len(edge_points[0])
+    print(num_points)
+    dist_to_points = np.zeros([num_points, height, width])
+    for i in range(num_points):
+        dist_to_points[i] = calculate_distance(height, width, edge_points[1][i], edge_points[0][i])
     for i in range(num_r):
+        print("radius", radius_values[i], "in process")
         for j in range(num_points):
-            accum_array[i] += np.exp(-1 * calculate_distance(height, width, i, edge_points[1][j], edge_points[0][j]))
+            accum_array[i] += np.exp(-1 * np.abs(dist_to_points[j] - radius_values[i]))
+        save_normalized_edges(accum_array[i], "circle_centers/radius_" + str(radius_values[i]))
     return thresh_edge_image, accum_array
 
 
-def calculate_distance(height, width, radius, x, y):
+def calculate_distance(height, width, x, y):
     """
     generate a map which shows the distance of each point to a circle centered at point (x, y) with  given radius
     """
@@ -132,7 +138,7 @@ def calculate_distance(height, width, radius, x, y):
     for i in range(height):
         for j in range(width):
             dist[i][j] = np.sqrt((i - y) ** 2 + (j - x) ** 2)
-    return np.abs(dist - radius)
+    return dist
 
 
 def find_circles(image, accum_array, radius_values, hough_thresh):
@@ -167,9 +173,12 @@ def main(argv):
 
     # Q2
     radius = [i for i in range(24, 36)]
-    thresh = 116
+    thresh = 140
     edge_binary, accum_arr = hough_circles(edge_magnitude, thresh, radius)
     cv2.imwrite("output/coins_edges.png", edge_binary)
+
+    print(np.where(accum_arr > 106.5))
+    # Q3
 
 
 if __name__ == '__main__':
