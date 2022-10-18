@@ -118,12 +118,10 @@ def hough_circles(edge_image, edge_thresh, radius_values):
     accum_array = np.zeros([num_r, height, width])
     edge_points = np.where(thresh_edge_image == 255)
     num_points = len(edge_points[0])
-    print(num_points)
     dist_to_points = np.zeros([num_points, height, width])
     for i in range(num_points):
         dist_to_points[i] = calculate_distance(height, width, edge_points[1][i], edge_points[0][i])
     for i in range(num_r):
-        print("radius", radius_values[i], "in process")
         for j in range(num_points):
             accum_array[i] += np.exp(-1 * np.abs(dist_to_points[j] - radius_values[i]))
         save_normalized_edges(accum_array[i], "circle_centers/radius_" + str(radius_values[i]))
@@ -142,25 +140,35 @@ def calculate_distance(height, width, x, y):
 
 
 def find_circles(image, accum_array, radius_values, hough_thresh):
-  """Find circles in an image using output from Hough transform.
+    """Find circles in an image using output from Hough transform.
 
-  Args:
-  - image (3D uint8 array): An H x W x 3 BGR color image. Here we use the
-      original color image instead of its grayscale version so the circles
-      can be drawn in color.
-  - accum_array (3D int array): Hough transform accumulator array having shape
-      R x H x W.
-  - radius_values (1D int array): An array of R radius values.
-  - hough_thresh (int): A threshold of votes in the accumulator array.
+    Args:
+    - image (3D uint8 array): An H x W x 3 BGR color image. Here we use the
+        original color image instead of its grayscale version so the circles
+        can be drawn in color.
+    - accum_array (3D int array): Hough transform accumulator array having shape
+        R x H x W.
+    - radius_values (1D int array): An array of R radius values.
+    - hough_thresh (int): A threshold of votes in the accumulator array.
 
-  Return:
-  - circles (list of 3-tuples): A list of circle parameters. Each element
-      (r, y, x) represents the radius and the center coordinates of a circle
-      found by the program.
-  - circle_image (3D uint8 array): A copy of the original image with detected
-      circles drawn in color.
-  """
-  raise NotImplementedError  #TODO
+    Return:
+    - circles (list of 3-tuples): A list of circle parameters. Each element
+        (r, y, x) represents the radius and the center coordinates of a circle
+        found by the program.
+    - circle_image (3D uint8 array): A copy of the original image with detected
+        circles drawn in color.
+    """
+    color = (0, 255, 0)
+    thickness = 2
+    pos = np.where(accum_array > hough_thresh)
+    num_circles = len(pos[0])
+    for i in range(num_circles):
+        image = cv2.circle(image, (pos[2][i], pos[1][i]), radius_values[pos[0][i]], color, thickness)
+    cv2.imwrite("output/coins_circles.png", image)
+    circles = []
+    for i in range(num_circles):
+        circles.append((pos[0][i], pos[1][i], pos[2][i]))
+    return circles, image
 
 
 def main(argv):
@@ -172,13 +180,15 @@ def main(argv):
     edge_magnitude = detect_edges(gray_img)
 
     # Q2
-    radius = [i for i in range(24, 36)]
-    thresh = 140
-    edge_binary, accum_arr = hough_circles(edge_magnitude, thresh, radius)
+    radius = [i for i in range(24, 31)]
+    edge_thresh = 140
+    edge_binary, accum_arr = hough_circles(edge_magnitude, edge_thresh, radius)
     cv2.imwrite("output/coins_edges.png", edge_binary)
 
-    print(np.where(accum_arr > 106.5))
     # Q3
+    hough_thresh = 60
+    circle_list, img_with_circle = find_circles(gray_img, accum_arr, radius, hough_thresh)
+    cv2.imwrite("output/coins_circles.png", img_with_circle)
 
 
 if __name__ == '__main__':
