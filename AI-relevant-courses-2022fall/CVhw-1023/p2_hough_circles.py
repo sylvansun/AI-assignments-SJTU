@@ -4,7 +4,7 @@ import numpy as np
 import sys
 
 
-def detect_edges(image):
+def detect_edges(image, stride=1):
     """Find edge points in a grayscale image.
 
       Args:
@@ -14,12 +14,49 @@ def detect_edges(image):
       - edge_image (2D float array): A heat map where the intensity at each point
           is proportional to the edge magnitude.
     """
-    pad_img = np.pad(image, ((1, 1), (1, 1)), 'constant')  # actually we do not use this
-    sobel_x = np.array([-1, 0, 1, -2, 0, 2, -1, 0, 1]).reshape(3, -1)
-    sobel_y = np.array([1, 2, 1, 0, 0, 0, -1, -2, -1]).reshape(3, -1)
-    grad_x, grad_y = cv2.filter2D(image, -1, sobel_x), cv2.filter2D(image, -1, sobel_y)
-    edge_image = np.sqrt(grad_x ** 2 + grad_y ** 2)
+    pad_img = np.pad(image, ((stride, stride), (stride, stride)), 'constant')
+    up, down, left, right = img_shift(pad_img, 'up', stride), img_shift(pad_img, 'down', stride),\
+                            img_shift(pad_img, 'left', stride), img_shift(pad_img, 'right', stride)
+    ul, ur, dl, dr = img_shift(up, 'left', stride), img_shift(up, 'right', stride),\
+                     img_shift(down, 'left', stride), img_shift(down, 'right', stride),
+    tool_imgs = [ul, up, ur, left, pad_img, right, dl, down, right]
+
+    sobel_x = np.array([-1, 0, 1, -2, 0, 2, -1, 0, 1])
+    sobel_y = np.array([1, 2, 1, 0, 0, 0, -1, -2, -1])
+
+    # calculate the gradients
+
+    grad_x, grad_y = np.zeros(pad_img.shape), np.zeros(pad_img.shape)
+    for i in range(len(sobel_x)):
+        grad_x += sobel_x[i] * tool_imgs[i]
+        grad_y += sobel_y[i] * tool_imgs[i]
+    print(grad_x)
+    edge_image = np.sqrt(grad_x[stride:-stride, stride:-stride] ** 2 + grad_y[stride:-stride, stride:-stride] ** 2)
     return edge_image
+
+
+def img_shift(img, direction, stride):
+    """
+
+    Args:
+        img: original image, need to be padded with zeros
+        stride: step size of shift
+        direction: shift direction
+
+    Returns:
+        the shifted image (2D int array)
+
+    """
+    result = np.zeros(img.shape)
+    if direction == 'up':
+        result[0:-2 * stride, stride:-stride] = img[stride:-stride, stride:-stride]
+    if direction == 'down':
+        result[2*stride:, stride:-stride] = img[stride:-stride, stride:-stride]
+    if direction == 'left':
+        result[stride:-stride, 0:-2 * stride] = img[stride:-stride, stride:-stride]
+    if direction == 'right':
+        result[stride:-stride, 2 * stride:] = img[stride:-stride, stride:-stride]
+    return result
 
 
 def save_edges_as_image(edges, name):
