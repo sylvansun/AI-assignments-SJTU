@@ -158,16 +158,25 @@ def find_circles(image, accum_array, radius_values, hough_thresh):
     - circle_image (3D uint8 array): A copy of the original image with detected
         circles drawn in color.
     """
+    # default parameters
     color = (0, 255, 0)
     thickness = 2
+    # center positions
     pos = np.where(accum_array > hough_thresh)
     num_circles = len(pos[0])
+    # generate all possible circles, they may share same centers
+    circles_multiple = []
     for i in range(num_circles):
-        image = cv2.circle(image, (pos[2][i], pos[1][i]), radius_values[pos[0][i]], color, thickness)
-    cv2.imwrite("output/coins_circles.png", image)
-    circles = []
-    for i in range(num_circles):
-        circles.append((pos[0][i], pos[1][i], pos[2][i]))
+        circles_multiple.append((radius_values[pos[0][i]], pos[1][i], pos[2][i]))
+    # NMS operation to save a single circle for each position
+    circles_multiple.sort(key=lambda x: x[2])
+    circles = [circles_multiple[0]]
+    for i in range(num_circles-1):
+        if circles_multiple[i+1][2] - circles_multiple[i][2] > 5:
+            circles.append(circles_multiple[i+1])
+    # draw those circles
+    for i in range(len(circles)):
+        image = cv2.circle(image, (circles[i][2] + 1, circles[i][1]), circles[i][0], color, thickness)
     return circles, image
 
 
@@ -188,6 +197,7 @@ def main(argv):
     # Q3
     hough_thresh = 60
     circle_list, img_with_circle = find_circles(gray_img, accum_arr, radius, hough_thresh)
+    print(circle_list)
     cv2.imwrite("output/coins_circles.png", img_with_circle)
 
 
