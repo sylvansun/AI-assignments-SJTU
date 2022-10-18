@@ -33,10 +33,8 @@ def save_edges_as_image(edges, name):
     Returns:
         - None
     """
-    scale = int(255/np.max(edges))
-    edge_int = edges.astype('uint8') * scale
-    edge_int[edge_int >= 128] = 255
-    edge_int[edge_int < 128] = 0
+    edge_normalized = (edges - np.min(edges)) / (np.max(edges) - np.min(edges)) * 255
+    edge_int = edge_normalized.astype('uint8')
     cv2.imwrite('output/' + name + "_edge.png", edge_int)
 
 
