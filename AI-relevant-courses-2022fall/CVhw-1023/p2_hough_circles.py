@@ -93,21 +93,46 @@ def save_binary_edges(edges, name, thresh=116):
 
 
 def hough_circles(edge_image, edge_thresh, radius_values):
-  """Threshold edge image and calculate the Hough transform accumulator array.
+    """Threshold edge image and calculate the Hough transform accumulator array.
 
-  Args:
-  - edge_image (2D float array): An H x W heat map where the intensity at each
-      point is proportional to the edge magnitude.
-  - edge_thresh (float): A threshold on the edge magnitude values.
-  - radius_values (1D int array): An array of R possible radius values.
+    Args:
+    - edge_image (2D float array): An H x W heat map where the intensity at each
+        point is proportional to the edge magnitude.
+    - edge_thresh (float): A threshold on the edge magnitude values.
+    - radius_values (1D int array): An array of R possible radius values.
 
-  Return:
-  - thresh_edge_image (2D bool array): Thresholded edge image indicating
-      whether each pixel is an edge point or not.
-  - accum_array (3D int array): Hough transform accumulator array. Should have
-      shape R x H x W.
-  """
-  raise NotImplementedError  #TODO
+    Return:
+    - thresh_edge_image (2D bool array): Thresholded edge image indicating
+        whether each pixel is an edge point or not.
+    - accum_array (3D int array): Hough transform accumulator array. Should have
+        shape R x H x W.
+    """
+    # generate the threshholded image
+    edge_normalized = (edge_image - np.min(edge_image)) / (np.max(edge_image) - np.min(edge_image)) * 255
+    thresh_edge_image = edge_normalized.astype('uint8')
+    thresh_edge_image[thresh_edge_image >= edge_thresh] = 255
+    thresh_edge_image[thresh_edge_image < edge_thresh] = 0
+
+    # calculate the accumulation array
+    height, width, num_r = edge_image.shape[0], edge_image.shape[1], len(radius_values)
+    accum_array = np.zeros([num_r, height, width])
+    edge_points = np.where(thresh_edge_image == 255)
+    num_points = len(edge_points)
+    for i in range(num_r):
+        for j in range(num_points):
+            accum_array[i] += np.exp(-1 * calculate_distance(height, width, i, edge_points[1][j], edge_points[0][j]))
+    return thresh_edge_image, accum_array
+
+
+def calculate_distance(height, width, radius, x, y):
+    """
+    generate a map which shows the distance of each point to a circle centered at point (x, y) with  given radius
+    """
+    dist = np.zeros([height, width])
+    for i in range(height):
+        for j in range(width):
+            dist[i][j] = np.sqrt((i - y) ** 2 + (j - x) ** 2)
+    return np.abs(dist - radius)
 
 
 def find_circles(image, accum_array, radius_values, hough_thresh):
@@ -138,13 +163,14 @@ def main(argv):
     gray_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
     # Q1
-    edge = detect_edges(gray_img)
-    save_normalized_edges(edge, img_name)
-    save_binary_edges(edge, img_name)
+    edge_magnitude = detect_edges(gray_img)
 
     # Q2
+    radius = [i for i in range(24, 36)]
+    thresh = 116
+    edge_binary, accum_arr = hough_circles(edge_magnitude, thresh, radius)
+    cv2.imwrite("output/coins_edges.png", edge_binary)
 
 
 if __name__ == '__main__':
     main(sys.argv[1:])
-
