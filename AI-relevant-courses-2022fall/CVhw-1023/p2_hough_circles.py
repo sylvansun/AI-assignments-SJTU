@@ -30,7 +30,6 @@ def detect_edges(image, stride=1):
     for i in range(len(sobel_x)):
         grad_x += sobel_x[i] * tool_imgs[i]
         grad_y += sobel_y[i] * tool_imgs[i]
-    print(grad_x)
     edge_image = np.sqrt(grad_x[stride:-stride, stride:-stride] ** 2 + grad_y[stride:-stride, stride:-stride] ** 2)
     return edge_image
 
@@ -59,7 +58,7 @@ def img_shift(img, direction, stride):
     return result
 
 
-def save_edges_as_image(edges, name):
+def save_normalized_edges(edges, name):
     """
 
     Args:
@@ -72,7 +71,25 @@ def save_edges_as_image(edges, name):
     """
     edge_normalized = (edges - np.min(edges)) / (np.max(edges) - np.min(edges)) * 255
     edge_int = edge_normalized.astype('uint8')
-    cv2.imwrite('output/' + name + "_edge.png", edge_int)
+    cv2.imwrite('output/' + name + "_normalized_edges.png", edge_int)
+
+
+def save_binary_edges(edges, name, thresh=116):
+    """
+
+    Args:
+        - edges (2D float array): A heat map where the intensity at each point
+            is proportional to the edge magnitude.
+        - name (string): file name
+
+    Returns:
+        - None
+    """
+    edge_normalized = (edges - np.min(edges)) / (np.max(edges) - np.min(edges)) * 255
+    edge_int = edge_normalized.astype('uint8')
+    edge_int[edge_int >= thresh] = 255
+    edge_int[edge_int < thresh] = 0
+    cv2.imwrite('output/' + name + "_edges.png", edge_int)
 
 
 def hough_circles(edge_image, edge_thresh, radius_values):
@@ -122,7 +139,8 @@ def main(argv):
 
     # Q1
     edge = detect_edges(gray_img)
-    save_edges_as_image(edge, img_name)
+    save_normalized_edges(edge, img_name)
+    save_binary_edges(edge, img_name)
 
     # Q2
 
