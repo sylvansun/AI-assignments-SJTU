@@ -1,6 +1,6 @@
 \documentclass[12pt,letterpaper]{article}
 \usepackage{fullpage}
-\usepackage[top=2cm, bottom=4.5cm, left=2.5cm, right=2.5cm]{geometry}
+\usepackage[top=2cm, bottom=4.5cm, left=1.5cm, right=1.5cm]{geometry}
 \usepackage{amsmath,amsthm,amsfonts,amssymb,amscd}
 \usepackage{lastpage}
 \usepackage{enumerate}
@@ -8,6 +8,8 @@
 \usepackage{mathrsfs}
 \usepackage{xcolor}
 \usepackage{graphicx}
+\usepackage{float}
+\usepackage{subfigure}
 \usepackage{listings}
 \usepackage{hyperref}
 \usepackage{mathtools}
@@ -88,5 +90,102 @@ These vanishing points $(f\frac{x_i}{z_i},f\frac{y_i}{z_i})$ actually lie on lin
 $$Ax+By+Cf=0$$
 
 \newpage
-\section{Programming Assignment Documentation and Results}
+\section{Programming Assignment}
+
+\subsection{}
+\subsubsection*{a}
+I use the default threshhold value 128.\\
+The function is straightforward. It takes the gray image as input and do an element-wise operation 
+to set all those values larger than threshhold value as 255, 
+meanwhile other values remain zero.
+\begin{figure}[htbp]
+  \centering
+  \subfigure[two\_objects]{
+  \label{bintwo}
+  \includegraphics[width=0.3\textwidth]{../output/two_objects_binary.png}}
+  \subfigure[many\_objects\_1]{
+  \label{binmany1}
+  \includegraphics[width=0.325\textwidth]{../output/many_objects_1_binary.png}}
+  \subfigure[many\_objects\_2]{
+  \label{binmany2}
+  \includegraphics[width=0.325\textwidth]{../output/many_objects_2_binary.png}}
+  \caption{binary images of various input}
+  \label{binary_img}
+\end{figure}
+
+\subsubsection*{b}
+I implemented the sequential labeling algorithm by making two passes of the image.
+In the first pass I label all those connected components by scanning the array from
+top to down and from left two right. 
+Meanwhile I used the union-find-set data structure to mark the equivalent classes.
+In the second pass I merge the equivalent classes, calculate the number of total connected components 
+and mark them with different gray levels by a normalization over interval [0,255].
+\begin{figure}[htbp]
+  \centering
+  \subfigure[two\_objects]{
+  \label{labtwo}
+  \includegraphics[width=0.3\textwidth]{../output/two_objects_labeled.png}}
+  \subfigure[many\_objects\_1]{
+  \label{labmany1}
+  \includegraphics[width=0.325\textwidth]{../output/many_objects_1_labeled.png}}
+  \subfigure[many\_objects\_2]{
+  \label{labmany2}
+  \includegraphics[width=0.325\textwidth]{../output/many_objects_2_labeled.png}}
+  \caption{labeled images of various input}
+  \label{labeled_img}
+\end{figure}
+
+\subsubsection*{c}
+This function is simply the implementation of the formulas given in our lecture notes.
+The results on various images are listed below. 
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[scale=0.48]{../output/attributes.png}
+  \label{att}
+  \caption{attributes of various images}
+\end{figure}
+
+\subsection{}
+\subsubsection*{a}
+The Sobel mask is equivalent to what we defined in class, i.e.
+$$Sobel_{x}=
+\begin{pmatrix}
+  -1 & 0 & 1\\
+  -2 & 0 & 2\\
+  -1 & 0 & 1
+\end{pmatrix} \qquad
+Sobel_{y}=
+\begin{pmatrix}
+  1 & 2 & 1\\
+  0 & 0 & 0\\
+  -1 & -2 & -1
+\end{pmatrix}
+$$
+I then implement convolution operation and finish the edge detect operation.
+\subsubsection*{b}
+I choose edge threshhold value 140 and \{24,25,\dots,30\} as possible radius values.
+
+\subsubsection*{c}
+The maximum intensity of my accumulation array is about 106,
+after careful examination, I choose hough threshold value as 75.
+At this threshold, we are able to detect all the circles at a fast speed.
+Also I used the NMS operation to filter out multiple circles centerd at the same point.\\
+The circle parameters given as a list of tuple are:\\
+(29, 105, 34)(24, 49, 55)(29, 145, 94)(24, 84, 109)(29, 207, 118)\\
+(28, 33, 146)(29, 118, 173)(28, 69, 215)(24, 172, 234)(24, 101, 263)
+\begin{figure}[htbp]
+  \centering
+  \subfigure[edge intensity]{
+  \label{edgeintense}
+  \includegraphics[width=0.32\textwidth]{../output/coins_normalized_edges.png}}
+  \subfigure[edge threshholded]{
+  \label{edgethresh}
+  \includegraphics[width=0.32\textwidth]{../output/coins_edges.png}}
+  \subfigure[circles with NMS operation]{
+  \label{drawcircle}
+  \includegraphics[width=0.32\textwidth]{../output/coins_circles.png}}
+  \caption{Results of problem 2}
+  \label{labeled_img}
+\end{figure}
+
 \end{document}
