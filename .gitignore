@@ -9,8 +9,6 @@
 *.aux
 *.synctex.gz
 
-#jupyter notebook
-*.ipynb
 
 #python cache files 
 __pycache__/
@@ -22,9 +20,10 @@ Voice-Activity-Detection/
 .idea/
 .ipynb_checkpoints/
 
-#2022 fall assignments description 
+#2022 fall assignments descriptions and datasets 
 CV_HW1.pdf
 AI-relevant-courses-2022fall/NLPhw-1026/hw_description.pdf
 AI-relevant-courses-2022fall/NLPhw-1026/data/news.2007.en.shuffled.deduped.test
 AI-relevant-courses-2022fall/NLPhw-1026/data/news.2007.en.shuffled.deduped.train
 AI-relevant-courses-2022fall/CVhw-1023/output/attributes.png
+AI-relevant-courses-2022fall/NLPhw-1026/model.pkl
