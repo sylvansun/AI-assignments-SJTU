@@ -104,6 +104,12 @@ def get_attribute(labeled_image):
     return att_list
 
 
+def show_attribute(list_of_dict, file_name):
+    print(file_name)
+    for i in range(len(list_of_dict)):
+        print(list_of_dict[i])
+
+
 def main(argv):
     img_name = argv[0]
     thresh_val = int(argv[1])
@@ -119,7 +125,7 @@ def main(argv):
     cv2.imwrite('output/' + img_name + "_binary.png", binary_image)
     cv2.imwrite('output/' + img_name + "_labeled.png", labeled_image)
 
-    print(attribute_list)
+    show_attribute(attribute_list, img_name)
 
 
 if __name__ == '__main__':

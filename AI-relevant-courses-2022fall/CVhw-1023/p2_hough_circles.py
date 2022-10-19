@@ -203,9 +203,3 @@ def main(argv):
 
 if __name__ == '__main__':
     main(sys.argv[1:])
-"""
-below are my results of the circle_list 
-(29, 105, 34), (24, 49, 55), (29, 145, 94), (24, 84, 109), (29, 207, 118),
-(28, 33, 146), (29, 118, 173), (28, 69, 215), (24, 172, 234), (24, 101, 263)
- sorted with ascending order of x coordinates
-"""
