@@ -29,7 +29,7 @@ int cal_min(int a,int b);
 int solve();
 void show_graph();
 
-int main(int argc, const char * argv[]) {
+int main(){
     construct_graph();
     std::cout<<solve()<<std::endl;
     return 0;
